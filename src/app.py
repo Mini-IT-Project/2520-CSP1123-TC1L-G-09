@@ -9,6 +9,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Bottle(db.Model):
+    __tablename__ = 'bottles_table'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), default='unnpicked')
@@ -27,3 +28,7 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/debug/count")
+def debug_count():
+    return {"bottles_count": Bottle.query.count()}
