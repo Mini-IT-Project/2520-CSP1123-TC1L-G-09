@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 class Bottle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    status = db.Column(db.String(20), default='available')
+    status = db.Column(db.String(20), default='unnpicked')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
