@@ -21,7 +21,9 @@ class Bottle(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    unpicked_count = Bottle.query.filter_by(status='unpicked').count()
+    return render_template('index.html', unpicked_count=unpicked_count)
+
 
 @app.route('/throw', methods=['POST'])
 def throw():
