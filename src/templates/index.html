@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Drifting Bottle</title>
-    </head>
-    <body>
-        <h1>Welcome U to Drifting Bottle here!</h1>
-        <p>Meet ur special soul right now ~</p>
-    </body>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Drifting Bottle</title>
+</head>
+<body>
+    <h1>Drifting Botttle</h1>
+
+    <!-- bottles template -->
+    <form action="{{ url_for('throw') }}" method="post">
+        <label for="content">write what you would like to share：</label><br>
+        <textarea name="content" rows="4" cols="40" required></textarea><br>
+        <button type="submit">throw it to the sea</button>
+    </form>
+
+    <br>
+
+    <!-- pick bottle -->
+    <form action="{{ url_for('pick') }}" method="get">
+        <button type="submit">pick one botttle righ now</button>
+    </form>
+
+</body>
 </html>
