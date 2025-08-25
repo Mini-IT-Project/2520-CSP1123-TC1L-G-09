@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Let see what is inside the bottle!</title>
+</head>
+<body>
+    <h1>🎁Hey!you got a bottle</h1>
+
+    {% if bottle %}
+        <blockquote>
+            {{ bottle.content }}
+        </blockquote>
+        <p><em>Time thrown into the sea：{{ bottle.created_at }}</em></p>
+    {% else %}
+        <p>the sea is still empty...🌊</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('index') }}">back to homepage</a>
+</body>
+</html>
