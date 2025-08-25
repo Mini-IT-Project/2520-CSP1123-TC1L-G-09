@@ -21,7 +21,9 @@ class Bottle(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    unpicked_count = Bottle.query.filter_by(status='unpicked').count()
+    return render_template('index.html', unpicked_count=unpicked_count)
+
 
 @app.route('/throw', methods=['POST'])
 def throw():
@@ -32,7 +34,16 @@ def throw():
         db.session.commit()
     return redirect(url_for('index'))
 
-###def pick
+@app.route('/pick')
+def pick():
+    bottles = Bottle.query.filter_by(status='unpicked').all()
+    if bottles:
+        bottle = random.choice(bottles)
+        bottle.status = 'picked'  
+        db.session.commit()
+        return render_template('pick.html', bottle=bottle)
+    else:
+        return "empty sea🌊"
 
 @app.route("/debug/count")
 def debug_count():
