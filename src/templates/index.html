@@ -81,6 +81,7 @@
             <form action="{{ url_for('pick') }}" method="get">
                 <button type="submit">Pick a bottle right now</button>
             </form>
+            <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
     </main>
 </body>
