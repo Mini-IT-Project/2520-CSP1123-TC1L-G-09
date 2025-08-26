@@ -16,16 +16,28 @@ class Bottle(db.Model):
     def __repr__(self):
         return f"Bottle{self.id} - {self.status} - {self.campus}"
     
-@bottle_bp.route("/throw", methods=["POST"],endpoint="throw")
-def throw_bottle():
-    message = request.form.get("message")
-    if message:
-        bottles.append(message)
+@bottle_bp.route("/throw", methods=["POST"])
+def throw():
+    content = request.form.get("content")
+    campus = request.form.get("campus")
+    if content and campus:
+        new_bottle = Bottle(content=content, campus=campus)
+        db.session.add(new_bottle)
+        db.session.commit()
     return redirect(url_for("main.index"))
 
-@bottle_bp.route("/pick",endpoint="pick")
-def pick_bottle():
+@bottle_bp.route("/pick")
+def pick():
+    campus = request.args.get("campus", "all")
+    query = Bottle.query.filter_by(status="unpicked")
+    if campus != "all":
+        query = query.filter_by(campus=campus)
+    bottles = query.all()
+    
     if bottles:
-        picked = bottles.pop(0)   
-        return render_template("pick.html", message=picked)
-    return render_template("pick.html", message="There is nothing...")
+        bottle = random.choice(bottles)
+        bottle.status = "picked"
+        db.session.commit()
+        return render_template("pick.html", bottle=bottle)
+    else:
+        return render_template("pick.html", bottle=None)
