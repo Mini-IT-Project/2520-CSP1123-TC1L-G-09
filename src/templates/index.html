@@ -16,6 +16,11 @@
             <h2>Throw a Bottle！</h2>
             <form action="{{ url_for('bottle.throw') }}" method="post">
                 <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
+                <label for="campus">Select your Campus:</label>
+                <select name="campus" required>
+                    <option value="cyberjaya">Cyberjaya</option>
+                    <option value="melaka">Melaka></option>
+                </select><br><br>
                 <button type="submit">Throw it to the sea</button>
             </form>
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
