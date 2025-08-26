@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from extensions import db 
+from extensions import db  
 
 bottle_bp = Blueprint("bottle", __name__)
 
