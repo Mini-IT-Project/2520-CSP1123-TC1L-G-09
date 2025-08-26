@@ -7,23 +7,24 @@
 </head>
 
 <body>
-    <header>🎓 MMU Drifting Bottle</header>
+    <header>
+        MMU Drifting Bottle
+    </header>
+
     <main>
-        <!-- throw bottle -->
         <div class="section">
-            <h2>Throw a Bottle</h2>
-            <form action="{{ url_for('throw') }}" method="post">
+            <h2>Throw a Bottle！</h2>
+            <form action="{{ url_for('bottle.throw') }}" method="post">
                 <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
                 <button type="submit">Throw it to the sea</button>
             </form>
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
 
-        <!-- pick bottle -->
         <div class="section">
             <h2>Pick a Bottle</h2>
-            <form action="{{ url_for('pick') }}" method="get">
-                <button type="submit">Pick a bottle right now</button>
+            <form action="{{ url_for('bottle.pick') }}" method="get">
+                <button type="submit">Pick a bottle right now！</button>
             </form>
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
