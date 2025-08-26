@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Please Login</title>
+    <link rel="icon" href="/static/.png" type="image/png">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">Login</header>
+    <main>
+        <div class="section" style="margin-top: 15vh;">
+        <h1>Login to MMU Soul!</h1>
+        <form action="">
+            <label for="username" style="font-size: 20px; font-weight: bold;">Username: </label>
+            <input class="input_column" placeholder="Write your username..." type="text" id="username" name="username" required>
+            <br><br>
+            <label for="password" style="font-size: 20px; font-weight: bold;">Password: </label>
+            <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required>
+            <br><br><br>
+            <b>Haven't have an account? </b><a href="{{ url_for('login.register') }}">Click here!</a>
+            <br><br>
+        </div>
+    </main>
+</body>
