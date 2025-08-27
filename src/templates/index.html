@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Drifting Bottle</title>
-    </head>
-    <body>
-        <h1>Welcome U to Drifting Bottle here!</h1>
-        <p>Meet ur special soul right now ~</p>
-    </body>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>MMU Drifting Bottle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        MMU Drifting Bottle
+    </header>
+
+    <main>
+        <div class="section">
+            <h2>Throw a Bottle！</h2>
+            <form action="{{ url_for('bottle.throw') }}" method="post">
+                <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
+                <label for="campus">Select your Campus:</label>
+                <select name="campus" required>
+                    <option value="all">Mix campuses</option>
+                    <option value="cyberjaya">Cyberjaya</option>
+                    <option value="melaka">Melaka></option>
+                </select><br><br>
+                <button type="submit">Throw it to the sea</button>
+            </form>
+            <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
+        </div>
+
+        <div class="section">
+            <h2>Pick a Bottle</h2>
+            <form action="{{ url_for('bottle.pick') }}" method="get">
+                <button type="submit">Pick a bottle right now！</button>
+            </form>
+            <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
+        </div>
+    </main>
+</body>
 </html>
