@@ -1,34 +1,20 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import Flask
+from main import main_bp
+from bottle_feature import bottle_bp
+from extensions import db, socketio  # ✅ 从 extensions 导入
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+db.init_app(app)
+socketio.init_app(app)
 
-class Bottle(db.Model):
-    __tablename__ = 'bottles_table'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    status = db.Column(db.String(20), default='unnpicked')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'<Bottle {self.id} - {self.status}>'
-
-@app.route('/')
-def index():
-    return render_template('index.html')
+app.register_blueprint(main_bp, url_prefix="/")
+app.register_blueprint(bottle_bp, url_prefix="/bottle")
 
 with app.app_context():
     db.create_all()
-    print("Database created successfully!")
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
-@app.route("/debug/count")
-def debug_count():
-    return {"bottles_count": Bottle.query.count()}
+    socketio.run(app, debug=True)
