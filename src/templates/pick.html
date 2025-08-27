@@ -2,72 +2,24 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>MMU Drifting Bottle</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #e6f0ff;
-            color: #003366;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #990000;
-            color: white;
-            padding: 20px 0;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        main {
-            padding: 30px 20px;
-        }
-        .section {
-            background-color: #cce0ff;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        blockquote {
-            font-size: 18px;
-            background-color: #d9f0ff;
-            padding: 15px;
-            border-left: 5px solid #0044cc;
-            display: inline-block;
-            max-width: 80%;
-            margin: 20px auto;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #0044cc;
-            font-weight: bold;
-        }
-        .info {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #003366;
-        }
-    </style>
+    <title>Let’s see what is inside the bottle!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <header>🎓 MMU Drifting Bottle</header>
-    <main>
-        <div class="section">
-            {% if bottle %}
-                <h2>🎁 You got a bottle!</h2>
-                <blockquote>{{ bottle.content }}</blockquote>
-                <p class="info"><em>Time thrown: {{ bottle.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</em></p>
-            {% else %}
-                <p>The sea is empty now... 🌊 Try throwing a bottle!</p>
-            {% endif %}
-            <a href="{{ url_for('index') }}">Back to homepage</a>
-        </div>
-        <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
 
+<body>
+    <header>🎓 You got a Bottle</header>
+    <main>
+        {% if bottle %}
+            <blockquote>
+                {{ bottle.content }}
+            </blockquote>
+            <p><em>Time thrown into the sea：{{ bottle.created_at }}</em></p>
+        {% else %}
+            <p class="info">The sea is still empty...🌊</p>
+        {% endif %}
+
+        <br>
+        <a href="{{ url_for('main.index') }}">Back to homepage</a>
     </main>
 </body>
 </html>

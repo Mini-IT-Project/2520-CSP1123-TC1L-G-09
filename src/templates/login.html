@@ -7,15 +7,14 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header class="header">Login</header>
     <main>
         <div class="section" style="margin-top: 15vh;">
         <h1>Login to MMU Soul!</h1>
         <form action="">
-            <label for="username" style="font-size: 20px; font-weight: bold;">Username: </label>
-            <input class="input_column" placeholder="Write your email..." type="email" id="email" name="email" required>
+            <label for="email" class="login_label">Email: </label>
+            <input class="input_column" placeholder="Write your email..." type="email" id="email" name="email" required style="margin-left: 10px;">
             <br><br>
-            <label for="password" style="font-size: 20px; font-weight: bold;">Password: </label>
+            <label for="password" class="login_label" style="margin-right: 10px;">Password: </label>
             <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required>
             <br><br><br>
             <b>Haven't have an account? </b><a href="{{ url_for('login.register') }}" class="register_a">Register here!</a>
