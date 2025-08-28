@@ -4,23 +4,25 @@ from main import main_bp
 from bottle_feature import bottle_bp
 import os
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
-#database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#upload file
-UPLOAD_FOLDER = os.path.join(os.getcwd(), "static", "uploads")
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    UPLOAD_FOLDER = os.path.join("static", "uploads")  
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-db.init_app(app)
+    db.init_app(app)
 
-app.register_blueprint(main_bp, url_prefix="/")
-app.register_blueprint(bottle_bp, url_prefix="/bottle")
+    app.register_blueprint(main_bp, url_prefix="/")
+    app.register_blueprint(bottle_bp, url_prefix="/bottle")
+
+    return app
 
 if __name__ == "__main__":
+    app = create_app()
     with app.app_context():
-        db.create_all()
+        db.create_all()   
     app.run(debug=True)

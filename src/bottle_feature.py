@@ -6,21 +6,17 @@ import random
 
 bottle_bp = Blueprint("bottle", __name__)
 
-#Database Model
+# Database Model
 class Bottle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    file_path = db.Column(db.String(200),nullable=True)
-    file_type = db.Column(db.String(20),nullable=True)
-    campus = db.Column(db.String(50),nullable=False,default="cyberjaya")
-    status = db.Column(db.String(20),default="unpicked")
+    content = db.Column(db.Text, nullable=True)   
+    file_path = db.Column(db.String(200), nullable=True)
+    file_type = db.Column(db.String(20), nullable=True)
+    campus = db.Column(db.String(50), nullable=False, default="cyberjaya")
+    status = db.Column(db.String(20), default="unpicked")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(),"static","uploads")
-ALLOWED_EXTENSIONS = ("png","jpg","jpeg","gif","mp3","wav","mp4","mov")
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "mp3", "wav", "mp4", "mov"}
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -36,20 +32,27 @@ def throw_bottle():
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
+        upload_folder = current_app.config["UPLOAD_FOLDER"]   
+        os.makedirs(upload_folder, exist_ok=True)
+
+        abs_path = os.path.join(upload_folder, filename)
+        file.save(abs_path)
+
+        file_path = f"uploads/{filename}"
+
         ext = filename.rsplit(".", 1)[1].lower()
-        if ext in {"png","jpg","jpeg","gif"}:
+        if ext in {"png", "jpg", "jpeg", "gif"}:
             file_type = "image"
-        elif ext in {"mp3","wav"}:
+        elif ext in {"mp3", "wav"}:
             file_type = "audio"
-        elif ext in {"mp4","mov"}:
+        elif ext in {"mp4", "mov"}:
             file_type = "video"
 
     if content or file_path:
         bottle = Bottle(content=content, campus=campus, file_path=file_path, file_type=file_type)
-        db.session.add(new_bottle)
+        db.session.add(bottle)
         db.session.commit()
+
     return redirect(url_for("main.index"))
 
 @bottle_bp.route("/pick", endpoint="pick")
@@ -61,7 +64,6 @@ def pick_bottle():
     bottles = query.all()
 
     if bottles:
-        import random
         bottle = random.choice(bottles)
         bottle.status = "picked"
         db.session.commit()
