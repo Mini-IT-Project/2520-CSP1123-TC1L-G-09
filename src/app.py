@@ -1,7 +1,7 @@
 from flask import Flask
+from extensions import db
 from main import main_bp
 from bottle_feature import bottle_bp
-from extensions import db, socketio  
 import os
 
 app = Flask(__name__)
