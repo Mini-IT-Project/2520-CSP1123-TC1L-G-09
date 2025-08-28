@@ -80,3 +80,38 @@ a {
     color: #0044cc;
     font-weight: bold;
 }
+
+.input_column {
+    width: 40%;
+    height: 20px;
+    font-size: 16px;
+    padding: 7px;
+    border-radius: 10px;
+    border: 2px solid #0044cc;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.input_column:hover {
+    border-color: #000000;
+}
+.input_column:focus {
+    box-shadow: 0 0 10px rgba(255,102,0,0.5); 
+}
+h1 {
+    color: #0044cc;
+}
+.register_a { 
+    color:blue; 
+    text-decoration:none; 
+    font-weight:bold;
+}
+.register_a:hover {
+    color: #0099ff;
+}
+.login_label {
+    display: inline-block;
+    font-size: 20px; 
+    font-weight: bold;
+    width: 105px;
+    text-align: left;
+}
