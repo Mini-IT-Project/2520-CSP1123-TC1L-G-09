@@ -9,7 +9,7 @@ bottle_bp = Blueprint("bottle", __name__, template_folder="templates")
 class Bottle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text, nullable=False)
-    file_path = db.Column(db.String(200),nulllable=True)
+    file_path = db.Column(db.String(200),nullable=True)
     file_type = db.Column(db.String(20),nullable=True)
     campus = db.Column(db.String(50),nullable=False,default="cyberjaya")
     status = db.Column(db.String(20),default="unpicked")
