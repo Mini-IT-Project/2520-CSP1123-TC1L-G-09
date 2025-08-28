@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, current_app
 from extensions import db  
 import os
 from werkzeug.utils import secure_filename
+import random
 
 bottle_bp = Blueprint("bottle", __name__, template_folder="templates")
 
@@ -36,7 +37,7 @@ def throw_bottle():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(file_path)
+        file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
         ext = filename.rsplit(".", 1)[1].lower()
         if ext in {"png","jpg","jpeg","gif"}:
             file_type = "image"
