@@ -17,6 +17,8 @@ class Bottle(db.Model):
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(),"static","uploads")
 ALLOWED_EXTENSIONS = ("png","jpg","jpeg","gif","mp3","wav","mp4","mov")
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def allowed_file(filename):
@@ -24,7 +26,7 @@ def allowed_file(filename):
 
 @bottle_bp.route("/throw", methods=["POST"], endpoint="throw")
 def throw_bottle():
-    msg = request.form.get("message")
+    content = request.form.get("content")
     campus = request.form.get("campus", "cyberjaya")
     file = request.files.get("file")
 
@@ -43,9 +45,9 @@ def throw_bottle():
         elif ext in {"mp4","mov"}:
             file_type = "video"
 
-    if msg or file_path:
-        bottle = Bottle(message=msg, campus=campus, file_path=file_path, file_type=file_type)
-        db.session.add(bottle)
+    if content or file_path:
+        bottle = Bottle(content=content, campus=campus, file_path=file_path, file_type=file_type)
+        db.session.add(new_bottle)
         db.session.commit()
     return redirect(url_for("main.index"))
 
