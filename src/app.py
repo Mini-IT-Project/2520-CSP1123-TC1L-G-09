@@ -1,20 +1,36 @@
+import os
 from flask import Flask
 from main import main_bp
 from bottle_feature import bottle_bp
+from forum_routes import forum_bp
 from extensions import db, socketio  # ✅ 从 extensions 导入
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+def create_app():
 
-db.init_app(app)
-socketio.init_app(app)
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
+    app.config['SECRET_KEY']= 'dev-secret'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), "uploads")
 
-app.register_blueprint(main_bp, url_prefix="/")
-app.register_blueprint(bottle_bp, url_prefix="/bottle")
+    db.init_app(app)
+    socketio.init_app(app)
 
-with app.app_context():
-    db.create_all()
+    app.register_blueprint(main_bp, url_prefix="/")
+    app.register_blueprint(forum_bp, url_prefix='/forum')
+    app.register_blueprint(bottle_bp, url_prefix="/bottle")
 
-if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    with app.app_context():
+        db.create_all()
+    
+    return app
+
+app = create_app()
+
+if __name__ == '__main__':
+    socketio.run(
+        app,
+        host='0.0.0.0',
+        port=int(os.environ.get('PORT',5000)),
+        debug=True
+        )
