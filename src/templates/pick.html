@@ -7,16 +7,32 @@
 </head>
 
 <body>
-    <header>🎓 You got a Bottle</header>
+    <header>You got a Bottle!</header>
     <main>
-        {% if bottle %}
-            <blockquote>
-                {{ bottle.content }}
-            </blockquote>
-            <p><em>Time thrown into the sea：{{ bottle.created_at }}</em></p>
-        {% else %}
-            <p class="info">The sea is still empty...🌊</p>
+    {% if bottle %}
+        {% if bottle.content %}
+            <p>{{ bottle.content }}</p>
         {% endif %}
+
+        {% if bottle.file_path %}
+            {% if bottle.file_type == 'image' %}
+                <img src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" alt="image" style="max-width:100%;">
+        {% elif bottle.file_type == 'audio' %}
+            <audio controls>
+                <source src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        {% elif bottle.file_type == 'video' %}
+            <video controls style="max-width:100%;">
+                <source src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+    {% endif %}
+
+{% else %}
+    <p>The sea is still empty...🌊</p>
+{% endif %}
 
         <br>
         <a href="{{ url_for('main.index') }}">Back to homepage</a>
