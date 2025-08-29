@@ -11,8 +11,8 @@ class Bottle(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)   
     file_path = db.Column(db.String(200), nullable=True)
-    file_type = db.Column(db.String(20), nullable=True)
-    campus = db.Column(db.String(50), nullable=False, default="cyberjaya")
+    file_type = db.Column(db.String(200), nullable=True)
+    campus = db.Column(db.String(20), nullable=False, default="cyberjaya")
     status = db.Column(db.String(20), default="unpicked")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
@@ -20,6 +20,10 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "mp3", "wav", "mp4", "mov"}
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@bottle_bp.route("/")
+def DriftingBottle():
+    return render_template("DriftingBottle.html")
 
 @bottle_bp.route("/throw", methods=["POST"], endpoint="throw")
 def throw_bottle():
@@ -53,18 +57,19 @@ def throw_bottle():
         db.session.add(bottle)
         db.session.commit()
 
-    return redirect(url_for("main.index"))
+    return redirect(url_for("bottle.DriftingBottle"))
 
 @bottle_bp.route("/pick", endpoint="pick")
 def pick_bottle():
     campus = request.args.get("campus", "all")
     query = Bottle.query.filter_by(status="unpicked")
+    
     if campus != "all":
         query = query.filter_by(campus=campus)
-    bottles = query.all()
+    database = query.all()
 
-    if bottles:
-        bottle = random.choice(bottles)
+    if database:
+        bottle = random.choice(database)
         bottle.status = "picked"
         db.session.commit()
         return render_template("pick.html", bottle=bottle)
