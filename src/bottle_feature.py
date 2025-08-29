@@ -57,7 +57,7 @@ def throw_bottle():
         db.session.add(bottle)
         db.session.commit()
 
-    return redirect(url_for("DriftingBottle"))
+    return redirect(url_for("bottle.DriftingBottle"))
 
 @bottle_bp.route("/pick", endpoint="pick")
 def pick_bottle():
