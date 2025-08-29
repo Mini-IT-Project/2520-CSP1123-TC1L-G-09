@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Let’s see what is inside the bottle!</title>
@@ -7,35 +8,37 @@
 </head>
 
 <body>
-    <header>You got a Bottle!</header>
+    <header>Hey！You got a Bottle!</header>
     <main>
     {% if bottle %}
-        {% if bottle.content %}
-            <p>{{ bottle.content }}</p>
-        {% endif %}
+        <div class = "bottle_content">
+            {% if bottle.content %}
+                <p>{{ bottle.content }}</p>
+            {% endif %}
 
-        {% if bottle.file_path %}
-            {% if bottle.file_type == 'image' %}
-                <img src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" alt="image" style="max-width:100%;">
-        {% elif bottle.file_type == 'audio' %}
-            <audio controls>
-                <source src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        {% elif bottle.file_type == 'video' %}
-            <video controls style="max-width:100%;">
-                <source src="{{ url_for('static', filename=bottle.file_path.split('/')[-1]) }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        {% endif %}
+            {% if bottle.file_path %}
+                {% if bottle.file_type == 'image' %}
+                    <img src="{{ url_for('static', filename=bottle.file_path) }}" alt="Bottle Image" style="max-width: 400px;">
+                {% elif bottle.file_type == 'audio' %}
+                    <audio controls>
+                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                        Your browser does not support the audio element.
+                    </audio>
+                {% elif bottle.file_type == 'video' %}
+                    <video controls style="max-width:100%;">
+                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p>The sea is still empty...🌊</p>
     {% endif %}
 
-{% else %}
-    <p>The sea is still empty...🌊</p>
-{% endif %}
-
-        <br>
-        <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+    <br>
+    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
     </main>
 </body>
 </html>
