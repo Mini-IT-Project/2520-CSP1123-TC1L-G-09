@@ -8,7 +8,7 @@ from extensions import db, socketio  # ✅ 从 extensions 导入
 def create_app():
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
     app.config['SECRET_KEY']= os.environ.get('SECRET_KEY', 'dev-fallback-key')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), "uploads")
