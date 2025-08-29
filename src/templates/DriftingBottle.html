@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>MMU Drifting Bottle</title>
@@ -20,7 +20,7 @@
                 <label for="file">Upload a file here (image/audio/video)</label>
                 <input type="file" name="file"><br><br>
 
-                <label for="campus">Select your Campus:</label>
+                <label for="campus">Select your campus:</label>
                 <select name="campus" required>
                     <option value="all">Mix campuses</option>
                     <option value="cyberjaya">Cyberjaya</option>
@@ -33,8 +33,15 @@
         </div>
 
         <div class="section">
-            <h2>Pick a Bottle</h2>
+            <h2>Pick a Bottle!</h2>
             <form action="{{ url_for('bottle.pick') }}" method="get">
+                <label for="campus">Select pick campus:</label>
+                <select name="campus" id="campus">
+                    <option value="all">Mix campuses</option>
+                    <option value="cyberjaya">Cyberjaya
+                    <option value="melaka">Melaka</option>
+                </select>
+                <br><br>
                 <button type="submit">Pick a bottle right now！</button>
             </form>
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
