@@ -21,6 +21,10 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "mp3", "wav", "mp4", "mov"}
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@bottle_bp.route("/")
+def DriftingBottle():
+    return render_template("DriftingBottle.html")
+
 @bottle_bp.route("/throw", methods=["POST"], endpoint="throw")
 def throw_bottle():
     content = request.form.get("content")
@@ -53,7 +57,7 @@ def throw_bottle():
         db.session.add(bottle)
         db.session.commit()
 
-    return redirect(url_for("main.index"))
+    return redirect(url_for("DriftingBottle"))
 
 @bottle_bp.route("/pick", endpoint="pick")
 def pick_bottle():
@@ -62,10 +66,10 @@ def pick_bottle():
     
     if campus != "all":
         query = query.filter_by(campus=campus)
-    bottles = query.all()
+    database = query.all()
 
-    if bottles:
-        bottle = random.choice(bottles)
+    if database:
+        bottle = random.choice(database)
         bottle.status = "picked"
         db.session.commit()
         return render_template("pick.html", bottle=bottle)
