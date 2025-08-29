@@ -10,7 +10,7 @@ from bottle_feature import bottle_bp
 def create_app():
     app = Flask(__name__)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bottles.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
@@ -32,10 +32,12 @@ def create_app():
 
     return app
 
+#website address
 if __name__ == "__main__":
+    app = create_app()
     socketio.run(
         app,
-        host='0.0.0.0',
-        port=int(os.environ.get('PORT', 5001)),
+        host='127.0.0.1',
+        port=5000,
         debug=True
     )
