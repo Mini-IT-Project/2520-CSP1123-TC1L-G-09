@@ -5,19 +5,12 @@
     <title>MMU Drifting Bottle & Events</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <header>
-        <h1>MMU Portal</h1>
-        <nav>
-            <a href="{{ url_for('main.homepage') }}">Home</a>
-            <a href="{{ url_for('bottle.throw') }}">Throw Bottle</a>
-            <a href="{{ url_for('bottle.pick') }}">Pick Bottle</a>
-        </nav>
-    </header>
 
     <main>
         <section class="events">
-            <h2>📅 Upcoming Events</h2>
+            <h2>Upcoming Events</h2>
             <ul>
                 {% for event in events %}
                     <li>
@@ -30,7 +23,7 @@
         </section>
 
     <section class="announcements">
-            <h2>📢 Announcements</h2>
+            <h2>Announcements</h2>
             <ul>
                 {% for ann in announcements %}
                     <li>
