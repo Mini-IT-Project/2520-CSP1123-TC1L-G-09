@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Now!</title>
+    <link rel="icon" href="/static/.png" type="image/png">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main>
+    <div class="section" style="margin-top: 15vh;">
+    <h1>Register for an MMU Soul account!</h1>
+    {% for msg in get_flashed_messages() %} 
+    <p>{{ msg }}</p>
+    {% endfor %}
+    <form action="{{url_for('login.register')}}" method="POST">
+        <label for="email" class="login_label">Email: </label>
+        <input class="input_column" placeholder="Write your email prefix..." type="text" id="email" name="email" required style="margin-left: 10px;">
+        <span style="margin-left: 4px; font-weight: bold;">@student.mmu.edu.my</span>
+        <br><br>
+        <label for="password" class="login_label" style="margin-right: 10px; margin-left: -185px;">Password: </label>
+        <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required>
+        <br><br>
+        <button type="submit">Submit</button>
+        <br><br>
+    </form>
+    </div>
+    </main>
+</body>
