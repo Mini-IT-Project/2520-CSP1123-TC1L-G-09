@@ -9,39 +9,31 @@
 
 <body>
     <header>Hey！You got a Bottle!</header>
-    <main>
-    {% if bottle %}
-        <div class = "bottle_content">
-            {% if bottle.content %}
-                <p>{{ bottle.content }}</p>
-            {% endif %}
 
-            {% if bottle.file_path %}
-                {% if bottle.file_type == 'image' %}
-                    <img src="{{ url_for('static', filename=bottle.file_path) }}" alt="Bottle Image" style="max-width: 400px;">
-                {% elif bottle.file_type == 'audio' %}
-                    <audio controls>
-                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
-                        Your browser does not support the audio element.
-                    </audio>
-                {% elif bottle.file_type == 'video' %}
-                    <video controls style="max-width:100%;">
-                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
-                        Your browser does not support the video tag.
-                    </video>
+    <main class="centered-main">
+        <section class="section">
+            <div id="bottle-list">
+                {% if bottles %}
+                    {% for bottle in bottles %}
+                        <div class="bottle_content">
+                            <p>{{ bottle.content }}</p>
+                            {% if bottle.image %}
+                                <img src="{{ url_for('static', filename=bottle.image) }}" alt="Bottle Image">
+                            {% endif %}
+                            {% if bottle.audio %}
+                                <audio controls src="{{ url_for('static', filename=bottle.audio) }}"></audio>
+                            {% endif %}
+                            {% if bottle.video %}
+                                <video controls src="{{ url_for('static', filename=bottle.video) }}"></video>
+                            {% endif %}
+                            <div class="info">Campus: {{ bottle.campus }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="empty-text">No bottles yet. Be the first to throw one!</p>
                 {% endif %}
-            {% endif %}
-        </div>
-
-    {% else %}
-        <div class="empty_sea">
-            <img src="images/empty-bottle.png" alt="No bottles" />
-            <p>No bottles yet. Be the first to throw one!</p>
-        </div>
-    {% endif %}
-
-    <br>
-    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+            </div>
+        </section>
     </main>
 </body>
 </html>
