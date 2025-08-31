@@ -1,46 +1,45 @@
 :root {
-    --section-blue: #4593ec;        
-    --button-blue: #7bd1fc;         
-    --input-bg: #cce6ff;           
-    --light-bg: #fdf9f0;             
-    --text-blue: #1a3d7c;           
-    --paper-bg: #fdf9f0;            
+    --section-blue: #4593ec;
+    --button-blue: #7bd1fc;
+    --input-bg: #cce6ff;
+    --light-bg: rgba(255, 253, 245, 0.85); 
+    --text-blue: #1a3d7c;
+    --paper-bg: rgba(255, 253, 245, 0.85);
 }
 
 body {
     margin: 0;
     font-family: "Georgia", "Times New Roman", serif;
     color: var(--text-blue);
-    background: radial-gradient(circle at top left, #cce6ff, #ffffff 70%);
+    background: url("{{ url_for('static', filename='sea_background.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
 }
 
+/* Header */
 header {
     text-align: center;
     font-size: 3em;
     font-weight: bold;
     color: var(--section-blue);
     letter-spacing: 2px;
-    padding: 30px 0; 
+    padding: 30px 0;
 }
 
 main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 20px 50px 20px; 
+    padding: 20px 20px 50px 20px;
     display: flex;
-    flex-wrap: nowrap;   
-    gap: 40px;
-    justify-content: space-between;
+    justify-content: center; 
 }
 
-#left and right layout
 .section {
     background-color: var(--light-bg);
     border-radius: 22px;
     padding: 40px 30px;
     box-shadow: 0 12px 28px rgba(0,0,0,0.08);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    flex: 0 0 40%;      
+    flex: 0 0 60%;  
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -51,54 +50,12 @@ main {
     box-shadow: 0 18px 35px rgba(0,0,0,0.12);
 }
 
-form textarea, form select, form input[type="file"] {
-    width: 90%;               
-    padding: 14px;
-    margin-bottom: 18px;
-    border-radius: 12px;
-    border: none;
-    font-family: "Georgia", "Times New Roman", serif;
-    color: var(--text-blue);
-    background-color: var(--input-bg);
-    transition: box-shadow 0.2s;
-}
-
-form textarea:focus, form select:focus, form input[type="file"]:focus {
-    box-shadow: 0 0 8px var(--button-blue);
-    outline: none;
-}
-
-button {
-    background-color: var(--button-blue);
-    color: var(--light-bg);
-    padding: 16px 32px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    font-family: "Georgia", "Times New Roman", serif;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-    transition: all 0.25s ease;
-    margin-right: 20px;
-}
-
-button:last-child {
-    margin-right: 0;
-}
-
-button:hover {
-    background-color: #85d0ff;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
-}
-
 .bottle_content {
     text-align: left;
     padding: 30px 35px;
     margin: 25px 0 0 0;
     border-radius: 18px;
-    background-color: var(--paper-bg); 
+    background-color: var(--paper-bg);
     font-family: "Georgia", "Times New Roman", serif;
     font-size: 1.2em;
     line-height: 1.8em;
@@ -126,6 +83,13 @@ button:hover {
     text-align: left;
 }
 
+.empty-text {
+    text-align: center;
+    font-size: 1.2em;
+    color: rgba(26, 61, 124, 0.8);
+    padding: 60px 0;
+}
+
 @media (max-width: 900px) {
     main {
         flex-direction: column;
@@ -134,20 +98,5 @@ button:hover {
 
     .section {
         flex: 1 1 100%;
-        min-width: auto;
-    }
-
-    form textarea, form select, form input[type="file"] {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 12px;
-    }
-
-    button:last-child {
-        margin-bottom: 0;
     }
 }
