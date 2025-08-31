@@ -7,6 +7,13 @@ post_tags=db.Table(
     db.Column('tag_id',db.Integer,db.ForeignKey('tags.id'),primary_key=True)
 )
 
+class User(db.Model):
+    __tablename__="users"
+    id=id = db.Column(db.Integer,primary_key=True)
+    username=db.Column(db.String(50),unique=True,nullable=False)
+    def __repr__(self):
+        return f"<User {self.username}>"
+
 class Post(db.Model):
     __tablename__='posts'
 
