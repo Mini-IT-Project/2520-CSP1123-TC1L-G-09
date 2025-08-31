@@ -39,7 +39,7 @@ def analysis_tag(raw:str):
 def inject_globals():
     return {"MMU SOUL":"MMU WHISPER"}
 
-@forum_bp.route("/")
+@forum_bp.route("/")  #post list
 def index():
     search_keyword:str=request.args.get("q","").strip()
     tag_filter:str=request.args.get("tag","").strip()
@@ -64,3 +64,7 @@ def index():
         q=search_keyword, 
         tag=tag_filter
     )
+
+
+
+
