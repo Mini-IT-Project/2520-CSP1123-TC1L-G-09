@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Let’s see what is inside the bottle!</title>
@@ -7,19 +8,37 @@
 </head>
 
 <body>
-    <header>🎓 You got a Bottle</header>
+    <header>Hey！You got a Bottle!</header>
     <main>
-        {% if bottle %}
-            <blockquote>
-                {{ bottle.content }}
-            </blockquote>
-            <p><em>Time thrown into the sea：{{ bottle.created_at }}</em></p>
-        {% else %}
-            <p class="info">The sea is still empty...🌊</p>
-        {% endif %}
+    {% if bottle %}
+        <div class = "bottle_content">
+            {% if bottle.content %}
+                <p>{{ bottle.content }}</p>
+            {% endif %}
 
-        <br>
-        <a href="{{ url_for('main.index') }}">Back to homepage</a>
+            {% if bottle.file_path %}
+                {% if bottle.file_type == 'image' %}
+                    <img src="{{ url_for('static', filename=bottle.file_path) }}" alt="Bottle Image" style="max-width: 400px;">
+                {% elif bottle.file_type == 'audio' %}
+                    <audio controls>
+                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                        Your browser does not support the audio element.
+                    </audio>
+                {% elif bottle.file_type == 'video' %}
+                    <video controls style="max-width:100%;">
+                        <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p>The sea is still empty...🌊</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
     </main>
 </body>
 </html>
