@@ -212,7 +212,7 @@ def report_post(post_id):
     if request.method=="GET":
         return render_template("report_post.html",post=post)
     
-    report_reason=reques.form.get("report")
+    report_reason=request.form.get("report")
     if not report_reason:
         flash("Please select your reason","error")
         return(url_for("forum.report_post",post_id=post.id))
