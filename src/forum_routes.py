@@ -35,10 +35,6 @@ def analysis_tag(raw:str):
             tags.append(cleaned)
     return tags
 
-@forum_bp.context_processor
-def inject_globals():
-    return {"MMU SOUL":"MMU WHISPER"}
-
 @forum_bp.route("/")  #post list
 def index():
     search_keyword:str=request.args.get("q","").strip()
