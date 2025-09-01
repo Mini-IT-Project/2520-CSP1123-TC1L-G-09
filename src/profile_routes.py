@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template
-from forum_models import User,Comment,Post
+from forum_models import User,Comment,Post,Like
 
 profile_bp = Blueprint("profile",
                        __name__,
