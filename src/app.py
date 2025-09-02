@@ -6,13 +6,11 @@ from extensions import db, socketio
 from main import main_bp
 from bottle_feature import bottle_bp
 
-#bottle
 def create_app():
     app = Flask(__name__)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
 
     UPLOAD_FOLDER = os.path.join("static", "uploads")  
