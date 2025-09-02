@@ -4,27 +4,20 @@
     <meta charset="UTF-8">
     <title>MMU Drifting Bottle & Events</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Georgia, serif;
-            background-color: #f5f5f5;
-        }
-
-        /* 头部样式 */
-        header {
-            background-color: #97bee5;  
-            color: #0b5182;             
-            text-align: center;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-    </style>
-
 </head>
+
+<body>
+    <header>
+        MMU Drifting Bottle & Events
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                <li><a href="#">Match Chat</a></li>
+                <li><a href="{{ url_for('bottle.throw') }}">Drifting Bottle</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <main>
         <section class="events">
@@ -40,7 +33,7 @@
             </ul>
         </section>
 
-    <section class="announcements">
+        <section class="announcements">
             <h2>Announcements</h2>
             <ul>
                 {% for ann in announcements %}

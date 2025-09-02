@@ -11,3 +11,12 @@ forum_bp = Blueprint(
     static_folder="static",
     static_url_path="/forum-static"
 )
+
+@forum_bp.route("/", endpoint="homepage")
+def homepage():
+    return render_template("forum_home.html")
+
+@forum_bp.route("/create", endpoint="create_post")
+def create_post():
+    return render_template("forum_create.html")
+
