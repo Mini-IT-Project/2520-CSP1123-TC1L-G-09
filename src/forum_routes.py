@@ -13,6 +13,14 @@ forum_bp = Blueprint(
     static_url_path="/forum-static"
 )
 
+@forum_bp.route("/", endpoint="homepage")
+def homepage():
+    return render_template("forum_home.html")
+
+@forum_bp.route("/create", endpoint="create_post")
+def create_post():
+    return render_template("forum_create.html")
+
 ALLOWED_EXT = {"png","jpg","jpeg","git","mp4","mov"}
 
 def allowed_file(filename: str) -> bool:  #check the filename
@@ -227,22 +235,3 @@ def report_post(post_id):
 def serve_upload(filename):
     upload=current_app.config["UPLOAD_FOLDER"]
     return send_from_directory(upload,filename)
-
-
-
-    
-
-    
-
-
-
-
-
-
-     
-
-                
-
-
-
-
