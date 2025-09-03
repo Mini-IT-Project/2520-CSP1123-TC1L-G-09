@@ -13,8 +13,9 @@
                 <img src="{{url_for('static',filename='uploads/' + user.avatar)}}" alt="Avatar">
                 {% else %}
                 <img src="{{url_for('static',filename='avatar.png')}}" alt="Default Avatar">
+                {% endif %}
             </div>
-            <h2> {{user.name}}</h2>
+            <h2> {{user.username}}</h2>
 
             <div class="profile-section">
                 <h3> MY POST</h3>
@@ -32,7 +33,7 @@
             <div class="profile-section">
                 <h3>LIKED POSTS</h3>
                 <ul>
-                    {% for post in users.likes %}
+                    {% for post in user.likes %}
                     <li>
                       <strong>{{post.title}}</strong> - {{post.content[:50]}}...  
                     </li>
@@ -45,9 +46,9 @@
             <div class="profile-section">
                 <h3>MY COMMENTS</h3>
                 <ul>
-                    {% for post in users.comments %}
+                    {% for comment in user.comments %}
                     <li>
-                        {{comments.content[:80]}}...
+                        {{comment.body[:80]}}...
                     </li>
                     {% else %}
                     <li> No Comments Yet...</li>
