@@ -2,46 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MMU SOUL Homepage</title>
+    <title>MMU SOUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
-    <div class="header-left">
-        MMU Soul
-    </div>
-    <nav class="header-nav">
-        <ul>
-            <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
-            <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
-            <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
-            <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
-        </ul>
-    </nav>
-</header>
-
+        <div class="title">MMU SOUL</div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
+                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <main>
-        <section class="section">
+        <section class="events">
             <h2>Upcoming Events</h2>
-            {% for event in events %}
+            <div class="card-container">
+                {% for event in events %}
                 <div class="card">
                     <h3>{{ event.title }}</h3>
                     <p><strong>Date:</strong> {{ event.date }}</p>
                     <p>{{ event.description }}</p>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </section>
 
-        <section class="section">
+        <section class="announcements">
             <h2>Announcements</h2>
-            {% for ann in announcements %}
+            <div class="card-container">
+                {% for ann in announcements %}
                 <div class="card">
                     <h3>{{ ann.title }}</h3>
                     <p><strong>Date:</strong> {{ ann.date }}</p>
                     <p>{{ ann.description }}</p>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </section>
     </main>
 </body>
