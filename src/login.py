@@ -34,5 +34,9 @@ def register():
         except Exception as e:
             db.session.rollback()
             flash(f":( Some unexpected error happen: {e}")
+<<<<<<< HEAD
                  
+=======
+
+>>>>>>> main
     return render_template('register.html')
