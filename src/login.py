@@ -6,7 +6,7 @@ from datetime import datetime
 
 login_bp = Blueprint("login",__name__)
 
-class users(db.Model):
+class Users(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     email= db.Column(db.String(120), unique=True, nullable=False)
     password= db.Column(db.String(200), nullable=False)
@@ -21,7 +21,7 @@ def register():
         email = request.form['email'] + "@student.mmu.edu.my"
         password = generate_password_hash(request.form['password'])
 
-        new_user= users(email=email, password=password)
+        new_user= Users(email=email, password=password)
         print(f"{new_user}, {email}, {password}")
         try:
             db.session.add(new_user)
