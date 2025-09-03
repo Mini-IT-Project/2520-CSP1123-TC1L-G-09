@@ -7,14 +7,19 @@
 </head>
 <body>
     <header>
-        <div class="site-title">MMU SOUL</div>
-        <nav>
-            <a href="{{ url_for('forum.homepage') }}">Forum</a>
-            <a href="{{ url_for('main.match_chat') }}">Match Chat</a>
-            <a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a>
-            <a href="{{ url_for('profile.view_profile') }}">Profile</a>
-        </nav>
-    </header>
+    <div class="header-left">
+        MMU Soul
+    </div>
+    <nav class="header-nav">
+        <ul>
+            <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+            <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
+            <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+            <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+        </ul>
+    </nav>
+</header>
+
 
     <main>
         <section class="section">
