@@ -214,3 +214,24 @@ a {
     object-fit: cover;
     margin-top: 1rem;
 }
+
+.profile-section {
+    text-align: left;
+    margin-top: 2rem;
+}
+
+.profile-section h3{
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
