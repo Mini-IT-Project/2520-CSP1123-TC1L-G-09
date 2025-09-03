@@ -1,9 +1,13 @@
 from flask import Blueprint,render_template
 from forum_models import User,Comment,Post,Like
 
-profile_bp = Blueprint("profile",
-                       __name__,
-                       template_folder="templates")
+profile_bp = Blueprint(
+    "profile",
+    __name__,
+    template_folder="templates",
+    static_folder="static",
+    static_url_path="/forum-static"
+)
 
 @profile_bp.route("/profile")
 def profile():
