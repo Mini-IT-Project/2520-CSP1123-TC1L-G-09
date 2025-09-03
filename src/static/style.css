@@ -8,6 +8,11 @@ body {
     padding: 0;
 }
 
+h1,h2,h3{
+    color:#0044cc;
+    margin-top:0;
+}
+
 /* Header widened */
 header {
     background-color: #990000;
