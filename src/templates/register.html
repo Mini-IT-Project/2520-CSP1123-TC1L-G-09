@@ -10,17 +10,22 @@
     <main>
     <div class="section" style="margin-top: 15vh;">
     <h1>Register for an MMU Soul account!</h1>
-    {% for msg in get_flashed_messages() %} 
-    <p>{{ msg }}</p>
-    {% endfor %}
     <form action="{{url_for('login.register')}}" method="POST">
-        <label for="email" class="login_label">Email: </label>
-        <input class="input_column" placeholder="Write your email prefix..." type="text" id="email" name="email" required style="margin-left: 10px;">
-        <span style="margin-left: 4px; font-weight: bold;">@student.mmu.edu.my</span>
-        <br><br>
-        <label for="password" class="login_label" style="margin-right: 10px; margin-left: -185px;">Password: </label>
-        <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required>
-        <br><br>
+        <div class="form-perform">
+            <label for="email" class="login_label">Email: </label>
+            <input class="input_column" placeholder="Write your email prefix..." type="text" id="email" name="email" required>
+            <span style="margin-left: 10px; font-weight: bold; white-space: nowrap;">@student.mmu.edu.my</span>
+            <br><br>
+        </div>
+        <div class="form-perform">
+            <label for="password" class="login_label">Password: </label>
+            <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required style="margin-right: 202px;">
+            <br><br><br>
+        </div>
+        {% for msg in get_flashed_messages() %} 
+        <p style="color: red; font-weight: bold;">{{ msg }}</p>
+        {% endfor %}
+        <a href="{{ url_for('login.home') }}" class="register_a" style="margin-right: 20px;">Back to Login</a>
         <button type="submit">Submit</button>
         <br><br>
     </form>
