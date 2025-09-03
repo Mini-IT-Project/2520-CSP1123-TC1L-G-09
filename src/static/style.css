@@ -112,13 +112,14 @@ a {
 
 /* Input fields */
 .input_column {
-    width: 40%;
+    flex: 1;
     height: 20px;
     font-size: 16px;
     padding: 7px;
     border-radius: 10px;
     border: 2px solid #0044cc;
     margin-top: 10px;
+    margin-left: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 .input_column:hover {
@@ -145,6 +146,13 @@ a {
     font-weight: bold;
     width: 105px;
     text-align: left;
+    white-space: nowrap;
+}
+.form-perform {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 /* Drifting bottle container with background image */
