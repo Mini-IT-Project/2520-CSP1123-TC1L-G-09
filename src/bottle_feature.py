@@ -25,39 +25,43 @@ def allowed_file(filename):
 def DriftingBottle():
     return render_template("DriftingBottle.html")
 
-@bottle_bp.route("/throw", methods=["POST"], endpoint="throw")
+@bottle_bp.route("/throw", methods=["GET", "POST"], endpoint="throw")
 def throw_bottle():
-    content = request.form.get("content")
-    campus = request.form.get("campus", "cyberjaya")
-    file = request.files.get("file")
+    if request.method == "POST":
+        content = request.form.get("content")
+        campus = request.form.get("campus", "cyberjaya")
+        file = request.files.get("file")
 
-    file_path = None
-    file_type = None
+        file_path = None
+        file_type = None
 
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        upload_folder = current_app.config["UPLOAD_FOLDER"]   
-        os.makedirs(upload_folder, exist_ok=True)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            upload_folder = current_app.config["UPLOAD_FOLDER"]   
+            os.makedirs(upload_folder, exist_ok=True)
 
-        abs_path = os.path.join(upload_folder, filename)
-        file.save(abs_path)
+            abs_path = os.path.join(upload_folder, filename)
+            file.save(abs_path)
 
-        file_path = f"uploads/{filename}"
+            file_path = f"uploads/{filename}"
 
-        ext = filename.rsplit(".", 1)[1].lower()
-        if ext in {"png", "jpg", "jpeg", "gif"}:
-            file_type = "image"
-        elif ext in {"mp3", "wav"}:
-            file_type = "audio"
-        elif ext in {"mp4", "mov"}:
-            file_type = "video"
+            ext = filename.rsplit(".", 1)[1].lower()
+            if ext in {"png", "jpg", "jpeg", "gif"}:
+                file_type = "image"
+            elif ext in {"mp3", "wav"}:
+                file_type = "audio"
+            elif ext in {"mp4", "mov"}:
+                file_type = "video"
 
-    if content or file_path:
-        bottle = Bottle(content=content, campus=campus, file_path=file_path, file_type=file_type)
-        db.session.add(bottle)
-        db.session.commit()
+        if content or file_path:
+            bottle = Bottle(content=content, campus=campus, file_path=file_path, file_type=file_type)
+            db.session.add(bottle)
+            db.session.commit()
 
-    return redirect(url_for("bottle.DriftingBottle"))
+        return redirect(url_for("bottle.throw"))
+
+    unpicked_count = Bottle.query.filter_by(status="unpicked").count()
+    return render_template("DriftingBottle.html", unpicked_count=unpicked_count)
 
 @bottle_bp.route("/pick", endpoint="pick")
 def pick_bottle():

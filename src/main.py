@@ -5,7 +5,6 @@ main_bp = Blueprint("main", __name__)
 
 @main_bp.route("/", endpoint="homepage")
 def homepage():
-    
     events = [
         {"title": "Orientation Week", "date": "2025-09-10", "description": "Welcome to new students!"},
         {"title": "Open Day", "date": "2025-09-20", "description": "Visit our campus."}
@@ -15,6 +14,24 @@ def homepage():
         {"title": "Library Closed", "date": "2025-09-08", "description": "Library will be closed on public holiday."}
     ]
     
-    #drifting bottle amount
+    # Drifting bottle amount
     unpicked_count = Bottle.query.filter_by(status="unpicked").count()
     return render_template("homepage.html", events=events, announcements=announcements, unpicked_count=unpicked_count)
+
+# New route for Match Chat
+@main_bp.route("/match-chat", endpoint="match_chat")
+def match_chat():
+    return render_template("MatchChat.html")
+
+# New route for Profile
+@main_bp.route("/profile", endpoint="profile")
+def profile():
+    # For now, dummy user data, replace with actual user if using Flask-Login
+    user = {
+        "username": "Guest",
+        "avatar": None,
+        "posts": [],
+        "likes": [],
+        "comments": []
+    }
+    return render_template("profile.html", user=user)
