@@ -8,7 +8,11 @@ post_tags=db.Table(
 )
 
 class User(db.Model):
+<<<<<<< HEAD
     __tablename__="user"
+=======
+    __tablename__="forum_users"
+>>>>>>> main
     id= db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(50),unique=True,nullable=False)
     def __repr__(self):
