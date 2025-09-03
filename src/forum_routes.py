@@ -17,6 +17,7 @@ forum_bp = Blueprint(
 def homepage():
     return render_template("forum_home.html")
 
+
 ALLOWED_EXT = {"png","jpg","jpeg","git","mp4","mov"}
 
 def allowed_file(filename: str) -> bool:  #check the filename
