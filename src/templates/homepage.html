@@ -14,8 +14,8 @@
         }
 
         header {
-            background-color: #97bee5;  
-            color: #0b5182;             
+            background-color: #97bee5;
+            color: #0b5182;
             padding: 20px;
             font-size: 24px;
             font-weight: bold;
@@ -41,14 +41,14 @@
 
         nav ul li a {
             text-decoration: none;
-            color: #333333;
-            font-size: 12px; 
+            color: #555555;  /* 深灰色 */
+            font-size: 12px;  /* 缩小一半 */
             font-weight: normal;
             transition: color 0.3s;
         }
 
         nav ul li a:hover {
-            color: #555555;
+            color: #333333;
         }
 
         main {
@@ -95,9 +95,9 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
-                <li><a href="#">Match Chat</a></li>
+                <li><a href="{{url_for('main.match_chat')}}">Match Chat</a></li>
                 <li><a href="{{ url_for('bottle.throw') }}">Drifting Bottle</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="{{ url_for('login.home') }}">Profile</a></li>
             </ul>
         </nav>
     </header>
