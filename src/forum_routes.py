@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint,render_template,request,redirect,url_for,flash,current_app,send_from_directory
 from extensions import db,socketio
-from forum_models import Post, Tag, Comment, Like, Report
+from forum_models import User,Post, Tag, Comment, Like, Report
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 
@@ -16,10 +16,6 @@ forum_bp = Blueprint(
 @forum_bp.route("/", endpoint="homepage")
 def homepage():
     return render_template("forum_home.html")
-
-@forum_bp.route("/create", endpoint="create_post")
-def create_post():
-    return render_template("forum_create.html")
 
 ALLOWED_EXT = {"png","jpg","jpeg","git","mp4","mov"}
 
