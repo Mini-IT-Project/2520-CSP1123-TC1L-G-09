@@ -2,102 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MMU Drifting Bottle & Events</title>
+    <title>MMU SOUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Georgia, serif;
-            background-color: #f5f5f5;
-            color: #333333;
-        }
-
-        header {
-            background-color: #97bee5;
-            color: #0b5182;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-
-        nav {
-            margin-top: 5px;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        nav ul li {
-            display: inline;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #555555;  /* 深灰色 */
-            font-size: 12px;  /* 缩小一半 */
-            font-weight: normal;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #333333;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        section {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            padding: 15px;
-        }
-
-        section h2 {
-            color: #0b5182;
-            margin-top: 0;
-        }
-
-        section ul {
-            padding-left: 20px;
-        }
-
-        section ul li {
-            margin-bottom: 15px;
-        }
-
-        section ul li h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #06385b;
-        }
-
-        section ul li p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-    </style>
 </head>
-
 <body>
     <header>
-        MMU Drifting Bottle & Events
+        <div class="title">MMU SOUL</div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+<<<<<<< HEAD
                 <li><a href="{{url_for('main.match_chat')}}">Match Chat</a></li>
                 <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
                 <li><a href="{{ url_for('login.home') }}">Profile</a></li>
+=======
+                <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
+                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+>>>>>>> main
             </ul>
         </nav>
     </header>
@@ -105,28 +27,28 @@
     <main>
         <section class="events">
             <h2>Upcoming Events</h2>
-            <ul>
+            <div class="card-container">
                 {% for event in events %}
-                    <li>
-                        <h3>{{ event.title }}</h3>
-                        <p><strong>Date:</strong> {{ event.date }}</p>
-                        <p>{{ event.description }}</p>
-                    </li>
+                <div class="card">
+                    <h3>{{ event.title }}</h3>
+                    <p><strong>Date:</strong> {{ event.date }}</p>
+                    <p>{{ event.description }}</p>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </section>
 
         <section class="announcements">
             <h2>Announcements</h2>
-            <ul>
+            <div class="card-container">
                 {% for ann in announcements %}
-                    <li>
-                        <h3>{{ ann.title }}</h3>
-                        <p><strong>Date:</strong> {{ ann.date }}</p>
-                        <p>{{ ann.description }}</p>
-                    </li>
+                <div class="card">
+                    <h3>{{ ann.title }}</h3>
+                    <p><strong>Date:</strong> {{ ann.date }}</p>
+                    <p>{{ ann.description }}</p>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </section>
     </main>
 </body>
