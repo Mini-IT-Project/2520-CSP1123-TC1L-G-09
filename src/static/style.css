@@ -1,66 +1,97 @@
-/* Global settings */
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     background: #e6f0ff;
     color: #003366;
-    text-align: center;
     margin: 0;
     padding: 0;
 }
 
-/* Header widened */
 header {
     background-color: #990000;
     color: white;
-    padding: 30px 0;
-    font-size: 2em;
+    padding: 35px 20px; 
+    font-size: 2.5em; 
     font-weight: bold;
+    text-align: center;
+    position: relative;
 }
 
-/* Main content */
+header nav {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.3em; 
+    font-weight: normal;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+    color: #ffcccc;
+}
+
 main {
     padding: 30px 20px;
+    text-align: center;
 }
 
-/* Enhanced sections */
 .section {
-    background-color: #cce0ff;
-    border-radius: 20px;
-    padding: 25px;
     margin: 25px auto;
     max-width: 700px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    border: 2px solid #0044cc;
-}
-
-/* Upload file section */
-.upload-section {
-    background-color: #d9f0ff;
-    border-radius: 20px;
     padding: 20px;
-    margin: 20px auto;
-    max-width: 700px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    border: 2px dashed #0044cc;
+    background-color: #f0f7ff;
+    border-radius: 15px;
+    border: 2px solid #0044cc; 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    text-align: left;
 }
 
-/* Titles */
+.section .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin: 10px auto;
+    max-width: 90%; 
+    border: 1.5px solid #0044cc; 
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+/* ---------------- Titles ---------------- */
 h1, h2 {
     color: #0044cc;
 }
 
-textarea {
-    width: 90%;
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+textarea, select {
+    width: 95%; 
     font-size: 16px;
-    padding: 10px;
+    padding: 12px;
     border-radius: 10px;
     border: 1px solid #0044cc;
     margin-top: 10px;
 }
 
-/* Button with 3D effect */
 button {
-    margin-top: 15px;
+    margin-top: 7px;
     padding: 10px 25px;
     font-size: 16px;
     font-weight: bold;
@@ -78,9 +109,10 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+/* Drifting Bottle Section Box */
+.section.drifting {
+    background-color: #e6f5ff;
+    border: 2px solid #0044cc; 
 }
 
 /* Info text */
@@ -181,26 +213,39 @@ a {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    background: url('/static/sea_background.jpg') no-repeat center center;
-    background-size: cover;
+    background: #e6f5ff; 
     padding: 20px;
     border-radius: 15px;
+    border: 2px solid #0044cc; 
+    text-align: center;
 }
 
-/* Individual pick item */
 .pick-item {
-    background-color: rgba(224, 240, 255, 0.8);
+    background-color: #ffffff;
     padding: 15px;
     border-radius: 15px;
+    border: 1.5px solid #0044cc;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     margin-bottom: 20px;
     text-align: left;
 }
 
-/* Responsive adjustments */
+a {
+    color: #0044cc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0099ff;
+}
+
 @media (max-width: 768px) {
-    .section, .upload-section {
+    .section, .pick-container {
         max-width: 95%;
+    }
+    header nav ul li a {
+        font-size: 0.8em;
     }
 }
 
