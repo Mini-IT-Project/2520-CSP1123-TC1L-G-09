@@ -10,7 +10,7 @@ profile_bp = Blueprint(
     static_url_path="/forum-static"
 )
 
-@profile_bp.route("/profile")
+@profile_bp.route("/")
 def profile():
     user_id = session.get("user_id")
     if not user_id:
