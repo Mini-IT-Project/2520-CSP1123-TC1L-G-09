@@ -27,6 +27,7 @@ def homepage():
     )
 
 #Profile Page
+'''
 @main_bp.route("/profile", endpoint="profile")
 def profile():
     user = get_current_user()
@@ -34,6 +35,7 @@ def profile():
         from flask import redirect, url_for
         return redirect(url_for('login.home'))
     return render_template("profile.html", user=user)
+'''
 
 def get_current_user():
     user_id = session.get("user_id")  

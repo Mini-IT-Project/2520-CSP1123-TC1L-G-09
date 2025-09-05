@@ -316,3 +316,16 @@ ul {
     padding: 0.5rem 0;
     border-bottom: 1px solid #eee;
 }
+
+/* homepage login */
+.homepage-login {
+    background-color: #68c3ff;
+    height: 20px;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #000000;
+    margin-top: 10px;
+    margin-left: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
