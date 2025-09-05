@@ -1,5 +1,6 @@
-from flask import Blueprint,render_template
-from forum_models import User,Comment,Post,Like
+from flask import Blueprint,render_template,session,redirect,url_for
+from forum_models import Comment,Post,Like
+from login import Users
 
 profile_bp = Blueprint(
     "profile",
@@ -11,5 +12,13 @@ profile_bp = Blueprint(
 
 @profile_bp.route("/profile")
 def profile():
-    user = User.query.get_or_404(user.id)
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for('login.home'))
+    
+    user = Users.query.get(user_id) 
+    if not user:
+        return redirect(url_for('login.home'))
+        
     return render_template("profile.html", user=user)
+
