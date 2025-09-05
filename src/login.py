@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash  #password is safe, even me dont know too, through hash
 from sqlalchemy.exc import IntegrityError
@@ -18,6 +18,7 @@ def home():
         if login_user:
             login_password= request.form['password']
             if check_password_hash(login_user.password, login_password):
+                session['user_id'] = login_user.id
                 return redirect(url_for('main.homepage'))
             else:
                 flash("Password wrong, Please try again!", "error")
