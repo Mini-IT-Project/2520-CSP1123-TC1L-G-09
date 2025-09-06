@@ -52,10 +52,10 @@
             </div>
         </section>
 
-        <section class="school_map">
+        <section class="school-map">
             <h2>School Map</h2>
             <div class="map_container">
-                <img src="{{url_for('static',filename='mmu_map.jpg')}}" alt="MMU Map">
+                <img src="{{url_for('static',filename='mmu_cyberjaya_map.jpg')}}" alt="MMU Map">
                 <a href="#" class="map_link">View Full Map</a>
             </div>
         </section>
@@ -71,7 +71,7 @@
 
         <section class="events">
             <h2>Upcoming Events</h2>
-            <div class="card_container">
+            <div class="card-container">
                 {% for event in events %}
                 <div class="card">
                     <h3>{{event.title}}</h3>
