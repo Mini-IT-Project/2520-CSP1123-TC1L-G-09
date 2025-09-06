@@ -646,5 +646,115 @@ ul {
     }
     header nav ul li a {
         font-size: 0.8em;
+      
+/*Forum search*/
+.search-section{
+    background-color: #990000;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    margin-top: 0.5rem;
+}
+
+.search-container{
+    display: flex;
+    gap: 0.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-container input{
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #363434;
+    border-radius: 30px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-container input:focus{
+    border-color: #e0b7b7;
+    box-shadow: 0 0 0 2px rgba(35, 42, 69, 0.2);
+}
+
+.search-container button {
+    background: linear-gradient(135deg,#e0b7b7 0%,#e87777 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s,box-shadow 0.2s;
+}
+
+.search-container button :hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* button for create post*/
+.floating-btn{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg,#032ac6 0%,#5c79eb 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(107, 105, 108, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1) ;
+    box-shadow:0 6px 25px rgba(217, 221, 239, 0.5)
+}
+
+.floating-btn:active{
+    transform: scale(0.95);
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 85px;
+    right: 10px;
+    background: rgba(255, 254, 254, 0.8);
+    color: black;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition:opacity 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.floating-btn:hover .tooltip{
+    opacity: 1;
+}
+
+@media (max-width:768px){
+    .floating-btn{
+        width: 60px;
+        height: 60px;
+        font-size: 1.7rem;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .tooltip{
+        bottom: 75px;
+        right: 5px;
     }
 }
