@@ -145,15 +145,23 @@ h2 {
     display: flex;
     justify-content: space-around;
     gap: 20px;
+    flex-wrap: wrap; 
 }
+
 .map-item {
     width: 35%;
     text-align: center;
+    min-width: 250px; 
 }
+
 .map-item img {
     width: 100%;
+    height: auto; 
     border-radius: 10px;
+    border: 2px solid #0044cc; 
+    display: block;
 }
+
 
 .map-link {
     display: inline-block;
