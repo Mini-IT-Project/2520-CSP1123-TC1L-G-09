@@ -194,27 +194,111 @@ h2 {
 }
 
 /*Notifications*/
+.notifications {
+    text-align: center;
+    margin: 40px auto;
+}
+
+.notifications h2 {
+    text-align: center;
+    color: #0044cc;
+    margin-bottom: 20px;
+}
+
 .notifications ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 600px;
 }
 
 .notifications ul li {
+    position: relative;
     font-size: 16px;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
+    padding: 10px 15px 10px 20px;
+    margin: 10px 0;
+    background-color: #e3f2fd;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.notifications ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background-color: #1565c0;
+    border-radius: 10px 0 0 10px;
 }
 
 /*Upcoming Events*/
-.events .event {
-    display:center;
-    width: 30%;
-    margin: 10px;
-    background: #e3f2fd;
+.events {
+    text-align: center;
+    margin: 40px auto;
+}
+
+.events h2 {
+    color: #0044cc;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.card-container .card {
+    background-color: #ffffff;
+    border-radius: 12px;
     padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, background-color 0.3s;
+    text-align: center;
+}
+
+.card-container .card:nth-child(odd) {
+    background-color: #e3f2fd;
+}
+
+.card-container .card img {
+    width: 100%;
     border-radius: 10px;
-    vertical-align: top;
+    margin-bottom: 10px;
+}
+
+.card-container .card h3 {
+    font-size: 1.1em;
+    margin: 5px 0;
+    color: #0044cc;
+}
+
+.card-container .card p {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: #333;
+}
+
+.card-container .card:nth-child(1),
+.card-container .card:nth-child(5) {
+    flex: 0 0 15%;
+    transform: scale(0.8);
+}
+
+.card-container .card:nth-child(2),
+.card-container .card:nth-child(4) {
+    flex: 0 0 18%;
+    transform: scale(0.9);
+}
+
+.card-container .card:nth-child(3) {
+    flex: 0 0 22%;
+    transform: scale(1);
 }
 
 /*MMU Links*/
