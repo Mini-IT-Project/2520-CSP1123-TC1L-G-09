@@ -71,6 +71,8 @@ header nav ul li a:hover {
 }
 
 main {
+    width:80%;
+    margin:0 auto;
     padding: 30px 20px;
     text-align: center;
 }
@@ -95,9 +97,14 @@ h2 {
 
 /*Card Container*/
 .card-container {
-    display: flex;
+    display: inline-block;
+    width:22%;
+    margin:10px;
+    padding:10px;
+    background: #e8f5e9;
     gap: 20px;
     flex-wrap: wrap;
+    vertical-align: top;
     justify-content: center;
 }
 
@@ -112,8 +119,8 @@ h2 {
 
 /*School Map*/
 .school-map img {
-    width: 100%;
-    border-radius: 12px;
+    width: 70%;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
 
@@ -131,6 +138,20 @@ h2 {
     background: #1565c0;
 }
 
+/*Campus Tips*/
+.campus-tips {
+    display: flex;
+    justify-content: space-around;
+}
+
+.campus-tips .tip {
+    background: #fff3e0;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 10px;
+    flex: 1;
+}
+
 /*Notifications*/
 .notifications ul {
     list-style: none;
@@ -144,6 +165,17 @@ h2 {
     border-bottom: 1px solid #ddd;
 }
 
+/*Upcoming Events*/
+.events .event {
+    display: inline-block;
+    width: 30%;
+    margin: 10px;
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 10px;
+    vertical-align: top;
+}
+
 /*MMU Links*/
 .link-container {
     display: flex;
@@ -152,12 +184,14 @@ h2 {
 }
 
 .link-container a {
+    display:block;
+    text-decoration: underline;
     padding: 10px 20px;
     background: #0044cc;
     color: white;
     border-radius: 8px;
     text-decoration: none;
-    margin: 10px;
+    margin: 8px 0;
     transition: background 0.3s;
 }
 
