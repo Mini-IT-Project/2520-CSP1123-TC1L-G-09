@@ -143,25 +143,22 @@ h2 {
 /*School Map*/
 .map-container {
     display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    gap: 20px; 
+    flex-wrap: nowrap; 
 }
 
 .map-item {
-    width: 35%;
+    width: 45%; 
     text-align: center;
-    min-width: 250px; 
 }
 
 .map-item img {
     width: 100%;
-    height: auto; 
+    height: auto;
     border-radius: 10px;
-    border: 2px solid #0044cc; 
     display: block;
 }
-
 
 .map-link {
     display: inline-block;
