@@ -284,21 +284,47 @@ h2 {
     color: #333;
 }
 
-.card-container .card:nth-child(1),
-.card-container .card:nth-child(5) {
-    flex: 0 0 15%;
-    transform: scale(0.8);
+.events .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 20px;
 }
 
-.card-container .card:nth-child(2),
-.card-container .card:nth-child(4) {
-    flex: 0 0 18%;
-    transform: scale(0.9);
+.events .card-container .card {
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
-.card-container .card:nth-child(3) {
-    flex: 0 0 22%;
-    transform: scale(1);
+.events .card-container .card img {
+    max-height: 120px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.events .card-container .card.past {
+    flex: 0 0 16%;
+    font-size: 0.9em;
+}
+
+.events .card-container .card.current {
+    flex: 0 0 28%;
+    font-size: 1.1em;
+}
+
+.events .card-container .card.upcoming {
+    flex: 0 0 16%;
+    font-size: 0.9em;
+}
+
+.events .card-container .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
 /*MMU Links*/
