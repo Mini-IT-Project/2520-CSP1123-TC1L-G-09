@@ -81,16 +81,44 @@
             </ul>
         </section>
 
-        <section class="events">
+        <section class="events section">
             <h2>Upcoming Events</h2>
             <div class="card-container">
-                {% for event in events %}
                 <div class="card">
-                    <h3>{{event.title}}</h3>
-                    <p><strong>Date:</strong>{{event.date}}</p>
-                    <p>{{event.description}}</p>
+                    <img src="{{ url_for('static', filename='event1.jpg') }}" alt="Event 1">
+                    <h3>Past Event</h3>
+                    <p>2025-08-30</p>
+                    <p>Short description of past event.</p>
+                </div>
+
+                <div class="card">
+                    <img src="{{ url_for('static', filename='event2.jpg') }}" alt="Event 2">
+                    <h3>Past Event</h3>
+                    <p>2025-09-01</p>
+                    <p>Short description of past event.</p>
+                </div>
+
+                <div class="card">
+                    <img src="{{ url_for('static', filename='event3.jpg') }}" alt="Event 3">
+                    <h3>Current Event</h3>
+                    <p>2025-09-07</p>
+                    <p>Short description of current event.</p>
+                </div>
+
+                <div class="card">
+                    <img src="{{ url_for('static', filename='event4.jpg') }}" alt="Event 4">
+                    <h3>Upcoming Event</h3>
+                    <p>2025-09-10</p>
+                    <p>Short description of upcoming event.</p>
+                </div>
+
+                <div class="card">
+                    <img src="{{ url_for('static', filename='event5.jpg') }}" alt="Event 5">
+                    <h3>Upcoming Event</h3>
+                    <p>2025-09-15</p>
+                    <p>Short description of upcoming event.</p>
+                </div>
             </div>
-            {% endfor %}
         </section>
 
             <section class="MMU Links">
