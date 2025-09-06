@@ -272,6 +272,22 @@ h2 {
     margin-bottom: 10px;
 }
 
+.events .card-container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 380px;   
+    margin: 0 auto;
+}
+
+.events .card-container .card img {
+    width: 100%;
+    height: 330px;   
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
 .card-container .card h3 {
     font-size: 1.1em;
     margin: 5px 0;
@@ -288,14 +304,13 @@ h2 {
     position: relative;
     width: 100%;
     max-width: 1100px;
-    height: 280px; /* 根据卡片高度调节 */
+    height: 280px;
     margin: 0 auto;
 }
 
 .events .card-container .card {
     position: absolute;
     bottom: 0;
-    width: 18%;
     border-radius: 15px;
     padding: 10px;
     text-align: center;
@@ -305,32 +320,37 @@ h2 {
 
 .events .card-container .card:nth-child(1) {
     left: 0%;
-    transform: scale(0.7);
+    transform: scale(0.8);
     z-index: 1;
+    width: 20%;
     background: #cce5ff;
 }
 .events .card-container .card:nth-child(2) {
-    left: 15%;
+    left: 18%;
     transform: scale(0.85);
     z-index: 2;
+    width: 20%;
     background: #99ccff;
 }
 .events .card-container .card:nth-child(3) {
     left: 36%;
     transform: scale(1);
     z-index: 3;
+    width: 20%;
     background: #4da6ff;
 }
 .events .card-container .card:nth-child(4) {
-    left: 57%;
+    left: 54%;
     transform: scale(0.85);
     z-index: 2;
+    width: 20%;
     background: #99ccff;
 }
 .events .card-container .card:nth-child(5) {
-    left: 78%;
-    transform: scale(0.7);
+    left: 72%;
+    transform: scale(0.8);
     z-index: 1;
+    width: 20%;
     background: #cce5ff;
 }
 
@@ -340,6 +360,25 @@ h2 {
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
+}
+
+.events .card-container .card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px 0 5px;
+    color: #003366;
+}
+
+.events .card-container .card p.date {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 8px;
+}
+
+.events .card-container .card p.desc {
+    font-size: 15px;
+    color: #222;
+    line-height: 1.4;
 }
 
 /*MMU Links*/
