@@ -44,7 +44,7 @@ def analysis_tag(raw:str):
 def index():
     search_keyword:str=request.args.get("q","").strip()
     tag_filter:str=request.args.get("tag","").strip()
-    post_query=Post.query
+    posts_query=Post.query
 
     if search_keyword:
         search_pattern = f"%{search_keyword}%"
@@ -60,7 +60,7 @@ def index():
 
     all_posts = posts_query.order_by(Post.created_at.desc()).all()
     return render_template(
-        "index.html", 
+        "forum_home.html", 
         posts=all_posts, 
         q=search_keyword, 
         tag=tag_filter
@@ -101,7 +101,7 @@ def create_post():
     socketio.emit("new_post",new_post.to_dict(base_url=request.host_url))
 
     flash("Post Uploaded!","success")
-    return redirect(url_for("forum.index"))
+    return redirect(url_for("forum.forum_homepage"))
 
 def handle_file_upload(file_object):
     if not file_object or not allowed_file(file_object.filename):
@@ -129,8 +129,8 @@ def edit_post(post_id):
     post=Post.query.get_or_404(post_id)
     if request.method=="GET":
         return render_template("create_edit_post.html",
-                               mode="create",
-                               post=None,
+                               mode="edit",
+                               post=post,
                                existing_tags=" ".join(f"#{tag.name}" for tag in post.tags))                        
     
     post.title=request.form.get("title","").strip()
@@ -181,7 +181,7 @@ def like_post(post_id):
 def add_comment(post_id):
     post=Post.query.get_or_404(post_id)
     comment_content=request.form.get("body","").strip()
-    comment_author=request.to.get("author","Anonymous").strip() or "Anonymous"
+    comment_author=request.form.get("author","Anonymous").strip() or "Anonymous"
     if not comment_content:
         return {"ok":False,"error":"Please write your comment"},400
     new_comment=Comment(
@@ -220,10 +220,10 @@ def report_post(post_id):
     
     new_report=Report(
         post=post,
-        reason="report_reason",
+        reason=report_reason,
     )
     db.session.add(new_report)
-    db.session.commit
+    db.session.commit()
 
     flash("Report Successfully!Thank you response!","success")
     return redirect(url_for("forum.post_detail",post_id=post.id))
