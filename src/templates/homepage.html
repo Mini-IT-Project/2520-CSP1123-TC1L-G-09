@@ -5,6 +5,7 @@
     <title>MMU SOUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <header>
         <div class="title">MMU SOUL</div>
@@ -28,7 +29,7 @@
     <div class="hero">
         <h1 class="slogan-line">
             <span class="red">Connect</span> 
-            <span class="blue">Anonymously</span><br>
+             <span class="blue">Anonymously</span><br>
             <span class="blue">Discover</span> 
             <span class="red">Unexpectedly</span>
         </h1>
@@ -37,20 +38,6 @@
             Your voice, your match, your message in a Bottle.
         </p>
     </div>
-
-    <main>
-        <section class="events">
-            <h2>Upcoming Events</h2>
-            <div class="card-container">
-                {% for event in events %}
-                <div class="card">
-                    <h3>{{ event.title }}</h3>
-                    <p><strong>Date:</strong> {{ event.date }}</p>
-                    <p>{{ event.description }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
 
         <section class="announcements">
             <h2>Announcements</h2>
@@ -63,6 +50,44 @@
                 </div>
                 {% endfor %}
             </div>
+        </section>
+
+        <section class="school_map">
+            <h2>School Map</h2>
+            <div class="map_container">
+                <img src="{{url_for('static',filename='mmu_map.jpg')}}" alt="MMU Map">
+                <a href="#" class="map_link">View Full Map</a>
+            </div>
+        </section>
+
+        <section class="notifications">
+            <h2>Campus Tips</h2>
+            <ul>
+                <li> Keep attendance always ≥ 80% </li>
+                <li> Do not help your friends to take attendance! </li>
+                <li> Follow class schedules strictly </li>
+            </ul>
+        </section>
+
+        <section class="events">
+            <h2>Upcoming Events</h2>
+            <div class="card_container">
+                {% for event in events %}
+                <div class="card">
+                    <h3>{{event.title}}</h3>
+                    <p><strong>Date:</strong>{{event.date}}</p>
+                    <p>{{event.description}}</p>
+            </div>
+            {% endfor %}
+        </section>
+
+            <section class="MMU Links">
+                <h2>MMU Official Links</h2>
+                <div class="link_container">
+                    <a href="https://ebwise.mmu.edu.my" target="_blank">Ebwise</a>
+                    <a href="https://clic.mmu.edu.my" target="_blank">Clic MMU</a>
+                    <a href="https://www.mmu.edu.my" target="_blank">MMU Website</a>
+                </div>
         </section>
     </main>
 </body>
