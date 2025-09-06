@@ -40,7 +40,7 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-    color: #ffcccc;
+    color: #ccdaff;
 }
 
 /*Slogan*/
@@ -75,9 +75,10 @@ main {
     text-align: center;
 }
 
+/*General Section Style*/
 .section {
-    margin: 25px auto;
-    max-width: 700px;
+    margin: 40px auto;
+    max-width: 1100px;
     padding: 20px;
     background-color: #f0f7ff;
     border-radius: 15px;
@@ -86,17 +87,85 @@ main {
     text-align: left;
 }
 
-.section .card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 10px 15px;
-    margin: 10px auto;
-    max-width: 90%; 
-    border: 1.5px solid #0044cc; 
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+h2 {
+    color: #0044cc;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
-/* titles */
+/*Card Container*/
+.card-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    flex: 1 1 250px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+/*School Map*/
+.school-map img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.map-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0044cc;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.map-link:hover {
+    background: #1565c0;
+}
+
+/*Notifications*/
+.notifications ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notifications ul li {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/*MMU Links*/
+.link-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.link-container a {
+    padding: 10px 20px;
+    background: #0044cc;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 10px;
+    transition: background 0.3s;
+}
+
+.link-container a:hover {
+    background: #1565c0;
+}
+
+/*Titles*/
 h1, h2 {
     color: #0044cc;
 }
@@ -137,20 +206,20 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
-/* Drifting Bottle Section Box */
+/*Drifting Bottle Section Box*/
 .section.drifting {
     background-color: #e6f5ff;
     border: 2px solid #0044cc; 
 }
 
-/* Info text */
+/*Info text*/
 .info {
     margin-top: 10px;
     font-size: 14px;
     color: #003366;
 }
 
-/* Blockquote style */
+/*Blockquote style*/
 blockquote {
     font-size: 18px;
     background-color: #d9f0ff;
@@ -161,7 +230,7 @@ blockquote {
     margin: 20px auto;
 }
 
-/* Links */
+/*Links*/
 a {
     display: inline-block;
     margin-top: 20px;
@@ -170,7 +239,7 @@ a {
     font-weight: bold;
 }
 
-/* Input fields */
+/*Input fields*/
 .input_column {
     flex: 1;
     height: 20px;
@@ -189,7 +258,7 @@ a {
     box-shadow: 0 0 10px rgba(255,102,0,0.5); 
 }
 
-/* Registration link */
+/*Registration link*/
 .register_a { 
     color: blue; 
     text-decoration: none; 
@@ -199,7 +268,7 @@ a {
     color: #0099ff;
 }
 
-/* Login label */
+/*Login label*/
 .login_label {
     display: inline-block;
     font-size: 20px; 
@@ -215,7 +284,7 @@ a {
     margin-bottom: 10px;
 }
 
-/* Drifting bottle container with background image */
+/*Drifting bottle container with background image*/
 .drifting-container {
     width: 100%;
     max-width: 700px;
@@ -226,7 +295,7 @@ a {
     border-radius: 15px;
 }
 
-/* Individual drifting bottle */
+/*Individual drifting bottle*/
 .drifting-bottle {
     background-color: rgba(224, 240, 255, 0.8); /* Semi-transparent for readability */
     padding: 15px;
@@ -236,7 +305,7 @@ a {
     text-align: left;
 }
 
-/* Pick page container with same background */
+/*Pick page container with same background*/
 .pick-container {
     width: 100%;
     max-width: 700px;
@@ -277,7 +346,7 @@ a:hover {
     }
 }
 
-/* Profile */
+/*Profile*/
 .profile-card{
     max-width: 600px;
     margin: 2rem auto;
@@ -317,7 +386,7 @@ ul {
     border-bottom: 1px solid #eee;
 }
 
-/* homepage login */
+/*Homepage Login*/
 .homepage-login {
     background-color: #68c3ff;
     height: 20px;
@@ -328,4 +397,14 @@ ul {
     margin-top: 10px;
     margin-left: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/*Responsive*/
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+    }
+    header nav ul li a {
+        font-size: 0.8em;
+    }
 }
