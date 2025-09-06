@@ -39,26 +39,38 @@
         </p>
     </div>
 
-        <section class="announcements">
+       <section class="announcements section">
             <h2>Announcements</h2>
-            <div class="card-container">
-                {% for ann in announcements %}
-                <div class="card">
-                    <h3>{{ ann.title }}</h3>
-                    <p><strong>Date:</strong> {{ ann.date }}</p>
-                    <p>{{ ann.description }}</p>
+            <div class="announcement-item">
+                <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
+                <div class="announcement-text">
+                    <h3>Orientation Week</h3>
+                    <p>Orientation Week starts next Monday, don’t miss it!</p>
                 </div>
-                {% endfor %}
+            </div>
+
+            <div class="announcement-item">
+                <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
+                <div class="announcement-text">
+                    <h3>Exam Timetable</h3>
+                    <p>Final exam timetable has been released. Please check portal.</p>
+                </div>
             </div>
         </section>
 
-        <section class="school-map">
+        <section class="school-map section">
             <h2>School Map</h2>
-            <div class="map_container">
-                <img src="{{url_for('static',filename='mmu_cyberjaya_map.jpg')}}" alt="MMU Map">
-                <a href="#" class="map_link">View Full Map</a>
+            <div class="map-container">
+                <div class="map-item">
+                    <h3>Cyberjaya Campus</h3>
+                    <img src="https://via.placeholder.com/400x250" alt="Cyberjaya Campus">
+                </div>
+                <div class="map-item">
+                    <h3>Melaka Campus</h3>
+                    <img src="https://via.placeholder.com/400x250" alt="Melaka Campus">
+                </div>
             </div>
-        </section>
+         </section>
 
         <section class="notifications">
             <h2>Campus Tips</h2>
