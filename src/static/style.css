@@ -635,6 +635,19 @@ ul {
     border-bottom: 1px solid #eee;
 }
 
+.profile-button{
+    padding: 13px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #1d2ff7a9;
+    border: none;
+    border-radius: 10px 0 0 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
 /*Homepage Login*/
 .homepage-login {
     background-color: #68c3ff;
@@ -657,7 +670,7 @@ ul {
         font-size: 0.8em;
     }
 }
-
+      
 /*Forum search*/
 .search-section{
     background-color: #990000;
