@@ -13,7 +13,7 @@
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
                 <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
                 <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
-                <li><a href="{{ url_for('profile.profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
                 <span style="color: rgba(35, 35, 255, 0.811); font-weight: bold;">Welcome</span>
@@ -27,10 +27,12 @@
     <body>
         <div class="profile-card">
             <div class="profile-tab">
-                <a href="{{url_for('profile.myProfile')}}">My Profile</a>
-                <a href="{{url_for('profile.profile')}}">History</a>
-                <a href="{{url_for('profile.settings')}}">Settings</a>
+                <a href="{{url_for('profile.myProfile')}}" class="profile-button">My Profile</a>
+                <a href="{{url_for('profile.profile')}}" class="profile-button">History</a>
+                <a href="{{url_for('profile.settings')}}" class="profile-button">Settings</a>
+            </div>
+            <div class="avatar"></div>
+            <img src="{{url_for('static', filename='avatar' ~ myprofile_data.avatar_name ~ 'png')}}" alt="avatar">
             </div>
         </div>
-        
-    </body>
+    </body> 
