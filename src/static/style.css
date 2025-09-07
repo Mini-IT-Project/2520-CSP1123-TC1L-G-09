@@ -646,7 +646,9 @@ ul {
     }
     header nav ul li a {
         font-size: 0.8em;
-      
+    }
+}
+
 /*Forum search*/
 .search-section{
     background-color: #990000;
