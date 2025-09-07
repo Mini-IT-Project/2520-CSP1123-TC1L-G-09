@@ -45,7 +45,6 @@
                     <p>{{ p.content }}</p>
 
                     {% if p.media_url %}
-                        {# 先轉小寫再判斷副檔名，避免 None 或大小寫問題 #}
                         {% set _m = p.media_url.lower() %}
                         {% if _m.endswith('.png') or _m.endswith('.jpg') or _m.endswith('.jpeg') or _m.endswith('.gif') %}
                             <img class="media" src="{{ p.media_url }}" alt="image" />
