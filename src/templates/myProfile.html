@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title> MY PROFILE </title>
+    </head>
+    <header>
+        <div>MY PROFILE</div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                <li><a href="{{ url_for('main.match_chat') }}">Match Chat</a></li>
+                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
+                <li>
+                {% if 'user_id' in session %}
+                <span style="color: rgba(35, 35, 255, 0.811); font-weight: bold;">Welcome</span>
+                {% else %}
+                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <body>
+        <div class="profile-card">
+            <div class="profile-tab">
+                <a href="{{url_for('profile.myProfile')}}" class="profile-button">My Profile</a>
+                <a href="{{url_for('profile.profile')}}" class="profile-button">History</a>
+                <a href="{{url_for('profile.settings')}}" class="profile-button">Settings</a>
+            </div>
+            <div class="avatar"></div>
+            <img src="{{url_for('static', filename='avatar' ~ myprofile_data.avatar_name ~ 'png')}}" alt="avatar">
+            </div>
+        </div>
+    </body> 
