@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
     <header>
         <div class="title">MMU SOUL</div>
         <nav>
@@ -121,15 +122,31 @@
             </div>
         </section>
 
-
-            <section class="MMU Links">
-                <h2>MMU Official Links</h2>
-                <div class="link_container">
-                    <a href="https://ebwise.mmu.edu.my" target="_blank">Ebwise</a>
-                    <a href="https://clic.mmu.edu.my" target="_blank">Clic MMU</a>
-                    <a href="https://www.mmu.edu.my" target="_blank">MMU Website</a>
+        <section class="mmu-links">
+            <h2>MMU Official Links</h2>
+            <div class="link-container">
+                <div class="link-item">
+                    <a href="https://www.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='mmu_logo.png') }}" alt="MMU Website">
+                    </a>
+                    <p>MMU Website</p>
                 </div>
+
+                <div class="link-item">
+                    <a href="https://ebwise.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='ebwise_logo.png') }}" alt="Ebwise">
+                    </a>
+                    <p>MMU Ebwise</p>
+                </div>
+
+                <div class="link-item">
+                    <a href="https://clic.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='clic_logo.png') }}" alt="Clic">
+                    </a>
+                    <p>MMU Clic</p>
+                </div>
+            </div>
         </section>
-    </main>
+
 </body>
 </html>
