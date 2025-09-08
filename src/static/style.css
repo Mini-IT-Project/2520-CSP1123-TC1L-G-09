@@ -395,6 +395,12 @@ h2 {
     flex-wrap: wrap;
 }
 
+.link-container img {
+    width:50%;
+    height:auto;
+    object-fit: -fit:contain;
+}
+
 .link-item {
     text-align: center;
 }
