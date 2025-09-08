@@ -25,14 +25,106 @@
         </nav>
     </header>
     <body>
-        <div class="profile-card">
+        <div class="profile-card" style="min-height: 50vh;" id="profile-view">
             <div class="profile-tab">
                 <a href="{{url_for('profile.myProfile')}}" class="profile-button">My Profile</a>
                 <a href="{{url_for('profile.profile')}}" class="profile-button">History</a>
                 <a href="{{url_for('profile.settings')}}" class="profile-button">Settings</a>
             </div>
-            <div class="avatar"></div>
-            <img src="{{url_for('static', filename='avatar' ~ myprofile_data.avatar_name ~ 'png')}}" alt="avatar">
+            <div class="avatar">
+            <img src="{{url_for('static', filename='avatar' ~ myprofile_data.avatar_type ~ '.png')}}" alt="avatar">
             </div>
+            <div class="profile-section">
+                <h3>Email adress: </h3>
+                <ul>
+                    <li>{{user.email}}</li>
+                </ul>
+            </div>
+            <div class="profile-section">
+                <h3>Student Information: </h3>
+                <ul>
+                    <li>{{myprofile_data.course_name}}</li>
+                </ul>
+            </div>
+            <br><br><br><br><br>
+            <button type="button" onclick="toggleEdit()">Edit Profile</button>
         </div>
+
+        <div class="profile-card" id="profile-edit" style="display: none;">
+            <div class="profile-tab">
+                <a href="{{url_for('profile.myProfile')}}" class="profile-button">My Profile</a>
+                <a href="{{url_for('profile.profile')}}" class="profile-button">History</a>
+                <a href="{{url_for('profile.settings')}}" class="profile-button">Settings</a>
+            </div>
+            <form action="{{url_for('profile.myProfile')}}" method="POST">
+                <div class="avatar">
+                    <input type="radio" name="avatar_type" value="1" {% if myprofile_data.avatar_type == 1 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar1.png') }}" alt="Avatar 1" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="2" {% if myprofile_data.avatar_type == 2 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar2.png') }}" alt="Avatar 2" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="3" {% if myprofile_data.avatar_type == 3 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar3.png') }}" alt="Avatar 3" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="4" {% if myprofile_data.avatar_type == 4 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar4.png') }}" alt="Avatar 4" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="5" {% if myprofile_data.avatar_type == 5 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar5.png') }}" alt="Avatar 5" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="6" {% if myprofile_data.avatar_type == 6 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar6.png') }}" alt="Avatar 6" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="7" {% if myprofile_data.avatar_type == 7 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar7.png') }}" alt="Avatar 7" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="8" {% if myprofile_data.avatar_type == 8 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar8.png') }}" alt="Avatar 8" class="avatar-img">
+                    <input type="radio" name="avatar_type" value="0" {% if myprofile_data.avatar_type == 0 %}checked{% endif %}>
+                    <img src="{{ url_for('static', filename='avatar0.png') }}" alt="Avatar 0" class="avatar-img">
+                </div>
+
+                <div class="profile-section">
+                    <h3>Email adress: </h3>
+                <ul>
+                    <li>{{user.email}}</li>
+                </ul>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Student Information: </h3>
+                    <ul><li>
+                        <label for="campus" class="login_label">Campus: </label>
+                        <select name="campus" id="campus">
+                            <option value="cyb" {% if myprofile_data.campus_name == 'cyb' %}selected{% endif %}>Cyberjaya</option>
+                            <option value="mlk" {% if myprofile_data.campus_name == 'cyb' %}selected{% endif %}>Melaka</option>
+                        </select>
+                        <label for="degree" class="login_label">Degree: </label>
+                        <select name="degree" id="degree">
+                            <option value="cs" {% if myprofile_data.degree_name == 'cs' %}selected{% endif %}>Foundation</option>
+                            <option value="it" {% if myprofile_data.degree_name == 'it' %}selected{% endif %}>Diploma</option>
+                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Bachelor</option>
+                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Master</option>
+                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Doctor</option>
+                        </select>
+                        <label for="faculty" class="login_label">Faculty: </label>
+                        <select name="faculty" id="faculty">
+                            <option value="cs" {% if myprofile_data.faculty_name == 'cs' %}selected{% endif %}>Computer Science</option>
+                            <option value="it" {% if myprofile_data.faculty_name == 'it' %}selected{% endif %}>Information Technology</option>
+                            <option value="se" {% if myprofile_data.faculty_name == 'se' %}selected{% endif %}>Software Engineering</option>
+                        </select>
+                    </li></ul>
+                </div>
+                <button type="submit">Save</button>
+                <button type="button" onclick="toggleEdit()">Cancel</button>
+            </form>
+        </div>
+
+        <script>
+        function toggleEdit() {
+            let view = document.getElementById("profile-view");
+            let edit = document.getElementById("profile-edit");
+            if (view.style.display === "none") {
+                view.style.display = "block";
+                edit.style.display = "none";
+            } else {
+                view.style.display = "none";
+                edit.style.display = "block";
+            }
+        }
+        </script>
     </body> 
