@@ -383,26 +383,41 @@ h2 {
 }
 
 /*MMU Links*/
+.mmu-links {
+    text-align: center;
+    margin: 40px 0;
+}
+
 .link-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 60px; 
     flex-wrap: wrap;
 }
 
-.link-container a {
-    display:block;
-    text-decoration: underline;
-    padding: 10px 20px;
-    background: #0044cc;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    margin: 8px 0;
-    transition: background 0.3s;
+.link-item {
+    text-align: center;
+    max-width: 150px;
 }
 
-.link-container a:hover {
-    background: #1565c0;
+.link-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border: 3px solid #0044cc;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.link-item img:hover {
+    transform: scale(1.1);
+    border-color: #1565c0;
+}
+
+.link-item p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #0044cc;
 }
 
 /*Titles*/
@@ -718,7 +733,7 @@ ul {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* button for create post*/
+/*button for create post*/
 .floating-btn{
     position: fixed;
     bottom: 30px;
