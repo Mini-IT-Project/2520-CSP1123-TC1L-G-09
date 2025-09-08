@@ -391,31 +391,33 @@ h2 {
 .link-container {
     display: flex;
     justify-content: center;
-    gap: 60px; 
+    gap: 40px; 
     flex-wrap: wrap;
 }
 
 .link-item {
     text-align: center;
-    max-width: 150px;
 }
 
-.link-item img {
+.circle-icon {
     width: 100px;
     height: 100px;
-    object-fit: cover;
-    border-radius: 50%; 
+    border-radius: 50%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 3px solid #0044cc;
     transition: transform 0.3s, border-color 0.3s;
 }
 
-.link-item img:hover {
+.circle-icon:hover {
     transform: scale(1.1);
     border-color: #1565c0;
 }
 
 .link-item p {
     margin-top: 10px;
+    font-size: 14px;
     font-weight: bold;
     color: #0044cc;
 }
