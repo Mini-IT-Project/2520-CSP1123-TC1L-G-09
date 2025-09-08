@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,session,redirect,url_for, flash
+from flask import Blueprint,render_template,session,redirect,url_for, flash,request
 from extensions import db
 from forum_models import Comment,Post,Like
 from login import Users
@@ -17,14 +17,17 @@ class Profile_data(db.Model):
     avatar_type= db.Column(db.Integer, nullable=False, default=0)
     course_name= db.Column(db.String(200), nullable=False, default=' ')
 
-@profile_bp.route("/")
+@profile_bp.route("/", methods=['GET', 'POST'])
 def myProfile():
     user_id = session.get("user_id")
+    print("user_id from session:", user_id)
+
     if not user_id:
         flash("Please login in first.")
         return redirect(url_for('login.home'))
     
     user = Users.query.get(user_id) 
+    print(user)
     if not user:
         flash("Please login in first.")
         return redirect(url_for('login.home'))
@@ -34,8 +37,12 @@ def myProfile():
         myprofile_data= Profile_data(user_id=user_id)
         db.session.add(myprofile_data)
         db.session.commit()
+    print (myprofile_data)
+
+    if request.method == "POST":
+        a
     
-    return render_template("myProfile.html", myprofile_data=myprofile_data)
+    return render_template("myProfile.html", myprofile_data=myprofile_data, user=user)
 
 @profile_bp.route("/history")
 def profile():
