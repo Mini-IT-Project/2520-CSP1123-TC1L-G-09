@@ -385,47 +385,41 @@ h2 {
 /*MMU Links*/
 .mmu-links {
     text-align: center;
-    margin: 40px 0;
+    margin: 40px auto;
+    max-width: 900px;
 }
 
 .link-container {
     display: flex;
     justify-content: center;
-    gap: 40px; 
+    gap: 40px;
     flex-wrap: wrap;
-}
-
-.link-container img {
-    width:50%;
-    height:auto;
-    object-fit: -fit:contain;
 }
 
 .link-item {
     text-align: center;
 }
 
-.circle-icon {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 3px solid #0044cc;
-    transition: transform 0.3s, border-color 0.3s;
+.link-item img {
+    width: 80px;  
+    height: 80px;
+    border-radius: 50%; 
+    object-fit: contain; 
+    background: white;   
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
 }
 
-.circle-icon:hover {
+.link-item img:hover {
     transform: scale(1.1);
-    border-color: #1565c0;
 }
 
 .link-item p {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 14px;
-    font-weight: bold;
     color: #0044cc;
+    font-weight: bold;
 }
 
 /*Titles*/
