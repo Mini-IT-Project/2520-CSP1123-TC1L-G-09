@@ -8,7 +8,7 @@ body {
 
 /*Header*/
 header {
-    background-color: #990000;
+    background-color: #0d47a1;
     color: white;
     padding: 35px 20px; 
     font-size: 2.5em; 
@@ -239,20 +239,20 @@ h2 {
 /*Upcoming Events*/
 .events {
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .events h2 {
     color: #0044cc;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 .card-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 15px;
+    gap: 10px;
 }
 
 .card-container .card {
