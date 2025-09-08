@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
     <header>
         <div class="title">MMU SOUL</div>
         <nav>
@@ -41,44 +42,26 @@
 
         <section class="announcements section">
             <h2>Announcements</h2>
-            <div class="announcement-item">
-                <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
-                <div class="announcement-text">
-                    <h3>Orientation Week</h3>
-                    <p>Orientation Week starts next Monday, don’t miss it!</p>
-                </div>
-            </div>
 
             <div class="announcement-item">
-                <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
-                <div class="announcement-text">
-                    <h3>Exam Timetable</h3>
-                    <p>Final exam timetable has been released. Please check portal.</p>
-                </div>
+                <a href="{{ url_for('announcement.detail', announcement_id=1) }}"
+                    <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
+                    <div class="announcement-text">
+                        <h3>Orientation Week</h3>
+                        <p>Orientation Week starts next Monday, don’t miss it!</p>
+                    </div>
+                </a>
             </div>
-        </section>
 
-        <section class="school-map section">
-            <h2>School Map</h2>
-            <div class="map-container">
-                <div class="map-item">
-                    <h3>Cyberjaya Campus</h3>
-                    <img src="{{ url_for('static', filename='mmu_cyberjaya_map.jpg') }}" alt="Cyberjaya Campus">
-                </div>
-            <div class="map-item">
-                <h3>Melaka Campus</h3>
-                <img src="{{ url_for('static', filename='mmu_melaka_map.jpg') }}" alt="Melaka Campus">
-                </div>
+            <div class="announcement-item">
+                <a href="{{ url_for('announcement.detail', announcement_id=2) }}">
+                    <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
+                    <div class="announcement-text">
+                        <h3>Exam Timetable</h3>
+                        <p>Final exam timetable has been released. Please check portal.</p>
+                    </div>
+                </a>
             </div>
-        </section>
-
-        <section class="notifications">
-            <h2>Campus Tips</h2>
-            <ul>
-                <li> Keep attendance always ≥ 80% </li>
-                <li> Do not help your friends to take attendance! </li>
-                <li> Follow class schedules strictly </li>
-            </ul>
         </section>
 
         <section class="events section">
@@ -121,15 +104,54 @@
             </div>
         </section>
 
-
-            <section class="MMU Links">
-                <h2>MMU Official Links</h2>
-                <div class="link_container">
-                    <a href="https://ebwise.mmu.edu.my" target="_blank">Ebwise</a>
-                    <a href="https://clic.mmu.edu.my" target="_blank">Clic MMU</a>
-                    <a href="https://www.mmu.edu.my" target="_blank">MMU Website</a>
+        <section class="school-map section">
+            <h2>School Map</h2>
+            <div class="map-container">
+                <div class="map-item">
+                    <h3>Cyberjaya Campus</h3>
+                    <img src="{{ url_for('static', filename='mmu_cyberjaya_map.jpg') }}" alt="Cyberjaya Campus">
                 </div>
+            <div class="map-item">
+                <h3>Melaka Campus</h3>
+                <img src="{{ url_for('static', filename='mmu_melaka_map.jpg') }}" alt="Melaka Campus">
+                </div>
+            </div>
         </section>
-    </main>
+
+        <section class="notifications">
+            <h2>Campus Tips</h2>
+            <ul>
+                <li> Keep attendance always ≥ 80% </li>
+                <li> Do not help your friends to take attendance! </li>
+                <li> Follow class schedules strictly </li>
+            </ul>
+        </section>
+
+        <section class="mmu-links">
+            <h2>MMU Official Links</h2>
+            <div class="link-container">
+                <div class="link-item">
+                    <a href="https://www.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='mmu_logo.png') }}" alt="MMU Website">
+                        <p>MMU Website</p>
+                    </a>
+                </div>
+
+                <div class="link-item">
+                    <a href="https://ebwise.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='ebwise_logo.png') }}" alt="MMU Ebwise">
+                        <p>MMU Ebwise</p>
+                    </a>
+                </div>
+
+                <div class="link-item">
+                    <a href="https://clic.mmu.edu.my" target="_blank">
+                        <img src="{{ url_for('static', filename='clic_logo.png') }}" alt="MMU Clic">
+                        <p>MMU Clic</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
 </body>
 </html>
