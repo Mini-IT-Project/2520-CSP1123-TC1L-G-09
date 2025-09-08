@@ -8,7 +8,7 @@ body {
 
 /*Header*/
 header {
-    background-color: #990000;
+    background-color: #0d47a1;
     color: white;
     padding: 35px 20px; 
     font-size: 2.5em; 
@@ -90,7 +90,7 @@ main {
 h2 {
     color: #0044cc;
     margin-bottom: 20px;
-    text-align: left;
+    text-align: center;
 }
 
 /*Card Container*/
@@ -140,10 +140,27 @@ h2 {
     color: #333;
 }
 
+.announcement-item a,
+.card a,
+.map-item a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.announcement-item a:hover,
+.card a:hover,
+.map-item a:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+
 /*School Map*/
 .map-container {
     display: flex;
-    justify-content: flex-start; 
+    justify-content: center; 
+    align-items: center;
+    margin-top: 20px;
     gap: 20px; 
     flex-wrap: nowrap; 
 }
@@ -237,20 +254,20 @@ h2 {
 /*Upcoming Events*/
 .events {
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .events h2 {
     color: #0044cc;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 .card-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 15px;
+    gap: 10px;
 }
 
 .card-container .card {
@@ -383,26 +400,43 @@ h2 {
 }
 
 /*MMU Links*/
+.mmu-links {
+    text-align: center;
+    margin: 40px auto;
+    max-width: 900px;
+}
+
 .link-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
-.link-container a {
-    display:block;
-    text-decoration: underline;
-    padding: 10px 20px;
-    background: #0044cc;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    margin: 8px 0;
-    transition: background 0.3s;
+.link-item {
+    text-align: center;
 }
 
-.link-container a:hover {
-    background: #1565c0;
+.link-item img {
+    width: 50px;  
+    height: 50px;
+    border-radius: 50%; 
+    object-fit: contain; 
+    background: white;   
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+}
+
+.link-item img:hover {
+    transform: scale(1.1);
+}
+
+.link-item p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #0044cc;
+    font-weight: bold;
 }
 
 /*Titles*/
@@ -718,7 +752,7 @@ ul {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* button for create post*/
+/*button for create post*/
 .floating-btn{
     position: fixed;
     bottom: 30px;
