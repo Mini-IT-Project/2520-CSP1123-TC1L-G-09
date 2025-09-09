@@ -89,9 +89,13 @@ def create_post():
         flash("Please write your title and content","error")
         return redirect(url_for("forum.create_post"))
     
-    new_post=Post(title=title,content=content,media_url=media_url)
-
     media_url=handle_file_upload(request.files.get("media"))
+    
+    new_post=Post(
+        title=title,
+        content=content,
+        media_url=media_url
+    )
 
     for tag in process_tags(tags_input):
         new_post.tags.append(tag)
@@ -99,7 +103,7 @@ def create_post():
     db.session.add(new_post)
     db.session.commit()
 
-    socketio.emit("new_post",new_post.to_dict(base_url=request.host_url))
+    socketio.emit("new_post",new_post.to_dict())
 
     flash("Post Uploaded!","success")
     return redirect(url_for("forum.homepage"))
@@ -113,7 +117,7 @@ def handle_file_upload(file_object):
 
     file_path=os.path.join(upload_dir,filename)
     file_object.save(file_path)
-    return f"/upload/{filename}"
+    return url_for("static",filename=f"uploads/{filename}")
 
 def process_tags(tag_string):
     tag_objects=[]
@@ -148,17 +152,17 @@ def edit_post(post_id):
             new_tag=Tag(name=tag_name)
             db.session.add(new_tag)
             post.tags.append(new_tag)
+
+    if request.form.get("delete_media")=="1":
+        post.media_url=None
     
     uploaded_file=request.files.get("media")
-    if not uploaded_file or not allowed_file(uploaded_file.filename):
-        return None
-    filename=secure_filename(uploaded_file.filename)
-    upload_dir=current_app.config["UPLOAD_FOLDER"]
-    os.makedirs(upload_dir,exist_ok=True)
+    if uploaded_file and allowed_file(uploaded_file.filename):
+        post.media_url=handle_file_upload(uploaded_file)
 
-    file_path=os.path.join(upload_dir,filename)
-    uploaded_file.save(file_path)
-    return f"/upload/{filename}"
+    db.session.commit()
+    flash("Post updated successfully","success")
+    return redirect(url_for("forum.post_detail",post_id=post_id))
 
 @forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
 def like_post(post_id):
@@ -229,7 +233,3 @@ def report_post(post_id):
     flash("Report Successfully!Thank you response!","success")
     return redirect(url_for("forum.post_detail",post_id=post.id))
 
-@forum_bp.route("/upload/<path:filename>")
-def serve_upload(filename):
-    upload=current_app.config["UPLOAD_FOLDER"]
-    return send_from_directory(upload,filename)
