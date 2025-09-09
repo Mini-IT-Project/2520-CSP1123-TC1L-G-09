@@ -819,32 +819,50 @@ ul {
 
 /* create post*/
 .back-btn{
-    background: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.2);
     border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     font-size: 20px;
-    margin-right: 15px;
     cursor: pointer;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.btn-btn:hover{
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
 }
 
 .form-card{
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     background-color: white;
     border-radius: 0 0 20px 20px;
-    padding: 30px;
+    padding: 40px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
 }
 
 .form-group{
-    margin-top: 25px;
+    margin-bottom: 30px;
 }
 
 label{
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-weight: 500;
-    color: whitesmoke;
+    color: rgb(34, 33, 33);
+    font-size: 18px;
 }
 
 input,textarea{
@@ -862,7 +880,7 @@ input:focus,textarea:focus{
 }
 
 textarea{
-    min-height: 120px;
+    min-height: 150px;
     resize: vertical;
 }
 
@@ -884,6 +902,10 @@ textarea{
     background-color: rgba(60, 37, 211, 0.05);
 }
 
+.file-upload input[type="file"]{
+    display: none;
+}
+
 .upload-icon{
     font-size: 40px;
     color: #9baddd;
@@ -897,4 +919,81 @@ textarea{
 
 #file-input{
     display: none;
+}
+
+.preview-container{
+    margin-top: 20px;
+    display: none;
+}
+
+.media-preview{
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    object-fit: contain;
+}
+
+.form-actions{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.btn{
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary{
+    background-color: #c2e1f6;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.btn-primary:hover{
+    background-color: #7d93a2;
+    transform: translateY(-2px);
+}
+
+.btn-secondary{
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+.btn-secondary:hover{
+    background-color: #d0d0d0;
+}
+
+@media (max-width:650px){
+    .back-btn{
+        padding: 15px;
+    }
+    .form-card{
+        padding: 30px 20px;
+    }
+    .form-actions{
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn{
+        width: 100px;
+    }
+}
+
+@media (max-width:400px){
+    input,textarea{
+        padding: 12px;
+    }
+    .file-upload{
+        padding: 20px 15px;
+    }
 }
