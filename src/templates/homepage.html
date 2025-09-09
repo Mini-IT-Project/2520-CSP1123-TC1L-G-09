@@ -18,7 +18,7 @@
                 <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
-                <span style="color: rgba(35, 35, 255, 0.811); font-weight: bold;">Welcome</span>
+                <span style="color: rgb(237, 27, 27); font-weight: bold;">Welcome</span>
                 {% else %}
                 <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
                 {% endif %}
@@ -42,9 +42,8 @@
 
         <section class="announcements section">
             <h2>Announcements</h2>
-
             <div class="announcement-item">
-                {# <a href="{{ url_for('announcement.detail', announcement_id=1) }}"> #}
+                <a href="{{ url_for('announcement.detail', announcement_id=1) }}"> 
                     <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
                     <div class="announcement-text">
                         <h3>Orientation Week</h3>
@@ -54,13 +53,27 @@
             </div>
 
             <div class="announcement-item">
-                {# <a href="{{ url_for('announcement.detail', announcement_id=2) }}"> #}
+                <a href="{{ url_for('announcement.detail', announcement_id=2) }}"> 
                     <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
                     <div class="announcement-text">
                         <h3>Exam Timetable</h3>
                         <p>Final exam timetable has been released. Please check portal.</p>
                     </div>
                 </a>
+              
+                <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
+                <div class="announcement-text">
+                    <h3>Orientation Week</h3>
+                    <p>Orientation Week starts next Monday, don’t miss it!</p>
+                </div>
+            </div>
+
+            <div class="announcement-item">
+                <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
+                <div class="announcement-text">
+                    <h3>Exam Timetable</h3>
+                    <p>Final exam timetable has been released. Please check portal.</p>
+                </div>
             </div>
         </section>
 
