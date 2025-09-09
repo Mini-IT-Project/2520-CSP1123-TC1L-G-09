@@ -6,9 +6,10 @@
     <link rel="icon" href="/static/.png" type="image/png">
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
     <main>
-        <div class="section" style="margin-top: 15vh; text-align: center;">
+        <div class="section" style="margin-top: 15vh; text-align: center;">
         <h1>Login to MMU Soul!</h1>
         <form action="{{url_for('login.home')}}" method="POST">
             <div class="form-perform">
@@ -17,6 +18,7 @@
                 <span style="margin-left: 10px; font-weight: bold; white-space: nowrap;">@student.mmu.edu.my</span>
                 <br><br>
             </div>
+            
             <div class="form-perform">
                 <label for="password" class="login_label">Password: </label>
                 <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required style="margin-right: 202px;">

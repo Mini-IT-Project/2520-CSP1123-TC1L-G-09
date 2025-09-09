@@ -16,7 +16,7 @@
                 <li><a href="{{ url_for('profile.profile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
-                <span style="color: rgba(35, 35, 255, 0.811); font-weight: bold;">Welcome</span>
+                <span style="color: rgb(237, 27, 27); font-weight: bold;">Welcome</span>
                 {% else %}
                 <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
                 {% endif %}
