@@ -4,26 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <title>MMU SOUL · Create Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>MMU SOUL · {{'Create Post' if mode=='create' else 'Edit Post'}}</title>
 </head>
 <body>
     <header>
-        CREATE A NEW POST
+        MMU SOUL · FORUM
         <button class="back-btn" onclick="window.history.back()">
             <i class="fas fa-arrow-left"></i>
         </button>
     </header>
+
     <div class="form-card">
         <h2>{{'Create a new post' if mode=='create' else 'Edit Post'}}</h2>
         <form id="post-form" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" placeholder="Enter post title" required>
+                <input type="text" name="title" placeholder="Enter post title" value="{{post.title if post else''}}" required>
             </div>
 
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea name="content" placeholder="Write your content here....." required></textarea>
+                <textarea name="content" placeholder="Write your content here....." required>{{post.content if post else ''}}</textarea>
             </div>
 
             <div class="form-group">
@@ -31,13 +33,29 @@
                 <input type="text" name="tags" value="{{existing_tags if existing_tags else ''}}" placeholder="#mmu">
             </div>
 
+            {% if mode=="edit" and post.media_url %}
+            <div class="form-group">
+                <label>Current Media</label>
+                {% if post.media_url.endswith(('.png','.jpeg','.jpg','.gif')) %}
+                <img src="{{post.media_url}}" style="max-width: 200px;">
+                {% else %}
+                <video src="{{post.media_url}}" style="max-width: 200px;" controls></video>
+                {% endif %}
+            </div>
+
+            <div>
+                <input type="checkbox" id="delete-media" name="delete_media" value="1">
+                <label for="delete-media">Delete this media</label>
+            </div>
+            {% endif %}
+
             <div class="form-group">
                 <label>Upload media</label>
-                <div class="file-upload" id="upload-area">
+                <label class="file-upload" id="upload-area">
                     <i class="fas fa-cloud-upload-alt upload-icon"></i>
                     <p class="upload-text">Upload your video or photo</p>
-                    <input type="file" id="file-input" name="media" accept="image/*,video/*">
-                </div>
+                    <input type="file" id="file-input" name="media" accept="image/*,video/*" style="display: none;">
+                </label>
 
                 <div class="preview-container" id="preview-container">
                     <div class="media-preview">
@@ -49,7 +67,7 @@
 
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
-                <button type="submit" class="btn btn-primary">Publish Post</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
