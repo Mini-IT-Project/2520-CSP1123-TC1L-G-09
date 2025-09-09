@@ -40,6 +40,7 @@ def analysis_tag(raw:str):
             tags.append(cleaned)
     return tags
 
+
 @forum_bp.route("/")  #post list
 def index():
     search_keyword:str=request.args.get("q","").strip()
@@ -101,7 +102,7 @@ def create_post():
     socketio.emit("new_post",new_post.to_dict(base_url=request.host_url))
 
     flash("Post Uploaded!","success")
-    return redirect(url_for("forum.forum_home"))
+    return redirect(url_for("forum.homepage"))
 
 def handle_file_upload(file_object):
     if not file_object or not allowed_file(file_object.filename):
