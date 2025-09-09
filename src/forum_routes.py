@@ -40,6 +40,7 @@ def analysis_tag(raw:str):
             tags.append(cleaned)
     return tags
 
+
 @forum_bp.route("/")  #post list
 def index():
     search_keyword:str=request.args.get("q","").strip()

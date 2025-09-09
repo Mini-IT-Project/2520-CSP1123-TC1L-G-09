@@ -1,0 +1,14 @@
+{% extends "forum_home.html" %}
+{% block tittle %}{{'New Post' if mode=='create' else 'Edit Post'}}{% endblock %}
+{% block content %}
+
+<section class="card form-card">
+    <h2>{{'Create a new post' if mode=='create' else 'Edit Post'}}</h2>
+    <form method="post" enctype="multipart/form-data">
+        <label> TITLE </label>
+        <input type="text" name="title" value="{{post.title if post else ''}}" required />
+
+        <label> CONTENT </label>
+        <textarea name="content" rows="6" required>{{post.content if post else ''}}</textarea>
+    </form>
+</section>
