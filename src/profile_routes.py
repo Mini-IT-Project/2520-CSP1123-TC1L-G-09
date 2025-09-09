@@ -15,7 +15,9 @@ class Profile_data(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     avatar_type= db.Column(db.Integer, nullable=False, default=0)
-    course_name= db.Column(db.String(200), nullable=False, default=' ')
+    campus_name= db.Column(db.String(200), nullable=False, default=' ')
+    degree_name= db.Column(db.String(200), nullable=False, default=' ')
+    faculty_name= db.Column(db.String(200), nullable=False, default=' ')
 
 @profile_bp.route("/", methods=['GET', 'POST'])
 def myProfile():
@@ -39,8 +41,15 @@ def myProfile():
         db.session.commit()
     print (myprofile_data)
 
-    if request.method == "POST":
-        return render_template("myProfile.html", myprofile_data=myprofile_data, user=user)
+    if request.method=='POST':
+        myprofile_data.avatar_type = request.form.get("avatar_type")
+        myprofile_data.campus_name= request.form.get("campus")
+        myprofile_data.degree_name= request.form.get("degree")
+        myprofile_data.faculty_name= request.form.get("faculty")
+
+        db.session.commit()
+
+    return render_template("myProfile.html", myprofile_data=myprofile_data, user=user)
 
 @profile_bp.route("/history")
 def profile():

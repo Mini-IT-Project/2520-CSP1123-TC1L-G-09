@@ -16,7 +16,7 @@
                 <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
-                <span style="color: rgba(35, 35, 255, 0.811); font-weight: bold;">Welcome</span>
+                <span style="color: rgb(237, 27, 27); font-weight: bold;">Welcome</span>
                 {% else %}
                 <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
                 {% endif %}
@@ -43,7 +43,12 @@
             <div class="profile-section">
                 <h3>Student Information: </h3>
                 <ul>
-                    <li>{{myprofile_data.course_name}}</li>
+                    <li>
+                        <label class="login_label">Campus: </label>{{myprofile_data.campus_name}} <br>
+                        <label class="login_label">Degree: </label>{{myprofile_data.degree_name}} <br>
+                        <label class="login_label">Faculty: </label>{{myprofile_data.faculty_name}} <br>
+
+                    </li>
                 </ul>
             </div>
             <br><br><br><br><br>
@@ -90,22 +95,30 @@
                     <ul><li>
                         <label for="campus" class="login_label">Campus: </label>
                         <select name="campus" id="campus">
-                            <option value="cyb" {% if myprofile_data.campus_name == 'cyb' %}selected{% endif %}>Cyberjaya</option>
-                            <option value="mlk" {% if myprofile_data.campus_name == 'cyb' %}selected{% endif %}>Melaka</option>
+                            <option value="Cyberjaya" {% if myprofile_data.campus_name == 'Cyberjaya' %}selected{% endif %}>Cyberjaya</option>
+                            <option value="Melaka" {% if myprofile_data.campus_name == 'Melaka' %}selected{% endif %}>Melaka</option>
                         </select>
                         <label for="degree" class="login_label">Degree: </label>
                         <select name="degree" id="degree">
-                            <option value="cs" {% if myprofile_data.degree_name == 'cs' %}selected{% endif %}>Foundation</option>
-                            <option value="it" {% if myprofile_data.degree_name == 'it' %}selected{% endif %}>Diploma</option>
-                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Bachelor</option>
-                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Master</option>
-                            <option value="se" {% if myprofile_data.degree_name == 'se' %}selected{% endif %}>Doctor</option>
+                            <option value="Foundation" {% if myprofile_data.degree_name == 'Foundation' %}selected{% endif %}>Foundation</option>
+                            <option value="Diploma" {% if myprofile_data.degree_name == 'Diploma' %}selected{% endif %}>Diploma</option>
+                            <option value="Bachelor" {% if myprofile_data.degree_name == 'Bachelor' %}selected{% endif %}>Bachelor</option>
+                            <option value="Master" {% if myprofile_data.degree_name == 'Master' %}selected{% endif %}>Master</option>
+                            <option value="Doctor" {% if myprofile_data.degree_name == 'Doctor' %}selected{% endif %}>Doctor</option>
                         </select>
                         <label for="faculty" class="login_label">Faculty: </label>
                         <select name="faculty" id="faculty">
-                            <option value="cs" {% if myprofile_data.faculty_name == 'cs' %}selected{% endif %}>Computer Science</option>
-                            <option value="it" {% if myprofile_data.faculty_name == 'it' %}selected{% endif %}>Information Technology</option>
-                            <option value="se" {% if myprofile_data.faculty_name == 'se' %}selected{% endif %}>Software Engineering</option>
+                            <option value="FCA" {% if myprofile_data.faculty_name == 'FCA' %}selected{% endif %}>Faculty of Cinematic Arts (FCA)</option>
+                            <option value="FOL" {% if myprofile_data.faculty_name == 'FOL' %}selected{% endif %}>Faculty of Law (FOL)</option>
+                            <option value="FET" {% if myprofile_data.faculty_name == 'FET' %}selected{% endif %}>Faculty of Engineering & Technology (FET)</option>
+                            <option value="FAIE" {% if myprofile_data.faculty_name == 'FAIE' %}selected{% endif %}>Faculty of Artificial Intelligence & Engineering (FAIE)</option>
+                            <option value="FCI" {% if myprofile_data.faculty_name == 'FCI' %}selected{% endif %}>Faculty of Computing & Informatics (FCI)</option>
+                            <option value="ODL" {% if myprofile_data.faculty_name == 'ODL' %}selected{% endif %}>Open and Distance Learing (ODL)</option>
+                            <option value="FIST" {% if myprofile_data.faculty_name == 'FIST' %}selected{% endif %}>Faculty of Information Science & Technology (FIST)</option>
+                            <option value="FOM" {% if myprofile_data.faculty_name == 'FOM' %}selected{% endif %}>Faculty of Managemnet (FOM)</option>
+                            <option value="FCM" {% if myprofile_data.faculty_name == 'FCM' %}selected{% endif %}>Faculty of Creative Multimedia (FCM)</option>
+                            <option value="FAC" {% if myprofile_data.faculty_name == 'FAC' %}selected{% endif %}>Faculty of Applied Communication (FAC)</option>
+                            <option value="FOB" {% if myprofile_data.faculty_name == 'FOB' %}selected{% endif %}>Faculty of Business (FOB)</option>
                         </select>
                     </li></ul>
                 </div>
