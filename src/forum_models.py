@@ -10,14 +10,14 @@ post_tags=db.Table(
 class User(db.Model):
     __tablename__="forum_users"
     id= db.Column(db.Integer,primary_key=True)
-    username=db.Column(db.String(50),unique=True,nullable=False)
+    user_id=db.Column(db.String(50),unique=True,nullable=False)
 
     posts = db.relationship('Post', backref='author', lazy=True)
     likes = db.relationship('Like', backref='user', lazy=True)
     comments = db.relationship('Comment', backref='user', lazy=True)
     avatar=db.Column(db.String(200),nullable=True)
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.user_id}>"
 
 class Post(db.Model):
     __tablename__='posts'

@@ -1,14 +1,55 @@
-{% extends "forum_home.html" %}
-{% block tittle %}{{'New Post' if mode=='create' else 'Edit Post'}}{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <title>MMU SOUL · Create Post</title>
+</head>
+<body>
+    <header>
+        CREATE A NEW POST
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+    </header>
+    <div class="form-card">
+        <form id="post-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" placeholder="Enter post title" required>
+            </div>
 
-<section class="card form-card">
-    <h2>{{'Create a new post' if mode=='create' else 'Edit Post'}}</h2>
-    <form method="post" enctype="multipart/form-data">
-        <label> TITLE </label>
-        <input type="text" name="title" value="{{post.title if post else ''}}" required />
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" placeholder="Write your content here....." required></textarea>
+            </div>
 
-        <label> CONTENT </label>
-        <textarea name="content" rows="6" required>{{post.content if post else ''}}</textarea>
-    </form>
-</section>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" id="tags" name="tags" placeholder="#mmu">
+            </div>
+
+            <div class="form-group">
+                <label>Upload media</label>
+                <div class="file-upload" id="upload-area">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p class="upload-text">Upload your video or photo</p>
+                </div>
+
+                <div class="preview-container" id="preview-container">
+                    <div class="media-preview">
+                        <img id="image-preview" style="width:100%; display: none;">
+                        <video id="video-preview" style="width:100%; display: none;" controls></video>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" oneclick="window.history.back()">Cancel</button>
+                <button type="button" class="btn btn-primary">Publish Post</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
