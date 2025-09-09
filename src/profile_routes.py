@@ -40,9 +40,7 @@ def myProfile():
     print (myprofile_data)
 
     if request.method == "POST":
-        a
-    
-    return render_template("myProfile.html", myprofile_data=myprofile_data, user=user)
+        return render_template("myProfile.html", myprofile_data=myprofile_data, user=user)
 
 @profile_bp.route("/history")
 def profile():
