@@ -629,6 +629,7 @@ a:hover {
 }
 
 .avatar img {
+    border: solid;
     width: 120px;
     height: 120px;
     border-radius: 50%;
