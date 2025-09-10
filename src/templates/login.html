@@ -2,36 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Please Login</title>
+    <title>Login Now!</title>
     <link rel="icon" href="/static/.png" type="image/png">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/login_register.css">
 </head>
-
 <body>
     <main>
-        <div class="section" style="margin-top: 15vh; text-align: center;">
-        <h1>Login to MMU Soul!</h1>
-        <form action="{{url_for('login.home')}}" method="POST">
-            <div class="form-perform">
-                <label for="email" class="login_label">Email: </label>
-                <input class="input_column" placeholder="Write your email prefix..." type="text" id="email" name="email" required>
-                <span style="margin-left: 10px; font-weight: bold; white-space: nowrap;">@student.mmu.edu.my</span>
-                <br><br>
-            </div>
-            
-            <div class="form-perform">
-                <label for="password" class="login_label">Password: </label>
-                <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required style="margin-right: 202px;">
-                <br><br>
-            </div>
-            <span>Haven't have an account? </span><a href="{{ url_for('login.register') }}" class="register_a">Register here!</a>
-            <br>
-            {% for msg in get_flashed_messages() %} 
-            <p style="color: red; font-weight: bold;">{{ msg }}</p>
-            {% endfor %}
-            <button type="submit">Submit</button>
-            <br><br>
-        </form>
+        <div class="envelope">
+            <h1 class="login-title">Login to MMU Soul</h1>
+            <form action="{{ url_for('login.login') }}" method="POST">
+                <div class="input-box">
+                    <input type="text" id="email" name="email" placeholder="Enter your MMU email" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                {% for msg in get_flashed_messages() %} 
+                <p style="color: red; font-weight: bold;">{{ msg }}</p>
+                {% endfor %}
+                <button type="submit">Login</button>
+                <div class="register-link">
+                    <a href="{{ url_for('login.register') }}">Don’t have an account? Register here</a>
+                </div>
+            </form>
         </div>
     </main>
 </body>
+</html>
