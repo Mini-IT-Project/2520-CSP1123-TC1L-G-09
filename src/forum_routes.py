@@ -5,6 +5,7 @@ from forum_models import Post, Tag, Comment, Like, Report
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 from login import Users
+from profile_routes import Profile_data
 
 forum_bp = Blueprint(
     "forum",
@@ -71,6 +72,7 @@ def index():
 @forum_bp.route("/p/<int:post_id>")
 def post_detail(post_id):
     post=Post.query.get_or_404(post_id) # Query the post from the database and return to the 404 page if not found
+    author_profile = Profile_data.query.filter_by(user_id=post.user_id).first()
     return render_template("post_detail.html",post=post)
 
 @forum_bp.route("/post/new",methods=["GET","POST"]) #Create a new post, GET displays the form, POST handles the submission
