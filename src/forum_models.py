@@ -7,18 +7,6 @@ post_tags=db.Table(
     db.Column('tag_id',db.Integer,db.ForeignKey('tags.id'),primary_key=True)
 )
 
-class User(db.Model):
-    __tablename__="forum_users"
-    id= db.Column(db.Integer,primary_key=True)
-    user_id=db.Column(db.String(50),unique=True,nullable=False)
-
-    posts = db.relationship('Post', backref='author', lazy=True)
-    likes = db.relationship('Like', backref='user', lazy=True)
-    comments = db.relationship('Comment', backref='user', lazy=True)
-    avatar=db.Column(db.String(200),nullable=True)
-    def __repr__(self):
-        return f"<User {self.user_id}>"
-
 class Post(db.Model):
     __tablename__='posts'
 
@@ -29,7 +17,7 @@ class Post(db.Model):
     created_at=db.Column(db.DateTime,default=datetime.utcnow,nullable=False)
     updated_at=db.Column(db.DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
 
-    user_id=db.Column(db.Integer, db.ForeignKey('forum_users.id'),nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     tags= db.relationship('Tag',secondary=post_tags,back_populates='posts')
     likes=db.relationship('Like',back_populates='post',cascade='all,delete-orphan')
     comments=db.relationship('Comment',back_populates='post',cascade='all,delete-orphan')
@@ -67,7 +55,7 @@ class Like(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
     post=db.relationship('Post',back_populates='likes')
-    user_id=db.Column(db.Integer, db.ForeignKey('forum_users.id'),nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
 
 class Comment(db.Model):
     __tablename__='comments'
@@ -77,7 +65,7 @@ class Comment(db.Model):
     body=db.Column(db.Text,nullable=False)
     create_at=db.Column(db.DateTime,default=datetime.utcnow,nullable=False)
     post=db.relationship('Post',back_populates='comments')
-    user_id=db.Column(db.Integer, db.ForeignKey('forum_users.id'),nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     
 class Report(db.Model):
     __tablename__='reports'
