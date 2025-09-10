@@ -23,7 +23,8 @@ def allowed_file(filename):
 
 @bottle_bp.route("/")
 def DriftingBottle():
-    return render_template("DriftingBottle.html")
+    unpicked_count = Bottle.query.filter_by(status="unpicked").count()
+    return render_template("DriftingBottle.html", unpicked_count=unpicked_count)
 
 @bottle_bp.route("/throw", methods=["GET", "POST"], endpoint="throw")
 def throw_bottle():
