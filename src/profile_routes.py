@@ -22,26 +22,23 @@ class Profile_data(db.Model):
 @profile_bp.route("/", methods=['GET', 'POST'])
 def myProfile():
     user_id = session.get("user_id")
-    print("user_id from session:", user_id)
 
     if not user_id:
         flash("Please login in first.")
         return redirect(url_for('login.home'))
     
     user = Users.query.get(user_id) 
-    print(user)
     if not user:
         flash("Please login in first.")
-        return redirect(url_for('login.home'))
+        return redirect(url_for('login.home')) #check used-id 
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
     if not myprofile_data:
         myprofile_data= Profile_data(user_id=user_id)
         db.session.add(myprofile_data)
         db.session.commit()
-    print (myprofile_data)
 
-    if request.method=='POST':
+    if request.method=='POST': #while html form click save
         myprofile_data.avatar_type = request.form.get("avatar_type")
         myprofile_data.campus_name= request.form.get("campus")
         myprofile_data.degree_name= request.form.get("degree")
