@@ -43,26 +43,25 @@
         <section class="announcements section">
             <h2>Announcements</h2>
             <div class="announcement-item">
-
+                <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
                 <a href="{{ url_for('forum.post_detail', post_id=1) }}">
-                    <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
-                    <div class="announcement-text">
-                        <h3>Orientation Week</h3>
-                        <p>Orientation Week starts next Monday, don’t miss it!</p>
-                    </div>
+                <div class="announcement-text">
+                    <h3>Orientation Week</h3>
+                    <p>Orientation Week starts next Monday, don’t miss it!</p>
+                </div>
                 </a>
             </div>
 
             <div class="announcement-item">
-
+                <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
                 <a href="{{ url_for('forum.post_detail', post_id=2) }}">
-                    <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
-                    <div class="announcement-text">
-                        <h3>Exam Timetable</h3>
-                        <p>Final exam timetable has been released. Please check portal.</p>
-                    </div>
+                <div class="announcement-text">
+                    <h3>Exam Timetable</h3>
+                    <p>Final exam timetable has been released. Please check portal.</p>
+                </div>
                 </a>
             </div>
+        </section>
 
         <section class="events section">
             <h2>Upcoming Events</h2>
@@ -81,7 +80,7 @@
                     <p class="desc">Experience traditional Malaysian orchestra performances.</p>
                 </div>
 
-                <div class="card size-large" style="background: linear-gradient(to bottom, #66baff, #3399ff);">
+                <div class="card size-large" style="background: linear-gradient(to bottom, #66baff, #76b9fc);">
                     <img src="{{ url_for('static', filename='infoday.jpg') }}" alt="Infoday" style="width:100%; border-radius:10px;">
                     <h3>Infoday</h3>
                     <p class="date"><strong>Date:</strong> 2025-10-04 to 2025-10-05</p>
