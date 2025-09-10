@@ -25,25 +25,3 @@ def homepage():
         announcements=announcements,
         unpicked_count=unpicked_count
     )
-
-#Profile Page
-'''
-@main_bp.route("/profile", endpoint="profile")
-def profile():
-    user = get_current_user()
-    if not user:
-        from flask import redirect, url_for
-        return redirect(url_for('login.home'))
-    return render_template("profile.html", user=user)
-'''
-
-def get_current_user():
-    user_id = session.get("user_id")  
-    if user_id:
-        return Users.query.get(user_id)
-    return None
-
-#Match Chat Route
-@main_bp.route("/match-chat", endpoint="match_chat")
-def match_chat():
-    return render_template("MatchChat.html")
