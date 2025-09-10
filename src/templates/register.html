@@ -2,33 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register Now!</title>
+    <title>Register now</title>
     <link rel="icon" href="/static/.png" type="image/png">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
 </head>
 <body>
-    <main>
-    <div class="section" style="margin-top: 15vh; text-align: center;">
-    <h1>Register for an MMU Soul account!</h1>
-    <form action="{{url_for('login.register')}}" method="POST">
-        <div class="form-perform">
-            <label for="email" class="login_label">Email: </label>
-            <input class="input_column" placeholder="Write your email prefix..." type="text" id="email" name="email" required>
-            <span style="margin-left: 10px; font-weight: bold; white-space: nowrap;">@student.mmu.edu.my</span>
-            <br><br>
+    <div class="login-form">
+        <h1 class="login-title">Register for MMU Soul!</h1>
+        <form action="{{ url_for('login.register') }}" method="POST">
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Email prefix..." required>
+                <span style="font-weight:bold; margin-left:5px;">@student.mmu.edu.my</span>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password..." required>
+            </div>
+
+            {% for msg in get_flashed_messages() %}
+            <p style="color:red; font-weight:bold;">{{ msg }}</p>
+            {% endfor %}
+
+            <button type="submit" class="login-btn">Register</button>
+        </form>
+
+        <div class="register">
+            Already have an account? <a href="{{ url_for('login.home') }}">Log in here!</a>
         </div>
-        <div class="form-perform">
-            <label for="password" class="login_label">Password: </label>
-            <input class="input_column" placeholder="Write your password..." type="password" id="password" name="password" required style="margin-right: 202px;">
-            <br><br><br>
-        </div>
-        {% for msg in get_flashed_messages() %} 
-        <p style="color: red; font-weight: bold;">{{ msg }}</p>
-        {% endfor %}
-        <a href="{{ url_for('login.home') }}" class="register_a" style="margin-right: 20px;">Back to Login</a>
-        <button type="submit">Submit</button>
-        <br><br>
-    </form>
     </div>
-    </main>
 </body>
+</html>
