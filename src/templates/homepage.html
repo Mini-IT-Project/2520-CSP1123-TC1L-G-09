@@ -43,26 +43,25 @@
         <section class="announcements section">
             <h2>Announcements</h2>
             <div class="announcement-item">
-
+                <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
                 <a href="{{ url_for('forum.post_detail', post_id=1) }}">
-                    <img src="{{ url_for('static', filename='mmu_win.jpg') }}" alt="MMU Wins Announcement">
-                    <div class="announcement-text">
-                        <h3>Orientation Week</h3>
-                        <p>Orientation Week starts next Monday, don’t miss it!</p>
-                    </div>
+                <div class="announcement-text">
+                    <h3>Orientation Week</h3>
+                    <p>Orientation Week starts next Monday, don’t miss it!</p>
+                </div>
                 </a>
             </div>
 
             <div class="announcement-item">
-
+                <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
                 <a href="{{ url_for('forum.post_detail', post_id=2) }}">
-                    <img src="{{ url_for('static', filename='exam.jpeg') }}" alt="Exam Announcement">
-                    <div class="announcement-text">
-                        <h3>Exam Timetable</h3>
-                        <p>Final exam timetable has been released. Please check portal.</p>
-                    </div>
+                <div class="announcement-text">
+                    <h3>Exam Timetable</h3>
+                    <p>Final exam timetable has been released. Please check portal.</p>
+                </div>
                 </a>
             </div>
+        </section>
 
         <section class="events section">
             <h2>Upcoming Events</h2>
