@@ -15,11 +15,6 @@ forum_bp = Blueprint(
     static_url_path="/forum-static"
 )
 
-@forum_bp.route("/", endpoint="homepage")
-def homepage():
-    return render_template("forum_home.html")
-
-
 ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}
 
 def allowed_file(filename: str) -> bool:  #check the filename
@@ -43,7 +38,7 @@ def analysis_tag(raw:str):
     return tags
 
 
-@forum_bp.route("/")  #post list
+@forum_bp.route("/", endpoint="homepage")  #post list
 def index():
     search_keyword:str=request.args.get("q","").strip()
     tag_filter:str=request.args.get("tag","").strip()
@@ -73,7 +68,10 @@ def index():
 def post_detail(post_id):
     post=Post.query.get_or_404(post_id) # Query the post from the database and return to the 404 page if not found
     author_profile = Profile_data.query.filter_by(user_id=post.user_id).first()
-    return render_template("post_detail.html",post=post)
+
+    for c in post.comments:
+        c.profile= Profile_data.query.filter_by(user_id=c.user_id).first()
+    return render_template("post_detail.html",post=post,author_profile=author_profile)
 
 @forum_bp.route("/post/new",methods=["GET","POST"]) #Create a new post, GET displays the form, POST handles the submission
 def create_post():
@@ -139,7 +137,7 @@ def process_tags(tag_string):
         tag_objects.append(tag)
     return tag_objects
 
-@forum_bp.route("/post/edit",methods=["GET","POST"])
+@forum_bp.route("/post/<int:post_id>/edit",methods=["GET","POST"])
 def edit_post(post_id):
     post=Post.query.get_or_404(post_id)
     if request.method=="GET":
@@ -177,7 +175,15 @@ def edit_post(post_id):
 @forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
 def like_post(post_id):
     post=Post.query.get_or_404(post_id)
-    new_like=Like(post=post)
+    user_id=session.get("user_id")
+    if not user_id:
+        return {"ok":False,"error":"Please login first"},403
+    
+    existing_like=Like.query.filter_by(post_id=post.id,user_id=user_id).first()
+    if existing_like:
+        return {"ok":False,"error":"Already liked"},400
+    
+    new_like=Like(post=post, user_id=user_id)
     db.session.add(new_like)
     db.session.commit()
     current_likes=post.like_count()
@@ -199,10 +205,16 @@ def add_comment(post_id):
     comment_author=request.form.get("author","Anonymous").strip() or "Anonymous"
     if not comment_content:
         return {"ok":False,"error":"Please write your comment"},400
+    
+    user_id=session.get("user_id")
+    if not user_id:
+        return {"ok":False,"error":"Please login first"},403
+    
     new_comment=Comment(
         post=post,
         body=comment_content,
-        author=comment_author
+        author=comment_author,
+        user_id=user_id
     )
     
     db.session.add(new_comment)
@@ -231,7 +243,7 @@ def report_post(post_id):
     report_reason=request.form.get("report")
     if not report_reason:
         flash("Please select your reason","error")
-        return(url_for("forum.report_post",post_id=post.id))
+        return redirect(url_for("forum.report_post",post_id=post.id))
     
     new_report=Report(
         post=post,
@@ -243,3 +255,15 @@ def report_post(post_id):
     flash("Report Successfully!Thank you response!","success")
     return redirect(url_for("forum.post_detail",post_id=post.id))
 
+@forum_bp.route("/post/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    user_id = session.get("user_id")
+    if post.user_id != user_id:
+        flash("You cannot delete this post", "error")
+        return redirect(url_for("forum.post_detail", post_id=post.id))
+
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post deleted successfully", "success")
+    return redirect(url_for("forum.homepage"))
