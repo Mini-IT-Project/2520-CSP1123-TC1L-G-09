@@ -1,87 +1,94 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #e6f0ff; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.envelope {
-    position: relative;
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/static/bluesea.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-form {
+    background: rgba(64, 64, 64, 0.15);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    padding: 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(25px);
+    text-align: center;
+    color: white;
     width: 400px;
-    padding: 40px 30px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    backdrop-filter: blur(10px);
-    border: 2px solid #0d47a1;
-}
-
-.envelope::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background: #0d47a1;
-    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.15);
 }
 
 .login-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #0d47a1;
-    text-align: center;
-    margin-bottom: 25px;
+    font-size: 36px;
+    margin-bottom: 30px;
 }
 
 .input-box {
-    margin-bottom: 20px;
+    margin: 20px 0;
+    position: relative;
 }
 
 .input-box input {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #0d47a1;
-    border-radius: 10px;
-    outline: none;
-    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 12px 12px 12px 45px;
+    border-radius: 99px;
+    outline: 3px solid transparent;
+    font-size: 17px;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
 }
 
 .input-box input:focus {
-    border-color: #003366;
+    outline: 3px solid rgba(255, 255, 255, 0.3);
 }
 
-button {
+.login-btn {
     width: 100%;
-    padding: 12px;
-    background: #0d47a1;
-    color: white;
+    padding: 12px 0;
+    background: #2F9CF4;
     border: none;
-    border-radius: 10px;
+    border-radius: 99px;
+    color: white;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
 }
 
-button:hover {
-    background: #003366;
+.login-btn:hover {
+    background: #0B87EC;
 }
 
-.register-link {
+.register {
     margin-top: 15px;
-    text-align: center;
+    font-size: 15px;
 }
 
-.register-link a {
-    color: #0d47a1;
+.register a {
+    color: white;
+    font-weight: 500;
     text-decoration: none;
-    font-weight: bold;
 }
 
-.register-link a:hover {
+.register a:hover {
     text-decoration: underline;
 }
