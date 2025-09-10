@@ -255,3 +255,15 @@ def report_post(post_id):
     flash("Report Successfully!Thank you response!","success")
     return redirect(url_for("forum.post_detail",post_id=post.id))
 
+@forum_bp.route("/post/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    user_id = session.get("user_id")
+    if post.user_id != user_id:
+        flash("You cannot delete this post", "error")
+        return redirect(url_for("forum.post_detail", post_id=post.id))
+
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post deleted successfully", "success")
+    return redirect(url_for("forum.homepage"))
