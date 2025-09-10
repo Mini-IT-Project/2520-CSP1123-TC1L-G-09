@@ -41,57 +41,48 @@
     </header>
 
     <main>
-        {% if posts %}
-        <!-- 卡片布局（多列） -->
-        <section class="card-feed active">
-            {% for p in posts %}
-            <div class="post-card">
-                <div class="post-header">
-                    <div class="avatar"></div>
-                    <span class="post-time">{{ p.created_at.strftime('%Y-%m-%d %H:%M') if p.created_at else '' }}</span>
+        <section id="feed">
+            {% for p in posts or [] %}
+            <article class="post-card">
+                <div class="post-meta">
+                    <img src="{{url_for('static',filename='avatar' ~ (p.author.profile.avatar_type if p.author and p.author.profile else 0)~'.png')}}" class="avatar" alt="avatar" 
+                    style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                    <div>
+                        <h3><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
+                        <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
+                    </div>
                 </div>
-                <h3 class="post-title">
-                    <a href="{{ url_for('forum.post_detail', post_id=p.id) }}">{{ p.title }}</a>
-                </h3>
-                <p class="post-excerpt">{{ p.content[:100] }}{% if p.content|length > 100 %}...{% endif %}</p>
+
+                <div class="post-content">
+                    <p class="post-excerpt">{{ p.content[:100] }}{% if p.content|length > 100 %}...{% endif %}</p>
+                    {% if p.media_url %}
+                    {% set _m=p.media_url.lower() %}
+                    {% if _m.endswith('.png') or _m.endswith('.jpg') or _m.endswith('.jpeg') or _m.endswith('.gif') %}
+                    <img class="media" src="{{p.media_url}}" alt="image" />
+                    {% else %}
+                    <video class="media" controls>
+                        <source src="{{p.media_url}}" />
+                    </video>
+                    {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="tags">
+                    {% for t in p.tags or [] %}
+                    <a class="tag" href="{{url_for('forum.homepage',tag=t.name)}}">#{{t.name}}</a>
+                    {% endfor %}
+                </div>
+
                 <div class="post-actions">
-                    <button class="btn blue-btn comment-btn">💬 {{ p.comment_count }}</button>
-                    <button class="btn blue-btn like-btn">👍 {{ p.like_count }}</button>
-                    <button class="btn blue-btn share-btn">🔗</button>
+                    <button type="button" class="icon-btn like-btn" data-id="{{ p.id }}">👍🏻<span class="like-count">{{ p.like_count()}}</span></button>
+                    <a class="icon-btn comment-btn" href="{{ url_for('forum.post_detail', post_id=p.id) }}#comments">💬<span class="comment-count">{{ p.comment_count()}}</span></a>
+                    <button type="button" class="icon-btn share-btn" data-url="{{ url_for('forum.post_detail', post_id=p.id, _external=True) }}">🔗</button>
                 </div>
-                <a href="{{ url_for('forum.post_detail', post_id=p.id) }}" class="details-btn">View Details</a>
-            </div>
+            </article>
+            {% else %}
+            <p class="muted">No post yet. Be the first to share something! 🎉</p>
             {% endfor %}
         </section>
-
-        <!-- 时间轴布局（单列） -->
-        <section class="timeline-feed">
-            {% for p in posts %}
-            <div class="timeline-item">
-                <div class="timeline-date">{{ p.created_at.strftime('%Y-%m-%d') if p.created_at else '' }}</div>
-                <div class="timeline-content">
-                    <div class="post-header">
-                        <div class="avatar"></div>
-                        <span class="post-time">{{ p.created_at.strftime('%H:%M') if p.created_at else '' }}</span>
-                    </div>
-                    <h3 class="post-title">
-                        <a href="{{ url_for('forum.post_detail', post_id=p.id) }}">{{ p.title }}</a>
-                    </h3>
-                    <p class="post-excerpt">{{ p.content[:150] }}{% if p.content|length > 150 %}...{% endif %}</p>
-                    <div class="post-actions">
-                        <button class="btn blue-btn comment-btn">💬 {{ p.comment_count }}</button>
-                        <button class="btn blue-btn like-btn">👍 {{ p.like_count }}</button>
-                        <button class="btn blue-btn share-btn">🔗</button>
-                    </div>
-                    <a href="{{ url_for('forum.post_detail', post_id=p.id) }}" class="details-btn">View Details</a>
-                </div>
-            </div>
-            {% endfor %}
-        </section>
-
-        {% else %}
-        <p class="muted" style="padding: 20px;">No post yet. Be the first to share something! 🎉</p>
-        {% endif %}
     </main>
 
     <a class="floating-btn" href="{{ url_for('forum.create_post') }}">
