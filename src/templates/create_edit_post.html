@@ -51,11 +51,11 @@
 
             <div class="form-group">
                 <label>Upload media</label>
-                <label class="file-upload" id="upload-area">
+                <div class="file-upload" id="upload-area" onclick="document.getElementById('file-input').click()">
                     <i class="fas fa-cloud-upload-alt upload-icon"></i>
                     <p class="upload-text">Upload your video or photo</p>
-                    <input type="file" id="file-input" name="media" accept="image/*,video/*" style="display: none;">
-                </label>
+                </div>
+                <input type="file" id="file-input" name="media" accept="image/*,video/*" style="display: none;">
 
                 <div class="preview-container" id="preview-container">
                     <div class="media-preview">
@@ -71,5 +71,25 @@
             </div>
         </form>
     </div>
+    <script>
+    document.getElementById("file-input").addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const imagePreview = document.getElementById("image-preview");
+        const videoPreview = document.getElementById("video-preview");
+        imagePreview.style.display = "none";
+        videoPreview.style.display = "none";
+
+        const url = URL.createObjectURL(file);
+        if (file.type.startsWith("image/")) {
+            imagePreview.src = url;
+            imagePreview.style.display = "block";
+        } else if (file.type.startsWith("video/")) {
+            videoPreview.src = url;
+            videoPreview.style.display = "block";
+        }
+    });
+    </script>
 </body>
 </html>

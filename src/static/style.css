@@ -757,29 +757,25 @@ ul {
     flex-direction: column;
 }
 
+.post-card .media {
+    width: 100%;
+    max-height: 200px;   
+    object-fit: contain;   
+    border-radius: 10px; 
+    display: block;
+}
+
 .post-meta {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     gap: 0.758rem;
 }
-/* a error
-.avatar {
-    width: 40px;
-    height: 40px;
-    background: #3399ff;
-    border-radius: 50%;
-    margin-right: 10px;
-}
 
-.timestamp{
-    font-size: 0.85rem;
-    color: #888;
-
-*/
 .post-title {
     font-size: 1.2rem;
     margin: 0 0 8px 0;
+}
 
 .post-excerpt {
     flex-grow: 1;
@@ -1053,6 +1049,9 @@ label{
     padding: 4px 8px;
     color: #65676b;
     border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
 }
 
 .dropdown-toggle:hover{
@@ -1063,11 +1062,11 @@ label{
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: #fff;
+    background-color:none;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     padding: 8px 0;
-    min-width: 160px;
+    min-width: 120px;
     z-index: 100;
     display: none;
 }
@@ -1077,6 +1076,7 @@ label{
     padding: 8px 16px;
     text-decoration: none;
     color: #1c1e21;
+    font-size: 12px;
 }
 
 .dropdown-menu:hover{
@@ -1187,8 +1187,10 @@ label{
 
 .comment-item{
     display: flex;
+    align-items: flex-start;
     gap:12px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    text-align: left;
 }
 
 .comment-content{
@@ -1196,7 +1198,7 @@ label{
     background-color: #f0f2f5;
     padding: 12px;
     border-radius: 12px;
-    position: relative;
+    text-align: left;
 }
 
 .comment-header{
