@@ -62,8 +62,10 @@ def profile():
     if not user:
         flash("Please login in first.")
         return redirect(url_for('login.home'))
+    
+    myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
         
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", myprofile_data=myprofile_data,user=user)
 
 @profile_bp.route("/Settings")
 def settings():
