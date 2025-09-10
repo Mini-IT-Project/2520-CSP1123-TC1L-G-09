@@ -2,30 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Now!</title>
-    <link rel="icon" href="/static/.png" type="image/png">
-    <link rel="stylesheet" href="/static/login_register.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
 </head>
 <body>
-    <main>
-        <div class="envelope">
-            <h1 class="login-title">Login to MMU Soul</h1>
-            <form action="{{ url_for('login.login') }}" method="POST">
-                <div class="input-box">
-                    <input type="text" id="email" name="email" placeholder="Enter your MMU email" required>
-                </div>
-                <div class="input-box">
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
-                {% for msg in get_flashed_messages() %} 
-                <p style="color: red; font-weight: bold;">{{ msg }}</p>
-                {% endfor %}
-                <button type="submit">Login</button>
-                <div class="register-link">
-                    <a href="{{ url_for('login.register') }}">Don’t have an account? Register here</a>
-                </div>
-            </form>
+    <div class="login-form">
+        <h1 class="login-title">Login to MMU Soul!</h1>
+        <form action="{{ url_for('login.home') }}" method="POST">
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Email prefix..." required>
+                <span style="font-weight:bold; margin-left:5px;">@student.mmu.edu.my</span>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password..." required>
+            </div>
+
+            {% for msg in get_flashed_messages() %}
+            <p style="color:red; font-weight:bold;">{{ msg }}</p>
+            {% endfor %}
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        
+        <div class="register">
+            Haven't an account? <a href="{{ url_for('login.register') }}">Register here!</a>
         </div>
-    </main>
+    </div>
 </body>
 </html>
