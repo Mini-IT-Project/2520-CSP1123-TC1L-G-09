@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session
 from bottle_feature import Bottle
-from forum_models import User 
+from login import Users
 
 main_bp = Blueprint("main", __name__)
 
