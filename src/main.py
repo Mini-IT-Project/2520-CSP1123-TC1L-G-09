@@ -40,7 +40,7 @@ def profile():
 def get_current_user():
     user_id = session.get("user_id")  
     if user_id:
-        return User.query.get(user_id)
+        return Users.query.get(user_id)
     return None
 
 #Match Chat Route
