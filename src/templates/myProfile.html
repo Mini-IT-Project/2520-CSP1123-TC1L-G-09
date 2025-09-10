@@ -8,8 +8,9 @@
     </head>
     <header>
         <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
-            <img src="{{url_for('static', filename='mmu_logo1.png')}}" alt="logo" width="100" height="90">
+            <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
         </a>
+        <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
         <div>MY PROFILE</div>
         <nav>
             <ul>
@@ -19,7 +20,7 @@
                 <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
-                <span style="color: rgb(237, 27, 27); font-weight: bold;">Welcome</span>
+                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
                 {% else %}
                 <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
                 {% endif %}
@@ -58,7 +59,7 @@
             <button type="button" onclick="toggleEdit()">Edit Profile</button>
         </div>
 
-        <div class="profile-card" id="profile-edit" style="display: none;">
+        <div class="profile-card" id="profile-edit" style="display: none; max-width: 610px;">
             <div class="profile-tab">
                 <a href="{{url_for('profile.myProfile')}}" class="profile-button">My Profile</a>
                 <a href="{{url_for('profile.profile')}}" class="profile-button">History</a>
