@@ -222,7 +222,7 @@ h2 {
     background-color: #e3f2fd;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    text-align: left;
+    text-align: center;
 }
 
 .notifications ul li::before {
@@ -787,21 +787,6 @@ ul {
     opacity: 1;
 }
 
-@media (max-width:768px){
-    .floating-btn{
-        width: 60px;
-        height: 60px;
-        font-size: 1.7rem;
-        bottom: 20px;
-        right: 20px;
-    }
-
-    .tooltip{
-        bottom: 75px;
-        right: 5px;
-    }
-}
-
 /* create post*/
 .back-btn{
     position: absolute;
@@ -848,25 +833,6 @@ label{
     font-weight: 500;
     color: rgb(34, 33, 33);
     font-size: 18px;
-}
-
-input,textarea{
-    width: 100px;
-    padding: 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-input:focus,textarea:focus{
-    outline: none;
-    border-color: #9baddd;
-}
-
-textarea{
-    min-height: 150px;
-    resize: vertical;
 }
 
 .file-upload{
@@ -956,6 +922,21 @@ textarea{
 
 .btn-secondary:hover{
     background-color: #d0d0d0;
+}
+
+@media (max-width:768px){
+    .floating-btn{
+        width: 60px;
+        height: 60px;
+        font-size: 1.7rem;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .tooltip{
+        bottom: 75px;
+        right: 5px;
+    }
 }
 
 @media (max-width:650px){
