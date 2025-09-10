@@ -62,7 +62,7 @@ def profile():
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
         
-    return render_template("profile.html", myprofile_data=myprofile_data,user=user)
+    return render_template("profile.html", myprofile_data=myprofile_data, user=user)
 
 @profile_bp.route("/Settings")
 def settings():
@@ -76,4 +76,11 @@ def settings():
         flash("Please login in first.")
         return redirect(url_for('login.home'))
     
-    return render_template("settings.html")
+    myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
+    
+    return render_template("settings.html", myprofile_data=myprofile_data)
+
+@profile_bp.route("/logout", methods=["POST"])
+def logout():
+    session.pop("user_id", None)
+    return redirect(url_for('main.homepage'))
