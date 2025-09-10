@@ -2,6 +2,7 @@ from flask import Blueprint,render_template,session,redirect,url_for, flash,requ
 from extensions import db
 from forum_models import Comment,Post,Like
 from login import Users
+from werkzeug.security import check_password_hash, generate_password_hash
 
 profile_bp = Blueprint(
     "profile",
@@ -79,6 +80,23 @@ def settings():
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
     
     return render_template("settings.html", myprofile_data=myprofile_data)
+
+@profile_bp.route("/change_password", methods=["POST"])
+def change_password():
+    user_id = session.get("user_id")
+    user = Users.query.get(user_id)
+    current_password=request.form.get("current_password")
+    new_password=request.form.get("new_password")
+
+    if check_password_hash(user.password, current_password):
+        user.password= generate_password_hash(new_password)
+        db.session.commit()
+
+        flash("Change password successful!", "success")
+        return redirect(url_for('profile.settings'))
+    else:
+        flash("Current Password incorrect!", "error")
+        return redirect(url_for('profile.settings'))
 
 @profile_bp.route("/logout", methods=["POST"])
 def logout():
