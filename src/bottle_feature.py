@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, session, flash
 from extensions import db
+from login import Users
 import os
 from werkzeug.utils import secure_filename
 import random
@@ -23,6 +24,17 @@ def allowed_file(filename):
 
 @bottle_bp.route("/")
 def DriftingBottle():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        flash("Please login in first.")
+        return redirect(url_for('login.home'))
+    
+    user = Users.query.get(user_id) 
+    if not user:
+        flash("Please login in first.")
+        return redirect(url_for('login.home')) #check used-id 
+    
     unpicked_count = Bottle.query.filter_by(status="unpicked").count()
     return render_template("DriftingBottle.html", unpicked_count=unpicked_count)
 
