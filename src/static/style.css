@@ -695,19 +695,12 @@ ul {
 }
       
 /*Forum search*/
-.search-section{
-    background-color: #4673e5b8;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    margin-top: 0.5rem;
-}
-
 .search-container{
     display: flex;
-    gap: 0.5rem;
+    align-self: center;
+    gap: 15px;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 25px auto;
 }
 
 .search-container input{
@@ -726,7 +719,7 @@ ul {
 }
 
 .search-container button {
-    background: linear-gradient(135deg,#c6cff5 0%,#779be8 100%);
+    background: #1d2ff7a9;
     color: white;
     border: none;
     border-radius: 30px;
@@ -790,14 +783,35 @@ ul {
 
 .post-meta {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
-    gap: 0.758rem;
+    gap: 8px;
+}
+
+.post-meta .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.timestamp {
+    font-size: 14px; 
+    color: #666;
+    text-align: left; 
+}
+
+.meta-text {
+    display: flex;
+    flex-direction: column; 
 }
 
 .post-title {
-    font-size: 1.2rem;
-    margin: 0 0 8px 0;
+    font-size: 20px; 
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
+    word-break: break-word;
 }
 
 .post-excerpt {
