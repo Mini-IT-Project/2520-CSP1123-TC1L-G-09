@@ -757,6 +757,18 @@ ul {
     flex-direction: column;
 }
 
+.post-card h3 {
+    text-align:left;
+    margin:0;
+    padding:0;
+}
+
+.post-card h3 a {
+    text-decoration:none;
+    color:#0044cc;
+    display:block;
+}
+
 .post-card .media {
     width: 100%;
     max-height: 200px;   
