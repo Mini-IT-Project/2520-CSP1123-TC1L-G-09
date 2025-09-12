@@ -757,6 +757,10 @@ ul {
     flex-direction: column;
 }
 
+.spacer {
+    flex-grow: 1;
+}
+
 .post-card h3 {
     text-align:left;
     margin:0;

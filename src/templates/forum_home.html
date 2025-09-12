@@ -68,6 +68,8 @@
                     {% endif %}
                 </div>
 
+                <div class="spacer"></div>
+
                 <div class="tags">
                     {% for t in p.tags or [] %}
                     <a class="tag" href="{{url_for('forum.homepage',tag=t.name)}}">#{{t.name}}</a>
