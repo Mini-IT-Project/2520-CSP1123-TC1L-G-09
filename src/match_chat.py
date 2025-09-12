@@ -18,3 +18,6 @@ def home():
         return redirect(url_for('login.home')) #check used-id 
     
     return render_template("MatchChat.html")
+
+def random_match():
+    a
