@@ -13,16 +13,6 @@
         </a>
         <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
         MMU SOUL · FORUM
-        <div class="search-section">
-            <form class="search-container" action="{{ url_for('forum.homepage') }}" method="get">
-                <input
-                    name="q"
-                    value="{{ q|default('') }}"
-                    placeholder="Search posts or #tags..."
-                />
-                <button type="submit">Search</button>
-            </form>
-        </div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
@@ -39,6 +29,17 @@
             </ul>
         </nav>
     </header>
+
+    <div class="search-section">
+        <form class="search-container" action="{{ url_for('forum.homepage') }}" method="get">
+            <input
+                name="q"
+                value="{{ q|default('') }}"
+                placeholder="Search posts or #tags..."
+            />
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
     <main>
         <section id="feed">
