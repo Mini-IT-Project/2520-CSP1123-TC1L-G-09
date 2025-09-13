@@ -68,6 +68,9 @@ def index():
         posts_query = posts_query.join(Post.tags).filter(Tag.name == tag_filter)
 
     all_posts = posts_query.order_by(Post.created_at.desc()).all()
+    for p in all_posts:
+        p.author_profile = Profile_data.query.filter_by(user_id=p.user_id).first()
+        
     return render_template(
         "forum_home.html", 
         posts=all_posts, 
