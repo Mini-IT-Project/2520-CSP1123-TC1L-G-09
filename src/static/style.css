@@ -77,7 +77,7 @@ main {
 
 /*General Section Style*/
 .section {
-    margin: 40px auto;
+    margin: 30px auto;
     max-width: 1100px;
     padding: 20px;
     background-color: #f0f7ff;
@@ -149,7 +149,7 @@ h2 {
     justify-content: center; 
     align-items: center;
     margin-top: 20px;
-    gap: 20px; 
+    gap: 15px; 
     flex-wrap: nowrap; 
 }
 
@@ -168,7 +168,7 @@ h2 {
 
 .map-link {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 10px;
     background: #0044cc;
     color: white;
     border-radius: 8px;
@@ -459,7 +459,7 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 8px rgba(147, 167, 205, 0.3);
     transition: all 0.2s ease;
 }
 
@@ -695,19 +695,12 @@ ul {
 }
       
 /*Forum search*/
-.search-section{
-    background-color: #4673e5b8;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    margin-top: 0.5rem;
-}
-
 .search-container{
     display: flex;
-    gap: 0.5rem;
+    align-self: center;
+    gap: 15px;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 25px auto;
 }
 
 .search-container input{
@@ -726,7 +719,7 @@ ul {
 }
 
 .search-container button {
-    background: linear-gradient(135deg,#c6cff5 0%,#779be8 100%);
+    background: #1d2ff7a9;
     color: white;
     border: none;
     border-radius: 30px;
@@ -751,10 +744,33 @@ ul {
 .post-card {
     background: #fff;
     border-radius: 10px;
+    box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    width: 300px;
+    height:400px;
+    padding: 16px;
+    margin-bottom:16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.post-card h3 {
+    text-align:left;
+    margin:0;
+    padding:0;
+}
+
+.post-card h3 a {
+    text-decoration:none;
+    color:#0044cc;
+    display:block;
 }
 
 .post-card .media {
@@ -767,14 +783,35 @@ ul {
 
 .post-meta {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
-    gap: 0.758rem;
+    gap: 8px;
+}
+
+.post-meta .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.timestamp {
+    font-size: 14px; 
+    color: #666;
+    text-align: left; 
+}
+
+.meta-text {
+    display: flex;
+    flex-direction: column; 
 }
 
 .post-title {
-    font-size: 1.2rem;
-    margin: 0 0 8px 0;
+    font-size: 20px; 
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
+    word-break: break-word;
 }
 
 .post-excerpt {
@@ -785,28 +822,31 @@ ul {
 .post-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 0.75px;
+    margin-top: 12px;
+    gap: 10px;
+    border-top: 1px solid #e0e0e0; 
 }
 
-.icon-btn like-btn {
-    background: none;
+.icon-btn {
+    background-color: #e6f2ff; 
+    color: #0077cc;           
     border: none;
-    cursor: pointer;
+    width: 100px;
+    height:36px;
+    border-radius: 8px;
+    padding: 6px 12px;
     font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px; 
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    text-decoration: none; 
 }
 
-.icon-btn comment-btn{
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.icon-btn share-btn{
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
+.icon-btn:hover {
+    background-color: #cce6ff; 
 }
 
 /*button for create post*/
@@ -1087,7 +1127,15 @@ label{
     display: block;
 }
 
- .post-title{
+#feed {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    gap:16px;
+    padding:16px;
+}
+
+.post-title{
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
@@ -1097,17 +1145,44 @@ label{
 .post-content{
     font-size: 16px;
     color: #050505;
-    margin-bottom: 16px;
     white-space: pre-line;
+    display: flex;
     line-height: 1.4;
+    gap: 6px;
+    max-height: 180px;
+    overflow:hidden;
+    flex-direction: column;
+}
+
+.post-content p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+    line-clamp: 4;
+    box-orient: vertical;
+
+    overflow:hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
 .post-media{
-    width: 100%;
+    max-width: 100%;
     border-radius: 8px;
-    margin-bottom: 16px;
-    max-height: 400px;
-    object-fit: contain;
+    margin-bottom: 3px;
+    max-height: 100px;
+    object-fit: cover;   
+    display: block;     
+}
+
+.post-content img,
+.post-content video {
+    max-width: 100%;
+    max-height: 120px; 
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
 }
 
 .tags{

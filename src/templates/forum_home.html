@@ -13,16 +13,6 @@
         </a>
         <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
         MMU SOUL · FORUM
-        <div class="search-section">
-            <form class="search-container" action="{{ url_for('forum.homepage') }}" method="get">
-                <input
-                    name="q"
-                    value="{{ q|default('') }}"
-                    placeholder="Search posts or #tags..."
-                />
-                <button type="submit">Search</button>
-            </form>
-        </div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
@@ -40,6 +30,15 @@
         </nav>
     </header>
 
+    <form class="search-container" action="{{ url_for('forum.homepage') }}" method="get">
+        <input
+            name="q"
+            value="{{ q|default('') }}"
+            placeholder="Search posts or #tags..."
+        />
+        <button type="submit">Search</button>
+    </form>
+
     <main>
         <section id="feed">
             {% for p in posts or [] %}
@@ -47,10 +46,11 @@
                 <div class="post-meta">
                     <img src="{{url_for('static',filename='avatar' ~ (p.author.profile.avatar_type if p.author and p.author.profile else 0)~'.png')}}" class="avatar" alt="avatar" 
                     style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
-                    <div>
-                        <h3><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
-                        <strong>{{p.author_profile.degree_name if p.author_profile else ''}} - {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
-                        <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
+
+                    <div class="meta-text">
+                        <h3 class="post-title"><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
+                      <strong>{{p.author_profile.degree_name if p.author_profile else ''}} - {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
+                      <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
                     </div>
                 </div>
 
@@ -68,6 +68,8 @@
                     {% endif %}
                 </div>
 
+                <div class="spacer"></div>
+
                 <div class="tags">
                     {% for t in p.tags or [] %}
                     <a class="tag" href="{{url_for('forum.homepage',tag=t.name)}}">#{{t.name}}</a>
@@ -75,10 +77,19 @@
                 </div>
 
                 <div class="post-actions">
-                    <button type="button" class="icon-btn like-btn" data-id="{{ p.id }}">👍🏻<span class="like-count">{{ p.like_count()}}</span></button>
-                    <a class="icon-btn comment-btn" href="{{ url_for('forum.post_detail', post_id=p.id) }}#comments">💬<span class="comment-count">{{ p.comment_count()}}</span></a>
-                    <button type="button" class="icon-btn share-btn" data-url="{{ url_for('forum.post_detail', post_id=p.id, _external=True) }}">🔗</button>
+                    <button type="button" class="icon-btn like-btn" data-id="{{ p.id }}">
+                        👍🏻<span class="like-count">{{ p.like_count()}}</span>
+                    </button>
+
+                    <button type="button" class="icon-btn comment-btn" href="{{ url_for('forum.post_detail', post_id=p.id) }}#comments">
+                        💬<span class="comment-count">{{ p.comment_count()}}</span>
+                    </a>
+
+                    <button type="button" class="icon-btn share-btn" data-url="{{ url_for('forum.post_detail', post_id=p.id, _external=True) }}">
+                        🔗<span class="share-count">Share</span>
+                    </button>
                 </div>
+
             </article>
             {% else %}
             <p class="muted">No post yet. Be the first to share something! 🎉</p>

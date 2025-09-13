@@ -40,6 +40,17 @@ def analysis_tag(raw:str):
 
 @forum_bp.route("/", endpoint="homepage")  #post list
 def index():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        flash("Please login in first.")
+        return redirect(url_for('login.home'))
+    
+    user = Users.query.get(user_id) 
+    if not user:
+        flash("Please login in first.")
+        return redirect(url_for('login.home')) #check used-id 
+    
     search_keyword:str=request.args.get("q","").strip()
     tag_filter:str=request.args.get("tag","").strip()
     posts_query=Post.query
