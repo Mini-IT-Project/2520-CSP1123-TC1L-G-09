@@ -1,11 +1,14 @@
 from datetime import datetime
 from extensions import db
+from zoneinfo import ZoneInfo
 
 post_tags=db.Table(
     'post_tags',
     db.Column('post_id',db.Integer,db.ForeignKey('posts.id'),primary_key=True),
     db.Column('tag_id',db.Integer,db.ForeignKey('tags.id'),primary_key=True)
 )
+
+MALAYSIA_TZ=ZoneInfo("Asia/Kuala_Lumpur")
 
 class Post(db.Model):
     __tablename__='posts'
@@ -14,8 +17,8 @@ class Post(db.Model):
     title=db.Column(db.String(50),nullable=False)
     content=db.Column(db.Text,nullable=False)
     media_url = db.Column(db.String(300), nullable=True)
-    created_at=db.Column(db.DateTime,default=datetime.utcnow,nullable=False)
-    updated_at=db.Column(db.DateTime,default=datetime.utcnow,onupdate=datetime.utcnow)
+    created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
+    updated_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),onupdate=datetime.now(MALAYSIA_TZ))
 
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     tags= db.relationship('Tag',secondary=post_tags,back_populates='posts')
@@ -63,7 +66,7 @@ class Comment(db.Model):
     post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
     author=db.Column(db.String(50),default='Anon')
     body=db.Column(db.Text,nullable=False)
-    created_at=db.Column(db.DateTime,default=datetime.utcnow,nullable=False)
+    created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     post=db.relationship('Post',back_populates='comments')
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     
@@ -73,5 +76,5 @@ class Report(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
     reason=db.Column(db.String(300),nullable=False)
-    create_at=db.Column(db.DateTime,default=datetime.utcnow,nullable=False)
+    create_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     post=db.relationship('Post',back_populates='reports')
