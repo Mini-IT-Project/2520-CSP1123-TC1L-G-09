@@ -48,7 +48,7 @@
                     style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
 
                     <div class="meta-text">
-                        <strong>{{p.author_profile.degree_name if p.author_profile else ''}} - {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
+                        <strong>{{p.author_profile.degree_name if p.author_profile else ''}} IN {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
                         <h3 class="post-title"><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
                         <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
                     </div>
@@ -102,18 +102,43 @@
         <span class="tooltip">Create new post</span>
     </a>
 <script>
-    document.querySelectorAll(".like-btn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const postId = btn.dataset.id;
-            const res = await fetch(`/post/${postId}/like`, {method:"POST"});
-            const data = await res.json();
-            if(data.ok){
-                btn.querySelector(".like-count").textContent = data.likes;
-            } else {
-                alert(data.error);
-            }
+    document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const postId = button.getAttribute("data-id");
+
+            fetch(`/forum/post/${postId}/like`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    const countSpan = button.querySelector(".like-count");
+                    if (countSpan) countSpan.textContent = data.likes;
+                } else {
+                    alert(data.error || "Like failed.");
+                }
+            })
+            .catch(err => console.error("Like error:", err));
         });
     });
+
+    if (typeof io !== "undefined") {
+        const socket = io();
+        socket.on("like_updates", function(data) {
+            const buttonEl = document.querySelector(`.like-btn[data-id="${data.post_id}"]`);
+            if (buttonEl) {
+                const countSpan = buttonEl.querySelector(".like-count");
+                if (countSpan) countSpan.textContent = data.likes;
+            }
+        });
+    }
+});
+
 </script>
 </body>
 </html>
