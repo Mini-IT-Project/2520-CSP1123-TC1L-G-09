@@ -49,6 +49,7 @@
                     style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                     <div>
                         <h3><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
+                        <strong>{{p.author_profile.degree_name if p.author_profile else ''}} - {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
                         <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
                     </div>
                 </div>
