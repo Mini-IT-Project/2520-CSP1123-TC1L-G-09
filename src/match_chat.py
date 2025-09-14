@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from extensions import db
+from extensions import socketio
 from login import Users
 
 MatchChat_bp = Blueprint("MatchChat",__name__)
@@ -18,6 +19,10 @@ def home():
         return redirect(url_for('login.home')) #check used-id 
     
     return render_template("MatchChat.html")
+
+@socketio.on('my event')
+def handle_my_event(data):
+    print(data, request.sid)
 
 def random_match():
     a

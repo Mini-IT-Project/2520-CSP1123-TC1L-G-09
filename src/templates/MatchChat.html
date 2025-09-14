@@ -28,13 +28,20 @@
             </ul>
         </nav>
     </header>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> 
+    <script type="text/javascript" charset="utf-8"> 
+        var socket = io("http://127.0.0.1:5000/"); 
+        socket.on('connect', function() { 
+            socket.emit('my event', {data: 'I\'m connected!'}); 
+        }); 
+    </script>
     <body style="text-align: center;">
         <br><br><br>
         <h1 class="slogan-line">
             <span class="red">Meet different</span> 
              <span class="blue">people</span><br>
-            <span class="blue">Chat with no</span> 
-            <span class="red"> presure</span>
+            <span class="blue">Chat with</span> 
+            <span class="red"> no presure</span>
         </h1>
             <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="submit">Match Now!</button>
     </body>
