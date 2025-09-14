@@ -55,7 +55,7 @@
                     <i class="fas fa-cloud-upload-alt upload-icon"></i>
                     <p class="upload-text">Upload your video or photo</p>
                 </div>
-                <input type="file" id="file-input" name="media" accept="image/*,video/*" style="display: none;">
+                <input type="file" id="file-input" name="media" accept="image/*,video/*" multiple style="display: none;">
 
                 <div class="preview-container" id="preview-container">
                     <div class="media-preview">
@@ -71,25 +71,37 @@
             </div>
         </form>
     </div>
-    <script>
+
+<script>
     document.getElementById("file-input").addEventListener("change", function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
 
-        const imagePreview = document.getElementById("image-preview");
-        const videoPreview = document.getElementById("video-preview");
-        imagePreview.style.display = "none";
-        videoPreview.style.display = "none";
+    const previewContainer = document.getElementById("preview-container");
+    previewContainer.innerHTML = ""; 
+    previewContainer.style.display = "grid"; 
 
+    Array.from(files).forEach(file => {
         const url = URL.createObjectURL(file);
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("media-preview");
+
         if (file.type.startsWith("image/")) {
-            imagePreview.src = url;
-            imagePreview.style.display = "block";
+            const img = document.createElement("img");
+            img.src = url;
+            wrapper.appendChild(img);
         } else if (file.type.startsWith("video/")) {
-            videoPreview.src = url;
-            videoPreview.style.display = "block";
+            const video = document.createElement("video");
+            video.src = url;
+            video.controls = true;
+            wrapper.appendChild(video);
         }
+
+        previewContainer.appendChild(wrapper);
     });
-    </script>
+});
+
+
+</script>
 </body>
 </html>

@@ -10,13 +10,20 @@ post_tags=db.Table(
 
 MALAYSIA_TZ=ZoneInfo("Asia/Kuala_Lumpur")
 
+class PostMedia(db.Model):
+    __tablename__="post_media"
+    id=db.Column(db.Integer,primary_key=True)
+    post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
+    media_url=db.Column(db.String(300),nullable=False)
+    post=db.relationship("Post",back_populates="media")
+
 class Post(db.Model):
     __tablename__='posts'
-
     id = db.Column(db.Integer,primary_key=True)
     title=db.Column(db.String(50),nullable=False)
     content=db.Column(db.Text,nullable=False)
     media_url = db.Column(db.String(300), nullable=True)
+    media=db.relationship("PostMedia",back_populates="post",cascade="all,delete-orphan")
     created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     updated_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),onupdate=datetime.now(MALAYSIA_TZ))
 

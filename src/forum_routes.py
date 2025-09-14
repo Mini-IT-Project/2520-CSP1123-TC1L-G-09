@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint,render_template,request,redirect,url_for,flash,current_app,send_from_directory,session
 from extensions import db,socketio
-from forum_models import Post, Tag, Comment, Like, Report
+from forum_models import Post, Tag, Comment, Like, Report,PostMedia
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 from login import Users
@@ -110,14 +110,17 @@ def create_post():
         flash("Please write your title and content","error")
         return redirect(url_for("forum.create_post"))
     
-    media_url=handle_file_upload(request.files.get("media"))
-    
     new_post=Post(
         title=title,
         content=content,
-        media_url=media_url,
         user_id=user_id
     )
+
+    uploads_files=request.files.getlist("media")
+    for file in request.files.getlist("media"):
+        url=handle_file_upload(file)
+        if url:
+            new_post.media.append(PostMedia(media_url=url))
 
     for tag in process_tags(tags_input):
         new_post.tags.append(tag)

@@ -985,15 +985,30 @@ label{
 }
 
 .preview-container{
+    width: 100%;
+    max-width: 100%;
     margin-top: 20px;
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
 }
 
 .media-preview{
     width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
+}
+
+.media-preview img,
+.media-preview video {
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
