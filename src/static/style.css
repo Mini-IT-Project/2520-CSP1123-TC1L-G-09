@@ -834,7 +834,7 @@ ul {
 .post-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
+    margin-top: 2px;
     gap: 10px;
     border-top: 1px solid #e0e0e0; 
 }
@@ -1161,9 +1161,11 @@ label{
     color: #050505;
     line-height: 1.4;
     gap: 6px;
-    margin: 12px auto;
+
     text-align: justify ;
-    flex-direction: column;
+    text-justify: inter-word;
+    margin: 12px auto;
+    margin-bottom: 2px;
 
     display: -webkit-box;
     line-clamp: 4;
@@ -1173,16 +1175,19 @@ label{
     overflow: hidden;
     text-overflow: ellipsis;
 
-    min-height: 180px;
-    max-height: 180px;
-    max-width: 80%; 
+    max-height: 6.4em;
+    min-height: unset;
+    width: 190px;
 }
 
 .post-content p {
+    margin: 0;
+    text-align: justify;
+    text-justify: inter-word;
+    
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-
     line-clamp: 4;
     box-orient: vertical;
 
@@ -1192,21 +1197,13 @@ label{
 }
 
 .post-media{
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 3px;
-    max-height: 100px;
+    max-width: 80%;
+    border-radius: 6px;
+    margin: 8px auto;
+    max-height: 120px;
     object-fit: cover;   
     display: block;     
-}
-
-.post-content img,
-.post-content video {
-    max-width: 100%;
-    max-height: 120px; 
-    object-fit: cover;
-    border-radius: 6px;
-    display: block;
+    align-items: center;
 }
 
 .tags{
