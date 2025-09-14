@@ -1159,13 +1159,23 @@ label{
 .post-content{
     font-size: 16px;
     color: #050505;
-    white-space: pre-line;
-    display: flex;
     line-height: 1.4;
     gap: 6px;
-    max-height: 180px;
-    overflow:hidden;
+    margin: 12px auto;
+    text-align: justify ;
     flex-direction: column;
+
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    min-height: 180px;
+    max-height: 180px;
+    max-width: 80%; 
 }
 
 .post-content p {
