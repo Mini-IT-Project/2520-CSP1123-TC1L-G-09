@@ -804,14 +804,26 @@ ul {
 .meta-text {
     display: flex;
     flex-direction: column; 
+    align-items: flex-start;
+}
+
+.post-meta .meta-text .post-author {
+    font-size: 17px;    
+    font-weight: bold;
+    margin: 6px 0 4px 0;
+    margin-bottom: -12px; 
+    color: #222;
+    line-height: 1.2;
 }
 
 .post-title {
     font-size: 20px; 
     font-weight: bold;
     line-height: 1.2;
-    margin: 0 0 4px 0;
+    margin: 0 0 6px 0;
     word-break: break-word;
+    text-align: left;
+    margin-bottom: 2px;
 }
 
 .post-excerpt {
@@ -822,7 +834,7 @@ ul {
 .post-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
+    margin-top: 2px;
     gap: 10px;
     border-top: 1px solid #e0e0e0; 
 }
@@ -1155,25 +1167,42 @@ label{
     font-weight: 600;
     margin-bottom: 12px;
     color: #050505;
+    text-align: left;
+    word-break: break-word;
 }
 
 .post-content{
     font-size: 16px;
     color: #050505;
-    white-space: pre-line;
-    display: flex;
     line-height: 1.4;
     gap: 6px;
-    max-height: 180px;
-    overflow:hidden;
-    flex-direction: column;
+
+    text-align: justify ;
+    text-justify: inter-word;
+    margin: 12px auto;
+    margin-bottom: 2px;
+
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-height: 6.4em;
+    min-height: unset;
+    width: 190px;
 }
 
 .post-content p {
+    margin: 0;
+    text-align: justify;
+    text-justify: inter-word;
+    
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-
     line-clamp: 4;
     box-orient: vertical;
 
@@ -1183,21 +1212,13 @@ label{
 }
 
 .post-media{
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 3px;
-    max-height: 100px;
+    max-width: 80%;
+    border-radius: 6px;
+    margin: 8px auto;
+    max-height: 120px;
     object-fit: cover;   
     display: block;     
-}
-
-.post-content img,
-.post-content video {
-    max-width: 100%;
-    max-height: 120px; 
-    object-fit: cover;
-    border-radius: 6px;
-    display: block;
+    align-items: center;
 }
 
 .tags{

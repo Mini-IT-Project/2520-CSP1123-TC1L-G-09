@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <title>MMU SOUL · FORUM</title>
+    <title>MMU FORUM</title>
 </head>
 <body>
     <header>
@@ -12,7 +12,7 @@
             <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
         </a>
         <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
-        MMU SOUL · FORUM
+        MMU FORUM
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
@@ -46,27 +46,33 @@
                 <div class="post-meta">
                     <img src="{{url_for('static',filename='avatar' ~ (p.author.profile.avatar_type if p.author and p.author.profile else 0)~'.png')}}" class="avatar" alt="avatar" 
                     style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
-
                     <div class="meta-text">
-                        <strong>{{p.author_profile.degree_name if p.author_profile else ''}} IN {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
+                        <h3 class="post-author">
+                            <strong>{{p.author_profile.degree_name if p.author_profile else ''}} IN {{p.author_profile.faculty_name if p.author_profile else ''}}</strong>
+                        </h3>
                         <h3 class="post-title"><a href="{{url_for('forum.post_detail',post_id=p.id)}}">{{p.title}}</a></h3>
                         <span class="timestamp">{{p.created_at.strftime('%Y-%m-%d %H:%M')}}</span>
                     </div>
                 </div>
 
                 <div class="post-content">
-                    <p class="post-excerpt">{{ p.content[:100] }}{% if p.content|length > 100 %}...{% endif %}</p>
-                    {% if p.media_url %}
+                    <p class="post-excerpt">
+                        {{ p.content[:100] }}{% if p.content|length > 100 %}...{% endif %}
+                    </p>
+                </div>
+
+                {% if p.media_url %}
+                <div class="post-media">
                     {% set _m=p.media_url.lower() %}
                     {% if _m.endswith('.png') or _m.endswith('.jpg') or _m.endswith('.jpeg') or _m.endswith('.gif') %}
-                    <img class="media" src="{{p.media_url}}" alt="image" />
+                        <img class="media" src="{{p.media_url}}" alt="image" />
                     {% else %}
-                    <video class="media" controls>
-                        <source src="{{p.media_url}}" />
-                    </video>
-                    {% endif %}
+                        <video class="media" controls>
+                            <source src="{{p.media_url}}" />
+                        </video>
                     {% endif %}
                 </div>
+                {% endif %}
 
                 <div class="spacer"></div>
 
