@@ -28,14 +28,8 @@
             </ul>
         </nav>
     </header>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> 
-    <script type="text/javascript" charset="utf-8"> 
-        var socket = io("http://127.0.0.1:5000/"); 
-        socket.on('connect', function() { 
-            socket.emit('my event', {data: 'I\'m connected!'}); 
-        }); 
-    </script>
     <body style="text-align: center;">
+        <div id="MatchChat-view">
         <br><br><br>
         <h1 class="slogan-line">
             <span class="red">Meet different</span> 
@@ -43,5 +37,38 @@
             <span class="blue">Chat with</span> 
             <span class="red"> no presure</span>
         </h1>
-            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="submit">Match Now!</button>
+            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match_button">Match Now!</button>
+        </div>
+
+        <div id="MatchChat-hidden" style="display: none;">
+            <p style="margin-top: 20vh;">searching for user...</p>
+            <br><br>
+            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()">Cancel</button>
+        </div>
+
+    <script>  /*gpt generated, but i understand how it work*/
+        function toggleEdit() {
+            let view = document.getElementById("MatchChat-view");
+            let edit = document.getElementById("MatchChat-hidden");
+            if (view.style.display === "none") {
+                view.style.display = "block";
+                edit.style.display = "none";
+            } else {
+                view.style.display = "none";
+                edit.style.display = "block";
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> 
+    <script type="text/javascript" charset="utf-8"> 
+        const socket = io(); 
+        socket.on('connect', function() { 
+            socket.emit('my event', {data: 'I\'m connected!'}); 
+        }); 
+    </script>
+    <script>
+        document.getElementById("match-button").addEventListener("click", () => {
+            socket.emit("match_request");
+        });
+    </script>
     </body>
