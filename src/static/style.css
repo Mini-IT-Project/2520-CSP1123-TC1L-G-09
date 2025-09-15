@@ -1103,35 +1103,38 @@ label{
     }
 }
 
-/* post detail */
+/* post */
 .dropdown{
     position: relative;
 }
 
 .dropdown-toggle{
-    background: none;
+    background-color: #c52c2a;
+    color: white;
     border: none;
     font-size: 20px;
     cursor: pointer;
     padding: 4px 8px;
-    color: #65676b;
     border-radius: 50%;
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: -40px;
+    right: -5px;
+    transition: background-color 0.2s;
+    outline: none; 
+    box-shadow: none;
 }
 
 .dropdown-toggle:hover{
-    background-color: #f0f2f5;
+    background-color: #d32f2f;
 }
 
 .dropdown-menu{
     position: absolute;
     right: 0;
     top: 100%;
-    background-color:none;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color:white;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     padding: 8px 0;
     min-width: 120px;
     z-index: 100;
@@ -1140,11 +1143,11 @@ label{
 
 .dropdown-menu a{
     display: block;
-    padding: 8px 16px;
+    padding: 4px 10px;
     text-decoration: none;
     color: #1c1e21;
     font-size: 12px;
-}
+} 
 
 .dropdown-menu:hover{
     background-color: #f0f2f5;
@@ -1160,6 +1163,19 @@ label{
     justify-content: center;
     gap:16px;
     padding:16px;
+}
+
+.post-header .post-author {
+    font-size: 18px;      
+    font-weight: 600;
+    color: #ffffff;        
+}
+
+.post-header .post-timestamp {
+    font-size: 10px;       
+    color: #fff;           
+    margin: 0;
+    text-align: left;
 }
 
 .post-title{
@@ -1183,16 +1199,16 @@ label{
     margin-bottom: 2px;
 
     display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
 
     overflow: hidden;
     text-overflow: ellipsis;
 
-    max-height: 6.4em;
+    max-height: 8.4em;
     min-height: unset;
-    width: 190px;
+    width: 180px;
 }
 
 .post-content p {
@@ -1202,8 +1218,8 @@ label{
     
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
     box-orient: vertical;
 
     overflow:hidden;
@@ -1212,7 +1228,7 @@ label{
 }
 
 .post-media{
-    max-width: 80%;
+    max-width: 70%;
     border-radius: 6px;
     margin: 8px auto;
     max-height: 120px;
@@ -1240,8 +1256,12 @@ label{
     background-color: #f0f2f5;
 }
 
-.comment-section{
-    margin-top: 24px;
+.comments-section {
+    margin: 20px auto 20px; 
+    padding: 20px;
+    background: #f9f9f9;  
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
 }
 
 .comment-title{
@@ -1281,6 +1301,7 @@ label{
     background-color: #1877f2;
     color: white;
     border: none;
+    margin: 20px auto 20px;
     border-radius: 20px;
     padding: 8px 16px;
     font-weight: 600;
@@ -1364,4 +1385,104 @@ label{
 
 .muted{
     color: #65676b;
+}
+
+/* post detail section */
+.post-detail-container {
+  max-width: 800px;        
+  margin: 0 auto 20px;     
+  padding: 0 20px;         
+  box-sizing: border-box; 
+}
+
+.post-detail-container .post-detail-title {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 12px 0 8px;
+    color: #111;
+    width: 100%; 
+    padding: 0 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.post-detail-container .post-detail-content  {
+    font-size: 16px;
+    color: #050505;
+    line-height: 1.6;
+    margin: 0 auto 12px;
+    text-align: justify;
+    white-space: normal;
+    overflow: visible;
+    display: block;
+
+    display: flex;
+    justify-content: center; 
+}
+
+.post-detail-container .post-detail-tags { 
+    margin: 0 0 20px;     
+    text-align: left;      
+}
+
+.post-detail-container .post-detail-tag {
+    display: inline-block;
+    margin: 4px 6px 0 0;
+    padding: 4px 10px;
+    font-size: 13px;
+    background: #c52c2a;
+    border-radius: none;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.post-detail-actions {
+    display: flex;            
+    justify-content: center;   
+    align-items: center;       
+    gap: 20px;                 
+    margin: 20px 0;
+}
+
+.post-detail-actions {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    gap: 12px;                 
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0; 
+}
+
+.post-detail-button {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 6px;                  
+    width: 90px;         
+    height: 40px;              
+    padding: 0 8px;
+    background-color: #d6eaff; 
+    color: #0077cc;            
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: none !important; 
+    line-height: 1;
+    transition: background-color 0.2s ease;
+}
+
+.post-detail-button:hover {
+    background-color: #cce6ff; 
+}
+
+.post-detail-button span {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
 }
