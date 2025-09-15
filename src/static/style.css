@@ -1162,6 +1162,19 @@ label{
     padding:16px;
 }
 
+.post-header .post-author {
+    font-size: 18px;      
+    font-weight: 600;
+    color: #ffffff;        
+}
+
+.post-header .post-timestamp {
+    font-size: 10px;       
+    color: #fff;           
+    margin: 0;
+    text-align: left;
+}
+
 .post-title{
     font-size: 18px;
     font-weight: 600;
@@ -1183,16 +1196,16 @@ label{
     margin-bottom: 2px;
 
     display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
 
     overflow: hidden;
     text-overflow: ellipsis;
 
-    max-height: 6.4em;
+    max-height: 8.4em;
     min-height: unset;
-    width: 190px;
+    width: 180px;
 }
 
 .post-content p {
@@ -1202,8 +1215,8 @@ label{
     
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
     box-orient: vertical;
 
     overflow:hidden;
@@ -1212,7 +1225,7 @@ label{
 }
 
 .post-media{
-    max-width: 80%;
+    max-width: 70%;
     border-radius: 6px;
     margin: 8px auto;
     max-height: 120px;
