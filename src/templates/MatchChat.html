@@ -37,13 +37,13 @@
             <span class="blue">Chat with</span> 
             <span class="red"> no presure</span>
         </h1>
-            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match_button">Match Now!</button>
+            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match-button">Match Now!</button>
         </div>
 
         <div id="MatchChat-hidden" style="display: none;">
             <p style="margin-top: 20vh;">searching for user...</p>
             <br><br>
-            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()">Cancel</button>
+            <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="cancel-button">Cancel</button>
         </div>
 
     <script>  /*gpt generated, but i understand how it work*/
@@ -69,6 +69,9 @@
     <script>
         document.getElementById("match-button").addEventListener("click", () => {
             socket.emit("match_request");
+        });
+        document.getElementById("cancel-button").addEventListener("click", () => {
+            socket.emit("cancel_request");
         });
     </script>
     </body>
