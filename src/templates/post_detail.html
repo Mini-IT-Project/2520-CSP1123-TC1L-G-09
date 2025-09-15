@@ -15,7 +15,7 @@
             alt="avatar" style="width: 40px; height:40px; border-radius: 50%; object-fit: cover;">
             <div style="display:flex;flex-direction: column;gap:2px;" >
                 <span class="post-author">
-                    {{author_profile.degree_name if author_profile else ''}} IN {{author_profile.faculty_name if author_profile else ''}}
+                    {{author_profile.degree_name if author_profile else ''}} {{author_profile.faculty_name if author_profile else 'Anonymous'}}
                 </span>
                 <span class="post-timestamp">
                     {{post.created_at.strftime('%Y-%m-%d %H:%M')}}
@@ -44,16 +44,15 @@
 
         <div class="post-detail-content">
             <p>{{post.content }}</p>
-            {% if post.media_url %}
-                {% set _m = post.media_url.lower() %}
-                {% if _m.endswith('.png') or _m.endswith('.jpg') or _m.endswith('.jpeg') or _m.endswith('.gif') %}
-                    <img class="post-media" src="{{post.media_url}}" alt="post image"/>
+            {% for m in post.media %}
+            {% if m.media_url.endswith('.png') or m.media_url.endswith('.jpg') or m.media_url.endswith('.jpeg') or m.media_url.endswith('.gif') %}
+                    <img class="media" src="{{m.media_url}}" alt="post image"/>
                 {% else %}
-                    <video class="post-media" controls>
-                        <source src="{{post.media_url}}">
+                    <video class="media" controls>
+                        <source src="{{m.media_url}}">
                     </video>
-                {% endif %}
             {% endif %}
+            {% endfor %}
         </div>
 
         <div class="post-detail-tags">
@@ -64,7 +63,7 @@
     </div>
 
     <footer class="post-detail-actions">
-        <button type="button" class="post-detail-button" data-id="{{ post.id }}">
+        <button type="button" class="icon-btn like-btn" data-id="{{ post.id }}">
             👍🏻<span class="like-count">{{ post.like_count()}}</span>
         </button>
 
@@ -109,114 +108,75 @@
     {% endfor %}
     </ul>
 </section>
-
 <script>
-   document.getElementById("comment-form").addEventListener("submit", async function(e) {
-    e.preventDefault(); 
-    const formData = new FormData(this);
-    try {
-        const res = await fetch(this.action, { method: "POST", body: formData });
-        const data = await res.json();
-        if (data.ok) {
-            const commentList = document.querySelector(".comment-list");
-            const li = document.createElement("li");
-            li.classList.add("comment-item");
-            li.innerHTML = `
-                <img src="/static/avatar0.png" alt="avatar" class="comment-avatar">
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <span class="comment-author">${data.author || "Anonymous"}</span>
-                    </div>
-                    <p class="comment-text">${formData.get("body")}</p>
-                    <div class="comment-time">just now</div>
-                </div>
-            `;
-            commentList.prepend(li);
-
-            const countSpan = document.querySelector(".comment-count");
-            if (countSpan) {
-                countSpan.textContent = data.total_comment;
-            }
-
-            this.reset();
-        } else {
-            alert(data.error);
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Network error while commenting.");
-    }
-});
-    
-    socket.on("new_comment", function(data) {
-    if (data.post_id === parseInt("{{ post.id }}")) {
-        const commentList = document.querySelector(".comment-list");
-
-        const li = document.createElement("li");
-        li.classList.add("comment-item");
-        li.innerHTML = `
-            <img src="/static/avatar${data.avatar_type || 0}.png" alt="avatar" class="comment-avatar">
-            <div class="comment-content">
-                <div class="comment-header">
-                    <span class="comment-author">${data.author || "Anonymous"}</span>
-                </div>
-                <p class="comment-text">${data.body}</p>
-                <div class="comment-time">just now</div>
-            </div>
-        `;
-        commentList.prepend(li);
-
-        const countSpan = document.querySelector(".comment-count");
-        if (countSpan) {
-            countSpan.textContent = data.total_comment; 
-        }
-    }
-});
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".like-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            const postId = button.getAttribute("data-id");
-
-            fetch(`/forum/post/${postId}/like`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({})
-            })
-            .then(res => res.json())
-            .then(data => {
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".like-btn").forEach(btn => {
+        btn.addEventListener("click", async function() {
+            const postId = this.dataset.id;
+            try {
+                const res = await fetch(`/forum/${postId}/like`, { method: "POST" });
+                const data = await res.json();
                 if (data.ok) {
-                    const countSpan = button.querySelector(".like-count");
-                    if (countSpan) countSpan.textContent = data.likes;
-                } else {
-                    alert(data.error || "Like failed.");
+
+                    const countSpan = this.querySelector(".like-count");
+                    if (countSpan) {
+                        countSpan.textContent = data.total_likes;
+                    }
                 }
-            })
-            .catch(err => console.error("Like error:", err));
+            } catch (err) {
+                console.error("Like error:", err);
+            }
         });
     });
 
+    const commentForm = document.getElementById("comment-form");
+    if (commentForm) {
+        commentForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            try {
+                const res = await fetch(this.action, { method: "POST", body: formData });
+                const data = await res.json();
+                if (data.ok) {
+                    const commentList = document.querySelector(".comment-list");
+                    const li = document.createElement("li");
+
+                    li.innerHTML = 
+                        '<img src="/static/avatar' + (data.avatar_type || 0) + '.png" width="30">' +
+                        '<strong>' + data.author + '</strong>: ' + data.body;
+
+                    commentList.appendChild(li);
+                    this.reset();
+                }
+            } catch (err) {
+                console.error("Comment error:", err);
+            }
+        });
+    }
+
     if (typeof io !== "undefined") {
         const socket = io();
-        socket.on("like_updates", function(data) {
-            const buttonEl = document.querySelector(`.like-btn[data-id="${data.post_id}"]`);
-            if (buttonEl) {
-                const countSpan = buttonEl.querySelector(".like-count");
-                if (countSpan) countSpan.textContent = data.likes;
+        socket.on("new_comment", function(data) {
+            const commentList = document.querySelector(".comment-list");
+            if (commentList) {
+                const li = document.createElement("li");
+
+                li.innerHTML = 
+                    '<img src="/static/avatar' + (data.avatar_type || 0) + '.png" width="30">' +
+                    '<strong>' + data.author + '</strong>: ' + data.body;
+
+                commentList.appendChild(li);
             }
         });
     }
 });
 
-    function confirmDelete() {
+function confirmDelete() {
     if (confirm("Are you sure you want to delete this post? This action cannot be undone.")) {
         document.getElementById("delete-form").submit();
     }
 }
-
 </script>
+
 </body>
 </html>
