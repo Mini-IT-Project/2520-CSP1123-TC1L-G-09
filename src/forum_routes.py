@@ -177,13 +177,19 @@ def edit_post(post_id):
             new_tag=Tag(name=tag_name)
             db.session.add(new_tag)
             post.tags.append(new_tag)
-
-    if request.form.get("delete_media")=="1":
-        post.media_url=None
     
-    uploaded_file=request.files.get("media")
-    if uploaded_file and allowed_file(uploaded_file.filename):
-        post.media_url=handle_file_upload(uploaded_file)
+    delete_ids=request.form.getlist("delete_media_ids")
+    if delete_ids:
+        for media_id in delete_ids:
+            media_obj=PostMedia.query.get(int(media_id))
+            if media_obj and media_obj in post.media:
+                db.session.delete(media_obj)
+    
+    uploads_files=request.files.getlist("media")
+    for file in request.files.getlist("media"):
+        url=handle_file_upload(file)
+        if url:
+            post.media.append(PostMedia(media_url=url))
 
     db.session.commit()
     flash("Post updated successfully","success")

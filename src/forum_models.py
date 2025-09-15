@@ -22,7 +22,6 @@ class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title=db.Column(db.String(50),nullable=False)
     content=db.Column(db.Text,nullable=False)
-    media_url = db.Column(db.String(300), nullable=True)
     media=db.relationship("PostMedia",back_populates="post",cascade="all,delete-orphan")
     created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     updated_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),onupdate=datetime.now(MALAYSIA_TZ))
@@ -44,7 +43,7 @@ class Post(db.Model):
             'id':self.id,
             'title':self.title,
             'content':(self.content[:200] .rstrip() + '...')if len(self.content)>200 else self.content,
-            'media_url': self.media_url,
+            'media': [m.media_url for m in self.media],
             'created_at':self.created_at.isoformat(),
             'updated_at':self.updated_at.isoformat() if self.updated_at else None,
             'tags':[t.name for t in self.tags],

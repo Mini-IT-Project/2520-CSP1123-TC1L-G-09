@@ -36,33 +36,43 @@
             {% if mode=="edit" and post.media_url %}
             <div class="form-group">
                 <label>Current Media</label>
-                {% if post.media_url.endswith(('.png','.jpeg','.jpg','.gif')) %}
-                <img src="{{post.media_url}}" style="max-width: 200px;">
-                {% else %}
-                <video src="{{post.media_url}}" style="max-width: 200px;" controls></video>
-                {% endif %}
-            </div>
-
-            <div>
-                <input type="checkbox" id="delete-media" name="delete_media" value="1">
-                <label for="delete-media">Delete this media</label>
+                <div class="preview-container">
+                    {% for m in post.media %}
+                    <div class="media-preview">
+                        {% if m.media_url.endswith(('.png','.jpeg','.jpg','.gif')) %}
+                        <img src="{{m.media_url}}">
+                        {% else %}
+                        <video src="{{m.media_url}}" controls></video>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <input type="checkbox" name="delete_media_ids" value="{{m.id}}">DELETE MEDIA
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             {% endif %}
 
-            <div class="form-group">
-                <label>Upload media</label>
-                <div class="file-upload" id="upload-area" onclick="document.getElementById('file-input').click()">
-                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                    <p class="upload-text">Upload your video or photo</p>
-                </div>
-                <input type="file" id="file-input" name="media" accept="image/*,video/*" multiple style="display: none;">
+            <div class="upload-box">
+                <input type="file" id="media" name="media" multiple accept="image/*,video/*" hidden>
+                <label for="media" class="upload-label">
+                    <span>Upload your video or photo</span>
+                </label>
+            </div>
 
-                <div class="preview-container" id="preview-container">
-                    <div class="media-preview">
-                        <img id="image-preview" style="width:100%; display: none;">
-                        <video id="video-preview" style="width:100%; display: none;" controls></video>
-                    </div>
-                </div>
+            <div class="preview-container" id="preview-container">
+                {% if post and post.media %}
+                    {% for media in post.media %}
+                        <div class="media-preview">
+                            {% if media.media_url.endswith(('.png','.jpg','.jpeg','.gif')) %}
+                                <img src="{{ url_for('static', filename=media.media_url) }}">
+                            {% else %}
+                                <video src="{{ url_for('static', filename=media.media_url) }}" controls></video>
+                            {% endif %}
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <div class="form-actions">
@@ -73,34 +83,54 @@
     </div>
 
 <script>
-    document.getElementById("file-input").addEventListener("change", function(event) {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
+const fileInput = document.getElementById("media");
+const previewContainer = document.getElementById("preview-container");
 
-    const previewContainer = document.getElementById("preview-container");
-    previewContainer.innerHTML = ""; 
-    previewContainer.style.display = "grid"; 
+let dt = new DataTransfer();
 
-    Array.from(files).forEach(file => {
-        const url = URL.createObjectURL(file);
+fileInput.addEventListener("change", function(e) {
+    const newFiles = Array.from(e.target.files);
+
+    newFiles.forEach((file) => {
+        const fileURL = URL.createObjectURL(file);
+
         const wrapper = document.createElement("div");
         wrapper.classList.add("media-preview");
 
         if (file.type.startsWith("image/")) {
             const img = document.createElement("img");
-            img.src = url;
+            img.src = fileURL;
             wrapper.appendChild(img);
         } else if (file.type.startsWith("video/")) {
             const video = document.createElement("video");
-            video.src = url;
+            video.src = fileURL;
             video.controls = true;
             wrapper.appendChild(video);
         }
 
-        previewContainer.appendChild(wrapper);
-    });
-});
+        const removeBtn = document.createElement("button");
+        removeBtn.innerHTML = "×";
+        removeBtn.classList.add("remove-btn");
+        removeBtn.onclick = function() {
+            wrapper.remove();
 
+            const index = Array.from(dt.files).indexOf(file);
+            if (index > -1) {
+                dt.items.remove(index);
+            }
+            fileInput.files = dt.files;
+        };
+
+        wrapper.appendChild(removeBtn);
+        previewContainer.appendChild(wrapper);
+
+        dt.items.add(file);
+    });
+
+    fileInput.files = dt.files;
+
+    fileInput.value = "";
+});
 
 </script>
 </body>
