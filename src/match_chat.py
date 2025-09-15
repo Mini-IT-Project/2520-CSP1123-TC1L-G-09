@@ -47,11 +47,11 @@ def handle_connect():
     if user_id:
         user= Connected_users.query.filter_by(user_id=user_id).first()
         if user:
-            user.sid= request.sid
+            user.sid= request.sid   #every time connected, update sid, so sid is lately
             print(f"new sid, {user.sid}, {request.sid}")
 
             activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
-            if activated_rooms:
+            if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
                 join_room(activated_rooms.room_name, sid= request.sid)
                 print (f"{user_id}, rejoin")
         else:
@@ -78,17 +78,17 @@ def handle_match_request():
     user_id = session.get("user_id") 
 
     other = MC_WaitingUser.query.filter(MC_WaitingUser.user_id != user_id).first() 
-    if other: 
-        room_name= f"room-{uuid.uuid4().hex}"
+    if other:             #if other in waiting pool, direct join with other, if no, go into waiting pool
+        room_name= f"room-{uuid.uuid4().hex}"                #unique room name
 
         my_activated_rooms= Activated_rooms.query.filter_by(room_name=room_name).first()
         if not my_activated_rooms:
             new_activated_rooms= Activated_rooms(room_name=room_name, user1_id=user_id, user2_id=other.user_id)
             db.session.add(new_activated_rooms)
-            db.session.commit()
+            db.session.commit()           #update activated_room to db.Model, so user can rejoin while reconnect
 
         my_new_sid=Connected_users.query.filter_by(user_id=user_id).first()
-        other_new_sid=Connected_users.query.filter_by(user_id=other.user_id).first()
+        other_new_sid=Connected_users.query.filter_by(user_id=other.user_id).first()      #use lately sid to join room
 
         join_room(room_name, sid=my_new_sid.sid)
         join_room(room_name, sid=other_new_sid.sid)
@@ -99,7 +99,7 @@ def handle_match_request():
 
         emit("match success", to=room_name)
     else:
-        new_user=MC_WaitingUser(user_id=user_id)
+        new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
         print(f"{user_id} are waiting")
         db.session.add(new_user)
         db.session.commit()
