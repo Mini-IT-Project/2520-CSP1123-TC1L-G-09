@@ -39,24 +39,28 @@
         </div>
     </header>
 
-    <h2 class="post-title">{{post.title}}</h2>
+    <div class="post-detail-container">
+        <h1 class="post-detail-title">{{ post.title }}</h1>
 
-    <div class="post-content">
-        <p>{{post.content | replace ('\n','<br>')|safe}}</p>
-    </div>
-    
-    {% if post.media_url %}
-    {% if post.media_url.endswith(('.png','.jpg','.jpeg','.gif')) %}
-    <img class="post-media" src="{{post.media_url}}" alt="post image">
-    {% else %}
-    <video class="post-media" controls><source src="{{post.media_url}}"></video>
-    {% endif %}
-    {% endif %}
+        <div class="post-detail-content">
+            <p>{{post.content }}</p>
+            {% if post.media_url %}
+                {% set _m = post.media_url.lower() %}
+                {% if _m.endswith('.png') or _m.endswith('.jpg') or _m.endswith('.jpeg') or _m.endswith('.gif') %}
+                    <img class="post-media" src="{{post.media_url}}" alt="post image"/>
+                {% else %}
+                    <video class="post-media" controls>
+                        <source src="{{post.media_url}}">
+                    </video>
+                {% endif %}
+            {% endif %}
+        </div>
 
-    <div class="tags">
-        {% for t in post.tags %}
-        <a class="tag" href="{{url_for('forum.homepage')}}?tag={{t.name}}">#{{t.name}}</a>
-        {% endfor %}
+        <div class="post-detail-tags">
+            {% for t in post.tags %}
+                <a class="post-detail-tag" href="{{url_for('forum.homepage')}}?tag={{t.name}}">#{{t.name}}</a>
+            {% endfor %}
+        </div>
     </div>
 
     <footer class="post-actions">

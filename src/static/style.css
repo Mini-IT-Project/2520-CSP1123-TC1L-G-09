@@ -1103,7 +1103,7 @@ label{
     }
 }
 
-/* post detail */
+/* post */
 .dropdown{
     position: relative;
 }
@@ -1380,4 +1380,51 @@ label{
 
 .muted{
     color: #65676b;
+}
+
+/* post detail section */
+.post-detail-container {
+  max-width: 800px;        
+  margin: 0 auto 20px;     
+  padding: 0 20px;         
+  box-sizing: border-box; 
+}
+
+.post-detail-container .post-detail-title {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 12px 0 8px;
+    color: #111;
+    width: 100%; 
+    padding: 0 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.post-detail-container .post-detail-content  {
+    font-size: 16px;
+    color: #050505;
+    line-height: 1.6;
+    margin: 0 0 12px;
+    text-align: justify;
+    white-space: normal;
+    overflow: visible;
+    display: block;
+}
+
+.post-detail-container .post-detail-tags { 
+    margin: 0 0 20px;     
+    text-align: left;      
+}
+
+.post-detail-container .post-detail-tag {
+    display: inline-block;
+    margin: 4px 6px 0 0;
+    padding: 4px 10px;
+    font-size: 13px;
+    background: #c52c2a;
+    border-radius: none;
+    text-decoration: none;
+    color: #ffffff;
 }
