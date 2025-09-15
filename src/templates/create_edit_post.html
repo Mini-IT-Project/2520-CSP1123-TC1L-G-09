@@ -33,7 +33,7 @@
                 <input type="text" name="tags" value="{{existing_tags if existing_tags else ''}}" placeholder="#mmu">
             </div>
 
-            {% if mode=="edit" and post.media_url %}
+            {% if mode=="edit" and post.media %}
             <div class="form-group">
                 <label>Current Media</label>
                 <div class="preview-container">
@@ -65,9 +65,9 @@
                     {% for media in post.media %}
                         <div class="media-preview">
                             {% if media.media_url.endswith(('.png','.jpg','.jpeg','.gif')) %}
-                                <img src="{{ url_for('static', filename=media.media_url) }}">
+                                <img src="{{ media.media_url }}">
                             {% else %}
-                                <video src="{{ url_for('static', filename=media.media_url) }}" controls></video>
+                                <video src="{{ media.media_url }}" controls></video>
                             {% endif %}
                             <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
                         </div>

@@ -5,7 +5,7 @@ from forum_models import Post, Tag, Comment, Like, Report,PostMedia
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 from login import Users
-from profile_routes import Profile_data
+from profile_routes import Profile_data,profile
 
 forum_bp = Blueprint(
     "forum",
@@ -247,7 +247,8 @@ def add_comment(post_id):
         "body":comment_content,
         "author":comment_author,
         "comment_id":new_comment.id,
-        "total_comment":post.comment_count()
+        "total_comment":post.comment_count(),
+        "avatar_type":profile.avatar_type if profile else 0
     })
     return{
         "ok":True,
