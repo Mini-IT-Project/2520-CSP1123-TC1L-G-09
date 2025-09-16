@@ -15,16 +15,29 @@ forum_bp = Blueprint(
     static_url_path="/forum-static"
 )
 
-ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}
+def handle_file_upload(file):
+    ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}
 
-def allowed_file(filename: str) -> bool:  #check the filename
-    if "." not in filename:
-        return False
-    extension = filename.split(".")[-1].lower()
-    if extension in ALLOWED_EXT:
-        return True
-    else:
-        return False
+    def allowed_file(filename: str) -> bool:
+        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
+
+    if not file or not allowed_file(file.filename):
+        return None
+
+    filename = secure_filename(file.filename)
+    extension = filename.rsplit(".", 1)[1].lower()
+
+    upload_dir = os.path.join(current_app.root_path, "static", "uploads")
+    os.makedirs(upload_dir, exist_ok=True)
+
+    save_path = os.path.join(upload_dir, filename)
+    file.save(save_path)
+
+    return {
+        "filename": filename,
+        "filetype": extension,
+        "media_url": f"uploads/{filename}"
+    }
     
 def analysis_tag(raw:str):
     if not raw:
@@ -115,34 +128,28 @@ def create_post():
         content=content,
         user_id=user_id
     )
-
-    uploads_files=request.files.getlist("media")
-    for file in request.files.getlist("media"):
-        url=handle_file_upload(file)
-        if url:
-            new_post.media.append(PostMedia(media_url=url))
+    db.session.add(new_post)
+    db.session.commit()
+    
+    upload_files = request.files.getlist("media")
+    for file in upload_files:
+        data = handle_file_upload(file)
+        if data:
+            new_post.media.append(PostMedia(
+                filename=data["filename"],
+                filetype=data["filetype"],
+                media_url=data["media_url"]
+            ))
 
     for tag in process_tags(tags_input):
         new_post.tags.append(tag)
 
-    db.session.add(new_post)
     db.session.commit()
 
     socketio.emit("new_post",new_post.to_dict())
 
     flash("Post Uploaded!","success")
     return redirect(url_for("forum.homepage"))
-
-def handle_file_upload(file_object):
-    if not file_object or not allowed_file(file_object.filename):
-        return None
-    filename=secure_filename(file_object.filename)
-    upload_dir=current_app.config["UPLOAD_FOLDER"]
-    os.makedirs(upload_dir,exist_ok=True)
-
-    file_path=os.path.join(upload_dir,filename)
-    file_object.save(file_path)
-    return url_for("static",filename=f"uploads/{filename}")
 
 def process_tags(tag_string):
     tag_objects=[]
@@ -154,46 +161,39 @@ def process_tags(tag_string):
         tag_objects.append(tag)
     return tag_objects
 
-@forum_bp.route("/post/<int:post_id>/edit",methods=["GET","POST"])
+@forum_bp.route("/post/<int:post_id>/edit", methods=["GET", "POST"])
 def edit_post(post_id):
-    post=Post.query.get_or_404(post_id)
-    if request.method=="GET":
-        return render_template("create_edit_post.html",
-                               mode="edit",
-                               post=post,
-                               existing_tags=" ".join(f"#{tag.name}" for tag in post.tags))                        
-    
-    post.title=request.form.get("title","").strip()
-    post.content=request.form.get("content","").strip()
-    new_tags_input=request.form.get("tags","").strip()
-    post.tags.clear()
-    tag_names=analysis_tag(new_tags_input)
-    
-    for tag_name in tag_names:
-        existing_tag=Tag.query.filter_by(name=tag_name).first()
-        if existing_tag:
-            post.tags.append(existing_tag)
-        else:
-            new_tag=Tag(name=tag_name)
-            db.session.add(new_tag)
-            post.tags.append(new_tag)
-    
-    delete_ids=request.form.getlist("delete_media_ids")
-    if delete_ids:
-        for media_id in delete_ids:
-            media_obj=PostMedia.query.get(int(media_id))
-            if media_obj and media_obj in post.media:
-                db.session.delete(media_obj)
-    
-    uploads_files=request.files.getlist("media")
-    for file in request.files.getlist("media"):
-        url=handle_file_upload(file)
-        if url:
-            post.media.append(PostMedia(media_url=url))
+    post = Post.query.get_or_404(post_id)
 
-    db.session.commit()
-    flash("Post updated successfully","success")
-    return redirect(url_for("forum.post_detail",post_id=post_id))
+    if request.method == "POST":
+        post.title = request.form.get("title")
+        post.body = request.form.get("body")
+
+        delete_ids = request.form.getlist("delete_media_ids")
+        for media_id in delete_ids:
+            media_obj = PostMedia.query.get(int(media_id))
+            if media_obj and media_obj in post.media:
+                file_path = os.path.join(current_app.root_path, "static", media_obj.media_url)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                db.session.delete(media_obj)
+
+        upload_files = request.files.getlist("media")
+        for file in upload_files:
+            data = handle_file_upload(file)
+            if data:
+                post.media.append(PostMedia(
+                    filename=data["filename"],
+                    filetype=data["filetype"],
+                    media_url=data["media_url"]
+                ))
+
+        db.session.commit()
+        flash("POST UPDATED", "success")
+        return redirect(url_for("forum.post_detail", post_id=post.id))
+
+    return render_template("create_edit_post.html", post=post)
+
 
 @forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
 def like_post(post_id):
@@ -223,39 +223,43 @@ def like_post(post_id):
 
 @forum_bp.route("/post/<int:post_id>/comment", methods=["POST"])
 def add_comment(post_id):
-    post=Post.query.get_or_404(post_id)
-    comment_content=request.form.get("body","").strip()
-    comment_author=request.form.get("author","Anonymous").strip() or "Anonymous"
+    post = Post.query.get_or_404(post_id)
+    comment_content = request.form.get("body", "").strip()
+    comment_author = request.form.get("author", "Anonymous").strip() or "Anonymous"
+
     if not comment_content:
-        return {"ok":False,"error":"Please write your comment"},400
-    
-    user_id=session.get("user_id")
+        return {"ok": False, "error": "Please write your comment"}, 400
+
+    user_id = session.get("user_id")
     if not user_id:
-        return {"ok":False,"error":"Please login first"},403
-    
-    new_comment=Comment(
+        return {"ok": False, "error": "Please login first"}, 403
+
+    new_comment = Comment(
         post=post,
         body=comment_content,
         author=comment_author,
         user_id=user_id
     )
-    
+
     db.session.add(new_comment)
     db.session.commit()
-    socketio.emit("new_comment",{
-        "post_id":post_id,
-        "body":comment_content,
-        "author":comment_author,
-        "comment_id":new_comment.id,
-        "total_comment":post.comment_count(),
-        "avatar_type":profile.avatar_type if profile else 0
-    })
-    return{
-        "ok":True,
-        "message":"Comment Successfully!",
-        "comment_id":new_comment.id,
-        "total_comment":post.comment_count()
+
+    profile = Profile_data.query.filter_by(user_id=user_id).first()
+
+    response_data = {
+        "ok": True,
+        "comment_id": new_comment.id,
+        "body": comment_content,
+        "author": profile.faculty_name if profile else comment_author,
+        "avatar_type": profile.avatar_type if profile else 0,
+        "created_at": new_comment.created_at.strftime("%Y-%m-%d %H:%M"),
+        "is_author": (user_id == post.user_id),
+        "total_comment": post.comment_count()
     }
+
+    socketio.emit("new_comment", {**response_data, "post_id": post_id}, to=f"post_{post_id}")
+
+    return response_data
 
 
 @forum_bp.route("/report/<int:post_id>", methods=["GET", "POST"])

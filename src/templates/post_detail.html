@@ -46,10 +46,10 @@
             <p>{{post.content }}</p>
             {% for m in post.media %}
             {% if m.media_url.endswith('.png') or m.media_url.endswith('.jpg') or m.media_url.endswith('.jpeg') or m.media_url.endswith('.gif') %}
-                    <img class="media" src="{{m.media_url}}" alt="post image"/>
+                    <img class="media" src="{{url_for('static',filename=m.media_url)}}" alt="post image"/>
                 {% else %}
                     <video class="media" controls>
-                        <source src="{{m.media_url}}">
+                        <source src="{{url_for('static',filename=m.media_url)}}">
                     </video>
             {% endif %}
             {% endfor %}
@@ -110,23 +110,45 @@
     </ul>
 </section>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".like-btn").forEach(btn => {
-        btn.addEventListener("click", async function() {
-            const postId = this.dataset.id;
-            try {
-                const res = await fetch(`/forum/${postId}/like`, { method: "POST" });
-                const data = await res.json();
-                if (data.ok) {
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const postId = button.getAttribute("data-id");
 
-                    const countSpan = this.querySelector(".like-count");
-                    if (countSpan) {
-                        countSpan.textContent = data.total_likes;
-                    }
+            fetch(`/forum/post/${postId}/like`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    const countSpan = button.querySelector(".like-count");
+                    if (countSpan) countSpan.textContent = data.likes;
+                } else {
+                    alert(data.error || "Like failed.");
                 }
-            } catch (err) {
-                console.error("Like error:", err);
+            })
+            .catch(err => console.error("Like error:", err));
+        });
+    });
+
+    if (typeof io !== "undefined") {
+        const socket = io();
+        socket.on("like_updates", function(data) {
+            const buttonEl = document.querySelector(`.like-btn[data-id="${data.post_id}"]`);
+            if (buttonEl) {
+                const countSpan = buttonEl.querySelector(".like-count");
+                if (countSpan) countSpan.textContent = data.likes;
             }
+        });
+    }
+
+    document.querySelectorAll("[data-href]").forEach(btn => {
+        btn.addEventListener("click", function() {
+            window.location.href = this.dataset.href;
         });
     });
 
@@ -139,14 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const res = await fetch(this.action, { method: "POST", body: formData });
                 const data = await res.json();
                 if (data.ok) {
-                    const commentList = document.querySelector(".comment-list");
-                    const li = document.createElement("li");
-
-                    li.innerHTML = 
-                        '<img src="/static/avatar' + (data.avatar_type || 0) + '.png" width="30">' +
-                        '<strong>' + data.author + '</strong>: ' + data.body;
-
-                    commentList.appendChild(li);
+                    addCommentToList(data);
                     this.reset();
                 }
             } catch (err) {
@@ -158,17 +173,34 @@ document.addEventListener("DOMContentLoaded", function() {
     if (typeof io !== "undefined") {
         const socket = io();
         socket.on("new_comment", function(data) {
-            const commentList = document.querySelector(".comment-list");
-            if (commentList) {
-                const li = document.createElement("li");
-
-                li.innerHTML = 
-                    '<img src="/static/avatar' + (data.avatar_type || 0) + '.png" width="30">' +
-                    '<strong>' + data.author + '</strong>: ' + data.body;
-
-                commentList.appendChild(li);
-            }
+            addCommentToList(data);
         });
+    }
+
+    function addCommentToList(data) {
+        const commentList = document.querySelector(".comment-list");
+        if (!commentList) return;
+
+        const li = document.createElement("li");
+        li.classList.add("comment-item");
+
+        li.innerHTML = `
+            <img src="/static/avatar${data.avatar_type || 0}.png" alt="avatar" class="comment-avatar">
+            <div class="comment-content">
+                <div class="comment-header">
+                    <span class="comment-author">${data.author}</span>
+                    ${data.is_author ? '<span class="author-badge">Author</span>' : ''}
+                </div>
+                <p class="comment-text">${data.body}</p>
+                <div class="comment-time">${data.created_at || "just now"}</div>
+                <div class="comment-actions">
+                    <span class="comment-action">Like</span>
+                    <span class="comment-action">Reply</span>
+                </div>
+            </div>
+        `;
+
+        commentList.appendChild(li);
     }
 });
 
@@ -177,7 +209,9 @@ function confirmDelete() {
         document.getElementById("delete-form").submit();
     }
 }
+
 </script>
+
 
 </body>
 </html>
