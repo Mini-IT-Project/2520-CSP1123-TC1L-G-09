@@ -63,13 +63,18 @@
     </div>
 
     <footer class="post-detail-actions">
-        <button type="button" class="icon-btn like-btn" data-id="{{ post.id }}">
+        <button type="button" class="post-detail-button like-btn" data-id="{{ post.id }}">
             👍🏻<span class="like-count">{{ post.like_count()}}</span>
         </button>
 
-        <button type="button" class="post-detail-button icon-btn comment-btn"
-            data-href="{{ url_for('forum.post_detail', post_id=post.id) }}#comments">
-            💬<span>{{ post.comment_count()}}</span>
+        <button type="button" class="post-detail-button comment-btn"
+            onclick='window.location.href="{{ url_for("forum.post_detail", post_id=post.id) }}#comments"'>
+            💬<span class="comment-count">{{ post.comment_count()}}</span>
+        </button>
+
+        <button type="button" class="post-detail-button share-btn" 
+            data-url="{{ url_for('forum.post_detail', post_id=post.id, _external=True) }}">
+            🔗<span class="label">Share</span>
         </button>
     </footer>
 </article>

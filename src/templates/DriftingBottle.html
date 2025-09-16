@@ -33,7 +33,7 @@
     <main>
         <div class="section">
             <h2>Throw a Bottle！</h2>
-            <form action="{{ url_for('bottle.throw') }}" method="post" enctype="multipart/form-data">
+            <form id="throwForm" action="{{ url_for('bottle.throw') }}" method="post" enctype="multipart/form-data">
                 <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
 
                 <label for="file">Upload a file here (image/audio/video)</label>
@@ -46,18 +46,19 @@
                     <option value="melaka">Melaka</option>
                 </select><br><br>
 
-                <button type="submit">Throw it to the sea</button>
+                <button type="submit" id="submit">Throw it to the sea</button>
             </form>
+
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
 
         <div class="section">
             <h2>Pick a Bottle!</h2>
-            <form action="{{ url_for('bottle.pick') }}" method="get">
+            <form id="pickForm" action="{{ url_for('bottle.pick') }}" method="get">
                 <label for="campus">Select pick campus:</label>
                 <select name="campus" id="campus">
                     <option value="all">Mix campuses</option>
-                    <option value="cyberjaya">Cyberjaya
+                    <option value="cyberjaya">Cyberjaya</option>
                     <option value="melaka">Melaka</option>
                 </select>
                 <br><br>
@@ -72,6 +73,80 @@
                 {% endif %}
             </p>
         </div>
+
+        <div id="videoPopup"> 
+            <div style="position:relative; background:#fff; padding:2px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+                <span id="closeBtn" class="close-btn">×</span>
+                <video id="throwVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
+                    <source src="{{ url_for('static', filename='throw.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div id="pickVideoPopup"> 
+            <div style="position:relative; background:#fff; padding:2px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+                <span id="closePickBtn" class="close-btn">×</span>
+                <video id="pickVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
+                    <source src="{{ url_for('static', filename='pick.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <script>
+        /*throw*/
+        document.getElementById("throwForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+
+            var form = this;
+            var popup = document.getElementById("videoPopup");
+            var video = document.getElementById("throwVideo");
+
+            popup.classList.add("show");
+            video.currentTime = 0;
+            video.play();
+
+            video.onended = function() {
+                popup.classList.remove("show"); 
+                console.log("video ended, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
+            };
+
+            document.getElementById("closeBtn").onclick = function() {
+                popup.classList.remove("show");
+                video.pause();
+                console.log("closed, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
+            };
+        });
+
+        /*pick*/
+        document.getElementById("pickForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+
+            var form = this;
+            var popup = document.getElementById("pickVideoPopup");
+            var video = document.getElementById("pickVideo");
+
+            popup.classList.add("show");
+            video.currentTime = 0;
+            video.play();
+
+            video.onended = function() {
+                popup.classList.remove("show"); 
+                console.log("pick video ended, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
+            };
+
+            document.getElementById("closePickBtn").onclick = function() {
+                popup.classList.remove("show");
+                video.pause();
+                console.log("pick closed, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
+            };
+        });
+        </script>
     </main>
 </body>
 </html>
