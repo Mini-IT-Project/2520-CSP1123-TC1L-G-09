@@ -59,8 +59,8 @@
             }
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script> 
-    <script type="text/javascript" charset="utf-8"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
+    <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
         const socket = io(); 
         socket.on('connect', function() { 
             socket.emit('my event', {data: 'I\'m connected!'}); 
@@ -72,6 +72,9 @@
         });
         document.getElementById("cancel-button").addEventListener("click", () => {
             socket.emit("cancel_request");
+        });
+        socket.on("match_success", function(data) {
+            window.location.href = data.redirect_url;    //redirect to match success page
         });
     </script>
     </body>

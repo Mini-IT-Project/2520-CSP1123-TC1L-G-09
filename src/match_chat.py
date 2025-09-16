@@ -3,6 +3,7 @@ from flask_socketio import join_room, emit
 from extensions import db
 from extensions import socketio
 from login import Users
+from profile_routes import Profile_data
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import uuid
@@ -90,6 +91,11 @@ def handle_match_request():
         my_new_sid=Connected_users.query.filter_by(user_id=user_id).first()
         other_new_sid=Connected_users.query.filter_by(user_id=other.user_id).first()      #use lately sid to join room
 
+        if not my_new_sid or not other_new_sid:
+            db.session.delete(other)
+            db.session.commit()
+            return
+
         join_room(room_name, sid=my_new_sid.sid)
         join_room(room_name, sid=other_new_sid.sid)
         print(f"{my_new_sid.user_id} and {other_new_sid.user_id} join {room_name}")
@@ -97,7 +103,8 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        emit("match success", to=room_name)
+        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)        #url show room_name, so match_success_page can get room_name variable
+        emit("match_success", {"redirect_url": redirect_url, "room_name": room_name},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
         print(f"{user_id} are waiting")
@@ -113,3 +120,21 @@ def handle_cancel_request():
 
     db.session.delete(cancel_user)
     db.session.commit()
+
+@MatchChat_bp.route('/match_success')
+def match_success_page():
+    print("match success")
+    room_name = request.args.get("room_name")     #from html get room_name
+
+    members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
+    if members:
+        user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
+        user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
+
+    redirect_url = url_for("MatchChat.chat_room", _external=True)      #to redirect to chat_room
+
+    return render_template("matchSuccess.html", user1=user1, user2=user2, redirect_url=redirect_url)
+
+@MatchChat_bp.route('/chat_room')
+def chat_room():
+    return render_template("chat_room.html")
