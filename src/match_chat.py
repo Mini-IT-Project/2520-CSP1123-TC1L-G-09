@@ -127,7 +127,7 @@ def match_success_page():
     room_name = request.args.get("room_name") 
     print(room_name)
 
-    members= Activated_rooms.query.filter_by(room_name=room_name).first()
+    members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
     if members:
         user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
         user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
