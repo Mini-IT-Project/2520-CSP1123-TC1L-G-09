@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint,render_template,request,redirect,url_for,flash,current_app,send_from_directory,session
 from extensions import db,socketio
-from forum_models import Post, Tag, Comment, Like, Report,PostMedia
+from forum_models import Post, Tag, Comment, Like, Report,PostMedia,CommentLike
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 from login import Users
@@ -226,6 +226,7 @@ def add_comment(post_id):
     post = Post.query.get_or_404(post_id)
     comment_content = request.form.get("body", "").strip()
     comment_author = request.form.get("author", "Anonymous").strip() or "Anonymous"
+    parent_id = request.form.get("parent_id")
 
     if not comment_content:
         return {"ok": False, "error": "Please write your comment"}, 400
@@ -238,7 +239,8 @@ def add_comment(post_id):
         post=post,
         body=comment_content,
         author=comment_author,
-        user_id=user_id
+        user_id=user_id,
+        parent_id=parent_id if parent_id else None 
     )
 
     db.session.add(new_comment)
@@ -254,13 +256,32 @@ def add_comment(post_id):
         "avatar_type": profile.avatar_type if profile else 0,
         "created_at": new_comment.created_at.strftime("%Y-%m-%d %H:%M"),
         "is_author": (user_id == post.user_id),
-        "total_comment": post.comment_count()
+        "total_comment": post.comment_count(),
+        "parent_id": parent_id
     }
 
     socketio.emit("new_comment", {**response_data, "post_id": post_id}, to=f"post_{post_id}")
 
     return response_data
 
+@forum_bp.route("/comment/<int:comment_id>/like", methods=["POST"])
+def like_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    user_id = session.get("user_id")
+    if not user_id:
+        return {"ok": False, "error": "Please login first"}, 403
+
+    existing_like = CommentLike.query.filter_by(comment_id=comment.id, user_id=user_id).first()
+    if existing_like:
+        db.session.delete(existing_like)
+        db.session.commit()
+        return {"ok": True, "likes": comment.like_count(), "comment_id": comment.id, "action": "unlike"}
+
+    new_like = CommentLike(comment=comment, user_id=user_id)
+    db.session.add(new_like)
+    db.session.commit()
+
+    return {"ok": True, "likes": comment.like_count(), "comment_id": comment.id, "action": "like"}
 
 @forum_bp.route("/report/<int:post_id>", methods=["GET", "POST"])
 def report_post(post_id):
@@ -295,3 +316,5 @@ def delete_post(post_id):
     db.session.commit()
     flash("Post deleted successfully", "success")
     return redirect(url_for("forum.homepage"))
+
+

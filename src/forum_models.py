@@ -68,6 +68,14 @@ class Like(db.Model):
     post=db.relationship('Post',back_populates='likes')
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
 
+class CommentLike(db.Model):
+    __tablename__="comment_likes"
+    id = db.Column(db.Integer,primary_key=True)
+    comment_id=db.Column(db.Integer,db.ForeignKey("comments.id"),nullable=False)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
+
+    comment=db.relationship("Comment",back_populates="likes")
+
 class Comment(db.Model):
     __tablename__='comments'
     id = db.Column(db.Integer,primary_key=True)
@@ -77,6 +85,12 @@ class Comment(db.Model):
     created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     post=db.relationship('Post',back_populates='comments')
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
+    parent_id=db.Column(db.Integer,db.ForeignKey("comments.id"),nullable=True)
+    replies=db.relationship("Comment",backref=db.backref("parent",remote_side=[id]),lazy="dynamic")
+    likes=db.relationship("CommentLike",back_populates="comment",cascade="all,delete-orphan")
+
+    def like_count(self):
+        return len(self.likes)
     
 class Report(db.Model):
     __tablename__='reports'
