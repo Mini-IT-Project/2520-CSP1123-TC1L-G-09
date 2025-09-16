@@ -15,7 +15,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
 
-    UPLOAD_FOLDER = os.path.join("static", "uploads")  
+    UPLOAD_FOLDER = os.path.join(app.root_path,"static", "uploads")  
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
