@@ -13,6 +13,8 @@ MALAYSIA_TZ=ZoneInfo("Asia/Kuala_Lumpur")
 class PostMedia(db.Model):
     __tablename__="post_media"
     id=db.Column(db.Integer,primary_key=True)
+    filename=db.Column(db.String(255),nullable=False)
+    filetype=db.Column(db.String(20),nullable=False)
     post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
     media_url=db.Column(db.String(300),nullable=False)
     post=db.relationship("Post",back_populates="media")

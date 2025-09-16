@@ -133,16 +133,14 @@ def create_post():
     flash("Post Uploaded!","success")
     return redirect(url_for("forum.homepage"))
 
-def handle_file_upload(file_object):
-    if not file_object or not allowed_file(file_object.filename):
+def handle_file_upload(file):
+    if not file or not allowed_file(file.filename):
         return None
-    filename=secure_filename(file_object.filename)
-    upload_dir=current_app.config["UPLOAD_FOLDER"]
-    os.makedirs(upload_dir,exist_ok=True)
-
-    file_path=os.path.join(upload_dir,filename)
-    file_object.save(file_path)
-    return url_for("static",filename=f"uploads/{filename}")
+    filename=secure_filename(file.filename)
+    save_path=os.path.join(current_app.config["UPLOAD_FOLDER"],filename)
+    os.makedirs(os.path.dirname(save_path),exist_ok=True)
+    file.save(save_path)
+    return f"uploads/{filename}"
 
 def process_tags(tag_string):
     tag_objects=[]
