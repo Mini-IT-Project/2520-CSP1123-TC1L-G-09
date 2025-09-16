@@ -52,11 +52,23 @@ header nav ul li a:hover {
 }
 
 .slogan-line{
-  margin:.2em 0;
-  line-height:1.15;
-  font-weight:800;
-  letter-spacing:.4px;
-  font-size: clamp(28px, 5.2vw, 54px);
+    margin:.2em 0;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:.4px;
+    font-size: clamp(28px, 5.2vw, 54px);
+
+    display: inline-block; 
+    animation: bounceLoop 2s ease-in-out infinite;
+}
+
+@keyframes bounceLoop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .slogan-line .red { color: #c62828; }   
@@ -277,6 +289,29 @@ h2 {
     margin-bottom: 10px;
 }
 
+.card-container .card h3 {
+    font-size: 1.1em;
+    margin: 5px 0;
+    color: #0044cc;
+}
+
+.card-container .card p {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: #333;
+}
+
+.events .card-container .card {
+    position: absolute;
+    bottom: 0;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    height:360px;
+}
+
 .events .card-container {
     position: relative;
     width: 100%;
@@ -291,37 +326,6 @@ h2 {
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
-}
-
-.card-container .card h3 {
-    font-size: 1.1em;
-    margin: 5px 0;
-    color: #0044cc;
-}
-
-.card-container .card p {
-    font-size: 0.9em;
-    margin: 5px 0;
-    color: #333;
-}
-
-.events .card-container {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    height: 400px;
-    margin: 0 auto;
-}
-
-.events .card-container .card {
-    position: absolute;
-    bottom: 0;
-    border-radius: 15px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    height:360px;
 }
 
 .events .card-container .card:nth-child(1) {
