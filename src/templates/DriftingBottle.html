@@ -62,7 +62,7 @@
                     <option value="melaka">Melaka</option>
                 </select>
                 <br><br>
-                <button type="submit" id="throwBtn">Throw it to the sea</button>
+                <button type="submit">Pick a bottle right now！</button>
             </form>
 
             <p class="info">
@@ -74,7 +74,7 @@
             </p>
         </div>
 
-        <div id="videoPopup" style="display:none;"> 
+        <div id="videoPopup"> 
             <div style="position:relative; background:#fff; padding:2px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
                 <span id="closeBtn" class="close-btn">×</span>
                 <video id="throwVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
@@ -92,18 +92,18 @@
             var popup = document.getElementById("videoPopup");
             var video = document.getElementById("throwVideo");
 
-            popup.style.display = "flex";
+            popup.classList.add("show");
             video.currentTime = 0;
             video.play();
 
             video.onended = function() {
-                popup.style.display = "none";
+                popup.classList.remove("show"); 
                 console.log("video ended, submitting form");
                 HTMLFormElement.prototype.submit.call(form);
             };
 
             document.getElementById("closeBtn").onclick = function() {
-                popup.style.display = "none";
+                popup.classList.remove("show");
                 video.pause();
                 console.log("closed, submitting form");
                 HTMLFormElement.prototype.submit.call(form);

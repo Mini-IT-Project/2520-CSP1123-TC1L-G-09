@@ -600,17 +600,28 @@ a:hover {
 }
 
 /*bottle video*/
-#videoPopup {
-  display: none;                
+#videoPopup {               
   position: fixed;
   inset: 0;                 
   width: 100vw;   
   height: 100vh;
   background: rgba(0,0,0,0.7); 
   z-index: 10000;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  opacity: 0; 
+  visibility: hidden;
+  pointer-events: none; 
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#videoPopup.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 #videoPopup.visible {
@@ -648,15 +659,25 @@ a:hover {
   border: none;
   background: #c52c2a; 
   color: #fff;
-  font-size: 20px;
-  line-height: 1;
+  font-size: 22px;
+  font-weight: bold;
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
   line-height: 40px;
   text-align: center;
+  transition: all 0.25s ease;
 }
 
-#videoPopup .close-btn:hover { transform: translateY(-2px); }
+#videoPopup .close-btn:hover { 
+    transform: translateY(-2px); 
+    background: #e03a38;
+    transform: scale(1.1);
+}
+
+#videoPopup .close-btn:active {
+  transform: scale(0.95);
+  background: #a8201f; 
+}
 
 html.modal-open { overflow: hidden; }
 
