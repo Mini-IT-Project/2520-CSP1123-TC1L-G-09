@@ -103,7 +103,7 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)
+        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)        #url show room_name, so match_success_page can get room_name variable
         emit("match_success", {"redirect_url": redirect_url, "room_name": room_name},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
@@ -124,15 +124,14 @@ def handle_cancel_request():
 @MatchChat_bp.route('/match_success')
 def match_success_page():
     print("match success")
-    room_name = request.args.get("room_name") 
-    print(room_name)
+    room_name = request.args.get("room_name")     #from html get room_name
 
     members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
     if members:
         user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
         user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
 
-    redirect_url = url_for("MatchChat.chat_room", _external=True)
+    redirect_url = url_for("MatchChat.chat_room", _external=True)      #to redirect to chat_room
 
     return render_template("matchSuccess.html", user1=user1, user2=user2, redirect_url=redirect_url)
 
