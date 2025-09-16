@@ -637,7 +637,7 @@ a:hover {
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: #c52c2a; /* MMU 红 */
+  background: #c52c2a; 
   color: #fff;
   font-size: 20px;
   line-height: 1;
@@ -647,6 +647,7 @@ a:hover {
   align-items: center;
   justify-content: center;
 }
+
 #videoPopup .close-btn:hover { transform: translateY(-2px); }
 
 html.modal-open { overflow: hidden; }
