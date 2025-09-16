@@ -33,7 +33,7 @@
     <main>
         <div class="section">
             <h2>Throw a Bottle！</h2>
-            <form action="{{ url_for('bottle.throw') }}" method="post" enctype="multipart/form-data">
+            <form id="throwForm" action="{{ url_for('bottle.throw') }}" method="post" enctype="multipart/form-data">
                 <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
 
                 <label for="file">Upload a file here (image/audio/video)</label>
@@ -46,8 +46,9 @@
                     <option value="melaka">Melaka</option>
                 </select><br><br>
 
-                <button type="submit">Throw it to the sea</button>
+                <button id="submit">Throw it to the sea</button>
             </form>
+
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
 
@@ -72,6 +73,40 @@
                 {% endif %}
             </p>
         </div>
+
+        <div id="videoPopup" style="display:none; position: fixed; top:0; left:0; width:100vw; height:100vh;
+            background: rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
+
+            <div style="position:relative; background:#fff; padding:10px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+                <span id="closeBtn" style="position: absolute; top: 5px; right: 10px; font-size: 20px; font-weight: bold; cursor: pointer;"> x </span>
+                <video id="throwVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
+                    <source src="{{ url_for('static', filename='throw.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <script>
+        document.getElementById("throwForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var popup = document.getElementById("videoPopup");
+            var video = document.getElementById("throwVideo");
+            popup.style.display = "flex";
+            video.currentTime = 0;
+            video.play();
+
+            video.onended = () => {
+                popup.style.display = "none";
+                event.target.submit();
+            };
+
+            document.getElementById("closeBtn").onclick = () => {
+                popup.style.display = "none";
+                video.pause();
+                event.target.submit(); 
+            };
+        });
+        </script>
     </main>
 </body>
 </html>

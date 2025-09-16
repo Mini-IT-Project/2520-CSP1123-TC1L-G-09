@@ -599,14 +599,57 @@ a:hover {
     color: #0099ff;
 }
 
-@media (max-width: 768px) {
-    .section, .pick-container {
-        max-width: 95%;
-    }
-    header nav ul li a {
-        font-size: 0.8em;
-    }
+/*bottle video*/
+#videoPopup {
+  display: none;                
+  position: fixed;
+  inset: 0;                    
+  background: rgba(0,0,0,0.65); 
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
 }
+
+#videoPopup.visible {
+  display: flex;
+}
+
+#videoPopup .video-wrapper {
+  position: relative;
+  width: 90vw;          
+  max-width: 1200px;    
+}
+
+#videoPopup video {
+  width: 100%;
+  height: auto;
+  max-height: 90vh;     
+  border-radius: 10px;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+#videoPopup .close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #c52c2a; /* MMU 红 */
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#videoPopup .close-btn:hover { transform: translateY(-2px); }
+
+html.modal-open { overflow: hidden; }
 
 /*Profile*/
 .profile-card{
