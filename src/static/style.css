@@ -52,11 +52,23 @@ header nav ul li a:hover {
 }
 
 .slogan-line{
-  margin:.2em 0;
-  line-height:1.15;
-  font-weight:800;
-  letter-spacing:.4px;
-  font-size: clamp(28px, 5.2vw, 54px);
+    margin:.2em 0;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:.4px;
+    font-size: clamp(28px, 5.2vw, 54px);
+
+    display: inline-block; 
+    animation: bounceLoop 2s ease-in-out infinite;
+}
+
+@keyframes bounceLoop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .slogan-line .red { color: #c62828; }   
