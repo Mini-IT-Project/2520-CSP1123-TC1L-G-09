@@ -65,10 +65,10 @@
                 <div class="post-media">
                     {% for m in p.media %}
                     {% if m.media_url.endswith('.png') or m.media_url.endswith('.jpg') or m.media_url.endswith('.jpeg') or m.media_url.endswith('.gif') %}
-                        <img class="media" src="{{m.media_url}}" alt="image" />
+                        <img class="media" src="{{url_for('static',filename=m.media_url)}}" alt="image" />
                     {% else %}
                         <video class="media" controls>
-                            <source src="{{m.media_url}}" />
+                            <source src="{{url_for('static',filename=m.media_url)}}" />
                         </video>
                     {% endif %}
                     {% endfor %}
@@ -92,9 +92,6 @@
                         💬<span class="comment-count">{{ p.comment_count()}}</span>
                     </a>
 
-                    <button type="button" class="icon-btn share-btn" data-url="{{ url_for('forum.post_detail', post_id=p.id, _external=True) }}">
-                        🔗<span class="share-count">Share</span>
-                    </button>
                 </div>
 
             </article>
