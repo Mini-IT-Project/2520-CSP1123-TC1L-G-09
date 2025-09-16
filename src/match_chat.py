@@ -3,6 +3,7 @@ from flask_socketio import join_room, emit
 from extensions import db
 from extensions import socketio
 from login import Users
+from profile_routes import Profile_data
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import uuid
@@ -102,8 +103,8 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        redirect_url = url_for("MatchChat.match_success_page", _external=True)
-        emit("match_success", {"redirect_url": redirect_url},to=room_name)
+        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)
+        emit("match_success", {"redirect_url": redirect_url, "room_name": room_name},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
         print(f"{user_id} are waiting")
@@ -122,5 +123,19 @@ def handle_cancel_request():
 
 @MatchChat_bp.route('/match_success')
 def match_success_page():
-    print(1)
-    return render_template("matchSuccess.html")
+    print("match success")
+    room_name = request.args.get("room_name") 
+    print(room_name)
+
+    members= Activated_rooms.query.filter_by(room_name=room_name).first()
+    if members:
+        user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
+        user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
+
+    redirect_url = url_for("MatchChat.chat_room", _external=True)
+
+    return render_template("matchSuccess.html", user1=user1, user2=user2, redirect_url=redirect_url)
+
+@MatchChat_bp.route('/chat_room')
+def chat_room():
+    return render_template("chat_room.html")
