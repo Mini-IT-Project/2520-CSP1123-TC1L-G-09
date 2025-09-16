@@ -46,7 +46,7 @@
                     <option value="melaka">Melaka</option>
                 </select><br><br>
 
-                <button id="submit">Throw it to the sea</button>
+                <button type="submit" id="submit">Throw it to the sea</button>
             </form>
 
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
@@ -62,7 +62,7 @@
                     <option value="melaka">Melaka</option>
                 </select>
                 <br><br>
-                <button type="submit">Pick a bottle right now！</button>
+                <button type="submit" id="throwBtn">Throw it to the sea</button>
             </form>
 
             <p class="info">
@@ -88,22 +88,27 @@
 
         <script>
         document.getElementById("throwForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+            event.preventDefault(); 
+
+            var form = this;
             var popup = document.getElementById("videoPopup");
             var video = document.getElementById("throwVideo");
+
             popup.style.display = "flex";
             video.currentTime = 0;
             video.play();
 
-            video.onended = () => {
+            video.onended = function() {
                 popup.style.display = "none";
-                event.target.submit();
+                console.log("video ended, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
             };
 
-            document.getElementById("closeBtn").onclick = () => {
+            document.getElementById("closeBtn").onclick = function() {
                 popup.style.display = "none";
                 video.pause();
-                event.target.submit(); 
+                console.log("closed, submitting form");
+                HTMLFormElement.prototype.submit.call(form);
             };
         });
         </script>
