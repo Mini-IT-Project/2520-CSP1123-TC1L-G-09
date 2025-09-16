@@ -90,6 +90,11 @@ def handle_match_request():
         my_new_sid=Connected_users.query.filter_by(user_id=user_id).first()
         other_new_sid=Connected_users.query.filter_by(user_id=other.user_id).first()      #use lately sid to join room
 
+        if not my_new_sid or not other_new_sid:
+            db.session.delete(other)
+            db.session.commit()
+            return
+
         join_room(room_name, sid=my_new_sid.sid)
         join_room(room_name, sid=other_new_sid.sid)
         print(f"{my_new_sid.user_id} and {other_new_sid.user_id} join {room_name}")
@@ -97,7 +102,8 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        emit("match success", to=room_name)
+        redirect_url = url_for("MatchChat.match_success_page", _external=True)
+        emit("match_success", {"redirect_url": redirect_url},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
         print(f"{user_id} are waiting")
@@ -113,3 +119,8 @@ def handle_cancel_request():
 
     db.session.delete(cancel_user)
     db.session.commit()
+
+@MatchChat_bp.route('/match_success')
+def match_success_page():
+    print(1)
+    return render_template("matchSuccess.html")

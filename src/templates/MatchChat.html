@@ -73,5 +73,10 @@
         document.getElementById("cancel-button").addEventListener("click", () => {
             socket.emit("cancel_request");
         });
+        socket.on("match_success", function(data) {
+            console.log("Redirect URL:", data.redirect_url);
+            alert("match success, turn to chat room...");
+            window.location.href = data.redirect_url; 
+        });
     </script>
     </body>
