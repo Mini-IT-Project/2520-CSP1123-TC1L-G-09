@@ -71,11 +71,6 @@
             data-href="{{ url_for('forum.post_detail', post_id=post.id) }}#comments">
             💬<span class="comment-count">{{ post.comment_count()}}</span>
         </button>
-
-        <button type="button" class="post-detail-button share-btn" 
-            data-url="{{ url_for('forum.post_detail', post_id=post.id, _external=True) }}">
-            🔗<span class="label">Share</span>
-        </button>
     </footer>
 </article>
 
@@ -145,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof io !== "undefined") {
     socket = io();
 
-    // 更新点赞数量
     socket.on("like_updates", data => {
       const buttonEl = document.querySelector(`.like-btn[data-id="${data.post_id}"]`);
       if (buttonEl) {
@@ -154,9 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // 新评论/回复广播
     socket.on("new_comment", data => {
-      // 🔥 只显示一次，区分 comment 和 reply
       if (data.parent_id) {
         if (!document.querySelector(`.reply-item[data-id="${data.comment_id}"]`)) {
           addReplyToComment(data);
@@ -214,7 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const data = await res.json();
         if (data.ok) {
-          // 🔥 只本地显示一次，socket 广播再来就忽略
           if (!document.querySelector(`.comment-item[data-id="${data.comment_id}"]`)) {
             addCommentToList(data);
           }
@@ -282,7 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const data = await res.json();
         if (data.ok) {
-          // 🔥 只本地显示一次，避免自己再变 parent
           if (!document.querySelector(`.reply-item[data-id="${data.comment_id}"]`)) {
             addReplyToComment(data);
           }
