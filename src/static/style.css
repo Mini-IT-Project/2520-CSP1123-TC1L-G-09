@@ -917,9 +917,10 @@ ul {
 
 .post-actions {
     display: flex;
-    justify-content: space-between;
-    margin-top: 2px;
-    gap: 10px;
+    justify-content: center;
+    align-items:center;
+    margin-top: 6px;
+    gap: 15px;
     border-top: 1px solid #e0e0e0; 
 }
 
@@ -927,16 +928,16 @@ ul {
     background-color: #e6f2ff; 
     color: #0077cc;           
     border: none;
-    width: 100px;
+    width: 60px;
     height:36px;
-    border-radius: 8px;
-    padding: 6px 12px;
+    border-radius: 30%;
+    padding: 6px 9px;
     font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px; 
+    gap: 3px; 
     transition: background-color 0.2s ease, transform 0.1s ease;
     text-decoration: none; 
 }
