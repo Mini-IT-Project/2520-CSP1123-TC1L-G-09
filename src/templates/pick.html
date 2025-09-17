@@ -12,7 +12,7 @@
             <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
         </a>
         <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
-        Hey！You got a Bottle!
+        You got a Bottle!
         <nav>
             <ul>
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
@@ -34,7 +34,6 @@
     <main>
     {% if bottle %}
         <div class="bottle-container">
-            <img src="{{ url_for('static', filename='bottle_bg.mp4') }}" alt="Bottle Background" class="bottle-bg">
             <div class="bottle_content">
                 {% if bottle.content %}
                     <p>{{ bottle.content }}</p>
