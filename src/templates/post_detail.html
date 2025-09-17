@@ -71,11 +71,6 @@
             data-href="{{ url_for('forum.post_detail', post_id=post.id) }}#comments">
             💬<span class="comment-count">{{ post.comment_count()}}</span>
         </button>
-
-        <button type="button" class="post-detail-button share-btn" 
-            data-url="{{ url_for('forum.post_detail', post_id=post.id, _external=True) }}">
-            🔗<span class="label">Share</span>
-        </button>
     </footer>
 </article>
 
@@ -137,6 +132,7 @@
     {% endfor %}
     </ul>
 </section>
+ 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".like-btn").forEach(button => {
