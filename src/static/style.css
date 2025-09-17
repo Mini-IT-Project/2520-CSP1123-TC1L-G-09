@@ -1512,9 +1512,15 @@ label{
     white-space: normal;
     overflow: visible;
     display: block;
+}
 
-    display: flex;
-    justify-content: center; 
+.post-detail-container img,
+.post-detail-container video {
+    max-width: 100%;    
+    height: auto;       
+    display: block;     
+    margin: 12px auto;  
+    border-radius: 8px; 
 }
 
 .post-detail-container .post-detail-tags { 
