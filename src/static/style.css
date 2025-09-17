@@ -1480,7 +1480,7 @@ label{
 }
 
 .like-comment-btn,
-.like-reply-btn {
+.comment-action reply-btn {
     border: none;
     color: white;
     background-color: #0a6ef0;  
@@ -1494,14 +1494,14 @@ label{
 }
 
 .like-comment-btn:hover,
-.like-reply-btn:hover {
+.comment-action reply-btn:hover {
     background-color: #005fa3;
     transform: translateY(-2px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .like-comment-btn:active,
-.like-reply-btn:active {
+.comment-action reply-btn:active {
     transform: translateY(1px); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
