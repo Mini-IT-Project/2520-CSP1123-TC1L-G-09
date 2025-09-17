@@ -28,3 +28,54 @@
             </ul>
         </nav>
     </header>
+    <body>
+        <div style="background-color: #4E4E4E; margin: 20px; padding: 20px; height: 75vh; box-sizing: border-box;">
+            <div class="avatar" style="display: flex; background-color: #363a39; padding: 1vh;">
+                {% if user1.user_id == session.get("user_id") %}
+                <img src="{{url_for('static', filename='avatar' ~ user2.avatar_type ~ '.png')}}" alt="avatar" style="width: 60px; height: 60px;">
+                {% else %}
+                <img src="{{url_for('static', filename='avatar' ~ user1.avatar_type ~ '.png')}}" alt="avatar" style="width: 60px; height: 60px;">
+                {% endif %}
+
+                {% if user1.user_id == session.get("user_id") %}
+                <p style="color: rgb(216, 226, 240); padding: 21px 10px 0px 10px;">{{ user2.degree_name }} in {{ user2.faculty_name }} at {{ user2.campus_name }}</p>
+                {% else %}
+                <p style="color: rgb(216, 226, 240); padding: 21px 10px 0px 10px;">{{ user1.degree_name }} in {{ user1.faculty_name }} at {{ user1.campus_name }}</p>
+                {% endif %}
+            </div>
+            <div>
+                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #ccc; border-radius: 8px; padding: 10px; color: aliceblue;">
+                </div>
+            </div>
+            <div style="position: absolute; bottom: 0; left: 20px;right: 20px; width: 97.65%; transform: translateY(-95%); background-color: aliceblue; border-radius: 0px 0px 12px 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); height: 7vh; display: flex; justify-content: center; align-items: center;">
+                <textarea id="messageInput" placeholder="Type a message..." rows="1" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc; resize: none; margin-left: 1%; margin-right: 5%;"></textarea>
+                <button id="sendButton" style="padding: 10px 20px; border-radius: 8px; background: blue; color: white; margin-right: 1%;" type="button">Send</button>
+            </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
+    <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
+        const socket = io(); 
+        socket.on('connect', function() { 
+            socket.emit('my event', {data: 'I\'m connected!'}); 
+        });
+    </script>
+    <script>
+        const input = document.getElementById("messageInput");
+        const chatBox = document.getElementById("chat-box");
+
+        document.getElementById("sendButton").addEventListener("click", () => {
+            const message = input.value.trim();
+            if (message) {
+                socket.emit("message", {message: message });
+                input.value = "";
+            }
+        });
+
+        socket.on("print_message", function(data) {
+            const p = document.createElement("p");
+            p.textContent = data.message;
+            chatBox.appendChild(p);
+            chatBox.scrollTop = chatBox.scrollHeight; 
+        });
+    </script>
+    </body>
