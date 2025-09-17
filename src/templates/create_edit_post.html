@@ -38,15 +38,17 @@
                 <label>Current Media</label>
                 <div class="preview-container">
                     {% for m in post.media %}
+                    <p>DEBUG: {{ url_for('static', filename=m.media_url) }}</p>
                     <div class="media-preview">
                         {% if m.media_url.endswith(('.png','.jpeg','.jpg','.gif')) %}
-                        <img src="{{m.media_url}}">
+                        <img src="{{url_for('static', filename=m.media_url)}}">
                         {% else %}
-                        <video src="{{m.media_url}}" controls></video>
+                        <video src="{{url_for('static', filename=m.media_url)}}" controls></video>
                         {% endif %}
-                    </div>
-                    <div>
-                        <input type="checkbox" name="delete_media_ids" value="{{m.id}}">DELETE MEDIA
+                        <div>
+                            <input type="checkbox" name="delete_media_ids" value="{{m.id}}">
+                            DELETE MEDIA
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -65,9 +67,9 @@
                     {% for media in post.media %}
                         <div class="media-preview">
                             {% if media.media_url.endswith(('.png','.jpg','.jpeg','.gif')) %}
-                                <img src="{{ media.media_url }}">
+                                <img src="{{ url_for('static', filename=media.media_url) }}">
                             {% else %}
-                                <video src="{{ media.media_url }}" controls></video>
+                                <video src="{{ url_for('static', filename=media.media_url) }}" controls></video>
                             {% endif %}
                             <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
                         </div>

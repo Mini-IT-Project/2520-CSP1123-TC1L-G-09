@@ -99,4 +99,5 @@ class Report(db.Model):
     post_id=db.Column(db.Integer,db.ForeignKey('posts.id'),nullable=False)
     reason=db.Column(db.String(300),nullable=False)
     created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
+    details = db.Column(db.Text, nullable=True)
     post=db.relationship('Post',back_populates='reports')
