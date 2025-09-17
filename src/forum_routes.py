@@ -10,9 +10,7 @@ from profile_routes import Profile_data,profile
 forum_bp = Blueprint(
     "forum",
     __name__,
-    template_folder="templates",
-    static_folder="static",
-    static_url_path="/forum-static"
+    template_folder="templates"
 )
 
 def handle_file_upload(file):
