@@ -66,7 +66,7 @@ def handle_connect():
 def handle_disconnect():
     user=Connected_users.query.filter_by(sid=request.sid).first()
     if user:
-        print(f"delete{user.user_id}from db")
+        print(f"delete {user.user_id} from db")
         db.session.delete(user)
         db.session.commit()
 
@@ -80,7 +80,7 @@ def handle_match_request():
 
     other = MC_WaitingUser.query.filter(MC_WaitingUser.user_id != user_id).first() 
     if other:             #if other in waiting pool, direct join with other, if no, go into waiting pool
-        room_name= f"room-{uuid.uuid4().hex}"                #unique room name
+        room_name= f"room_{uuid.uuid4().hex}"                #unique room name
 
         my_activated_rooms= Activated_rooms.query.filter_by(room_name=room_name).first()
         if not my_activated_rooms:
@@ -131,10 +131,24 @@ def match_success_page():
         user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
         user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
 
-    redirect_url = url_for("MatchChat.chat_room", _external=True)      #to redirect to chat_room
+    redirect_url = url_for("MatchChat.chat_room", room_name=room_name, _external=True)      #to redirect to chat_room
 
     return render_template("matchSuccess.html", user1=user1, user2=user2, redirect_url=redirect_url)
 
 @MatchChat_bp.route('/chat_room')
 def chat_room():
-    return render_template("chat_room.html")
+    room_name = request.args.get("room_name")     #from html get room_name
+
+    members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
+    if members:
+        user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
+        user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
+
+    return render_template("chat_room.html", user1=user1, user2=user2, room_name=room_name)
+
+@socketio.on("message")
+def handle_message(data):
+    room_name = request.args.get("room_name")
+    message=data["message"]
+    print(message)
+    emit("print_message", {"message": message}, to=room_name)
