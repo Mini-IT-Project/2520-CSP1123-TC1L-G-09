@@ -572,25 +572,30 @@ a {
 }
 
 /*Pick page container with same background*/
-.pick-container {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-    background: #e6f5ff; 
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid #0044cc; 
-    text-align: center;
+.bottle-container {
+    position: relative;
+    width: 600px;        
+    margin: 40px auto;
 }
 
-.pick-item {
-    background-color: #ffffff;
+.bottle-bg {
+    width: 100%;
+    display: flex;
+}
+
+.bottle-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 70%;      
+    text-align: center;
+    color: #222;
+    font-size: 16px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);  
     padding: 15px;
-    border-radius: 15px;
-    border: 1.5px solid #0044cc;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-    text-align: left;
+    border-radius: 12px;
 }
 
 a {
