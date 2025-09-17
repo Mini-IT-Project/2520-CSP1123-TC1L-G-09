@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>REPORT POST</title>
+</head>
+<body>
+    <header>
+        <a href="{{url_for('forum.post_detail',post_id=post.id)}}" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h2>Report Post</h2>
+    </header>
+    <main>
+        <section class="form-card">
+            <h3>Why are you reporting this post?</h3>
+            <p class="muted">Post Title: <strong>{{ post.title }}</strong></p>
+            <p class="muted">Posted on {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+
+            <form method="post" action="{{ url_for('forum.report_post', post_id=post.id) }}">
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="report" value="Spam" required>
+                        Spam or misleading
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="report" value="Hate Speech">
+                        Hate speech or abusive content
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="report" value="Explicit Content">
+                        Explicit or inappropriate content
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="report" value="Other">
+                        Other
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="details">Additional Details (optional):</label>
+                    <textarea id="details" name="details" rows="3" placeholder="Write more about why you are reporting this post..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                    <a href="{{ url_for('forum.post_detail', post_id=post.id) }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

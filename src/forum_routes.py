@@ -286,24 +286,27 @@ def like_comment(comment_id):
 
 @forum_bp.route("/report/<int:post_id>", methods=["GET", "POST"])
 def report_post(post_id):
-    post=Post.query.get_or_404(post_id)
-    if request.method=="GET":
-        return render_template("report_post.html",post=post)
-    
-    report_reason=request.form.get("report")
+    post = Post.query.get_or_404(post_id)
+    if request.method == "GET":
+        return render_template("report_post.html", post=post)
+
+    report_reason = request.form.get("report")
+    report_details = request.form.get("details", "").strip()
+
     if not report_reason:
-        flash("Please select your reason","error")
-        return redirect(url_for("forum.report_post",post_id=post.id))
-    
-    new_report=Report(
+        flash("Please select your reason", "error")
+        return redirect(url_for("forum.report_post", post_id=post.id))
+
+    new_report = Report(
         post=post,
         reason=report_reason,
+        details=report_details
     )
     db.session.add(new_report)
     db.session.commit()
 
-    flash("Report Successfully!Thank you response!","success")
-    return redirect(url_for("forum.post_detail",post_id=post.id))
+    flash("Report submitted successfully! Thank you for your feedback.", "success")
+    return redirect(url_for("forum.post_detail", post_id=post.id))
 
 @forum_bp.route("/post/<int:post_id>/delete", methods=["POST"])
 def delete_post(post_id):
