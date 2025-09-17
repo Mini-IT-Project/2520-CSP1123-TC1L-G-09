@@ -61,7 +61,7 @@
                     </p>
                 </div>
 
-                {% if p.media %}
+                {% if p.content|length < 100 and p.media %}
                 <div class="post-media">
                     {% set first = p.media[0] %}
                     {% if first.media_url.endswith('.png') or first.media_url.endswith('.jpg') or first.media_url.endswith('.jpeg') or first.media_url.endswith('.gif') %}

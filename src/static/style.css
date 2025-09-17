@@ -905,6 +905,14 @@ ul {
 .post-excerpt {
     flex-grow: 1;
     color: #555;
+    display: -webkit-box;
+    box-orient: vertical;
+
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .post-actions {
