@@ -1479,6 +1479,33 @@ label{
     text-decoration: underline;
 }
 
+.like-comment-btn,
+.like-reply-btn {
+    border: none;
+    color: white;
+    background-color: #0a6ef0;  
+    width: 70px;
+    height: 36px;
+    font-size: 13px;
+    cursor: pointers;
+    padding: 8px 12px; 
+    border-radius:20px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.like-comment-btn:hover,
+.like-reply-btn:hover {
+    background-color: #005fa3;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.like-comment-btn:active,
+.like-reply-btn:active {
+    transform: translateY(1px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
 .muted{
     color: #65676b;
 }
