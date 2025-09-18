@@ -134,7 +134,15 @@ def match_success_page():
     members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
     if members:
         user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
+        if not user1:
+            user1= Profile_data(user_id=members.user1_id)
+            db.session.add(user1)
+            db.session.commit()
         user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
+        if not user2:
+            user2= Profile_data(user_id=members.user2_id)
+            db.session.add(user2)
+            db.session.commit()
 
     redirect_url = url_for("MatchChat.chat_room", room_name=room_name, _external=True)      #to redirect to chat_room
 
