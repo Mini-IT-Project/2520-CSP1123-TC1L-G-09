@@ -33,35 +33,46 @@
     
     <main>
     <div class="bottle-container">
+        <video autoplay loop muted playsinline class="bottle-video">
+            <source src="{{ url_for('static', filename='bottle_bg.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
         {% if bottle %}
-            <div class="bottle_content">
-                {% if bottle.content %}
-                    <p>{{ bottle.content }}</p>
-                {% endif %}
-
-                {% if bottle.file_path %}
-                    {% if bottle.file_type == 'image' %}
-                        <img src="{{ url_for('static', filename=bottle.file_path) }}" alt="Bottle Image" style="max-width: 400px;">
-                    {% elif bottle.file_type == 'audio' %}
-                        <audio controls>
-                            <source src="{{ url_for('static', filename=bottle.file_path) }}">
-                            Your browser does not support the audio element.
-                        </audio>
-                    {% elif bottle.file_type == 'video' %}
-                        <video controls style="max-width:100%;">
-                            <source src="{{ url_for('static', filename=bottle.file_path) }}">
-                            Your browser does not support the video tag.
-                        </video>
+            <div class="bottle-wrapper">
+                <div class="bottle_content">
+                    {% if bottle.content %}
+                        <p>{{ bottle.content }}</p>
                     {% endif %}
-                {% endif %}
-            </div>
-        </div>
-    {% else %}
-        <p>The sea is still empty...🌊</p>
-    {% endif %}
 
-    <br>
-    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+                    {% if bottle.file_path %}
+                        {% if bottle.file_type == 'image' %}
+                            <img src="{{ url_for('static', filename=bottle.file_path) }}" alt="Bottle Image" style="max-width: 400px;">
+                        {% elif bottle.file_type == 'audio' %}
+                            <audio controls>
+                               <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                               Your browser does not support the audio element.
+                            </audio>
+                        {% elif bottle.file_type == 'video' %}
+                            <video controls style="max-width:100%;">
+                                <source src="{{ url_for('static', filename=bottle.file_path) }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="bottle-footer">
+                    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="bottle-empty">
+                <p>The sea is still empty...🌊</p>
+                <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+            </div>
+        {% endif %}
     </main>
 </body>
 </html>
