@@ -40,7 +40,13 @@ def home():
         flash("Please login in first.")
         return redirect(url_for('login.home')) #check used-id 
     
-    return render_template("MatchChat.html")
+    myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
+    if not myprofile_data:
+        myprofile_data= Profile_data(user_id=user_id)
+        db.session.add(myprofile_data)
+        db.session.commit()
+
+    return render_template("MatchChat.html", myprofile_data = myprofile_data)
 
 @socketio.on("connect")
 def handle_connect():
@@ -69,6 +75,15 @@ def handle_connect():
 
 @socketio.on("disconnect")
 def handle_disconnect():
+    user_id = session.get("user_id")
+
+    cancel_user=MC_WaitingUser.query.filter_by(user_id=user_id).first()
+    print(f"{user_id} cancel")
+
+    if cancel_user:
+        db.session.delete(cancel_user)
+        db.session.commit()
+        
     user=Connected_users.query.filter_by(sid=request.sid).first()
     if user:
         print(f"delete {user.user_id} from db")
