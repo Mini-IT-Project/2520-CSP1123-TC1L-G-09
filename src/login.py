@@ -9,6 +9,7 @@ class Users(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     email= db.Column(db.String(120), unique=True, nullable=False)
     password= db.Column(db.String(200), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     likes = db.relationship("Like", backref="user", lazy="dynamic")
@@ -23,7 +24,11 @@ def home():
             login_password= request.form['password']
             if check_password_hash(login_user.password, login_password):
                 session['user_id'] = login_user.id
-                return redirect(url_for('main.homepage'))
+
+                if login_user.is_admin:
+                    return redirect(url_for('admin.dashboard'))
+                else:
+                    return redirect(url_for('main.homepage'))
             else:
                 flash("Password wrong, Please try again!", "error")
         else:
