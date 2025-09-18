@@ -261,7 +261,7 @@ def add_comment(post_id):
 
     socketio.emit("new_comment", {**response_data, "post_id": post_id})
 
-    return jsonify({"ok": True}), 200
+    return jsonify(response_data), 200
 
 @forum_bp.route("/comment/<int:comment_id>/like", methods=["POST"])
 def like_comment(comment_id):
