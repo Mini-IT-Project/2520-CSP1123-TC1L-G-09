@@ -61,14 +61,17 @@
                         {% endif %}
                     {% endif %}
                 </div>
-            </div>
 
-            <div class="bottle-footer">
-                <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+                <div class="bottle-footer">
+                    <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+                </div>
             </div>
 
         {% else %}
-            <p>The sea is still empty...🌊</p>
+            <div class="bottle-empty">
+                <p>The sea is still empty...🌊</p>
+                <a href="{{ url_for('bottle.DriftingBottle') }}">Back to homepage</a>
+            </div>
         {% endif %}
     </main>
 </body>
