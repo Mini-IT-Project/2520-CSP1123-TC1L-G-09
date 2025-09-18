@@ -24,7 +24,8 @@ def home():
             login_password= request.form['password']
             if check_password_hash(login_user.password, login_password):
                 session['user_id'] = login_user.id
-
+                session['is_admin'] = bool(login_user.is_admin)
+                
                 if login_user.is_admin:
                     return redirect(url_for('admin.dashboard'))
                 else:
@@ -58,3 +59,9 @@ def register():
             flash(f":( Some unexpected error happen: {e}")
 
     return render_template('register.html')
+
+@login_bp.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out.", "success")
+    return redirect(url_for('login.home'))
