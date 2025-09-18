@@ -4,12 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="/socket.io/socket.io.js"></script>
     <title>MMU FORUM</title>
 </head>
 <body>
+  <header>
+    <a href="{{url_for('forum.homepage')}}">
+      <button class="back-btn" >
+         <i class="fas fa-arrow-left"></i>
+      </button>
+    </a>
+    MMU FORUM
+  </header>
+
 <article class="card post">
-    <header class="post-header">
+    <header class="post-header" style="background-color: #d87070;border-radius: 6px;">
         <div style="display: flex; align-items: center;gap: 10px;">
             <img src="{{url_for('static', filename='avatar' ~ (author_profile.avatar_type if author_profile else 0) ~ '.png')}}" 
             alt="avatar" style="width: 40px; height:40px; border-radius: 50%; object-fit: cover;">

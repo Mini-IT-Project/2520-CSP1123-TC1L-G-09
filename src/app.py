@@ -7,6 +7,7 @@ from main import main_bp
 from bottle_feature import bottle_bp
 from profile_routes import profile_bp
 from match_chat import MatchChat_bp
+from admin_routes import admin_bp
 
 def create_app():
     app = Flask(__name__)
@@ -28,6 +29,7 @@ def create_app():
     app.register_blueprint(login_bp, url_prefix="/login")
     app.register_blueprint(profile_bp,url_prefix="/profile")
     app.register_blueprint(MatchChat_bp, url_prefix="/MatchChat")
+    app.register_blueprint(admin_bp,url_prefix="/admin")
 
     with app.app_context():
         db.create_all()

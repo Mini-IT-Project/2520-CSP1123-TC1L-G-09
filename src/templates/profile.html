@@ -46,7 +46,9 @@
                 <ul>
                     {% for post in user.posts %}
                     <li>
-                        <strong>{{post.title}}</strong> - {{post.content[:50]}}...
+                        <a href="{{url_for('forum.post_detail',post_id=post.id)}}">
+                            <strong>{{post.title}}</strong> - {{post.created_at.strftime('%Y-%m-%d %H:%M')}}
+                        </a>
                     </li>
                     {% else %}
                     <li> No Post Yet...</li>
@@ -57,9 +59,11 @@
             <div class="profile-section">
                 <h3>LIKED POSTS</h3>
                 <ul>
-                    {% for post in user.likes %}
+                    {% for like in user.likes %}
                     <li>
-                      <strong>{{post.title}}</strong> - {{post.content[:50]}}...  
+                        <a href="{{url_for('forum.post_detail',post_id=like.post.id)}}">
+                            <strong>{{like.post.title}}</strong> - {{like.post.created_at.strftime('%Y-%m-%d %H:%M')}}
+                        </a> 
                     </li>
                     {% else %}
                     <li> No Liked Posts Yet...</li>
@@ -72,7 +76,9 @@
                 <ul>
                     {% for comment in user.comments %}
                     <li>
-                        {{comment.body[:80]}}...
+                        <a href="{{url_for('forum.post_detail',post_id=comment.post.id)}}">
+                            {{comment.body[:50]}}...(on"{{comment.post.title}})
+                        </a>
                     </li>
                     {% else %}
                     <li> No Comments Yet...</li>
