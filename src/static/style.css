@@ -591,10 +591,9 @@ header{
 
 .bottle-container {
     position: relative;
-    color: white;
     width: 100vw;        
     height: 100vh;
-    margin: 0;
+    margin: auto;
     padding: 0;
     background-size: cover;
     background-position: center; 
@@ -604,33 +603,37 @@ header{
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    text-shadow: none;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
 .bottle-wrapper {
-    width: 30%;
-    min-width: 280px; 
-    background: rgba(255, 255, 255, 0.6); 
-    padding: 20px;
+    width: 40%;
+    min-width: 320px;
+    min-height: 40vh; 
+    background: rgba(255,255,255,0.9);
+    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 50%;
+    justify-content: space-between; 
+    align-items: center;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .bottle_content {
     font-size: 16px;
     font-weight: 500;
     color: #222;
+    margin-bottom: 3px;
+    text-shadow: none;
 }
-
 
 .bottle-video {
     position: absolute;
@@ -647,19 +650,6 @@ header{
     display: block;
 }
 
-.bottle_content {
-    width: 70%;     
-    width: 600px; 
-    text-align: center;
-    color: #222;
-    font-size: 16px;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.8);  
-    padding: 15px;
-    border-radius: 12px;
-    z-index: 2;
-}
-
 .bottle-media {
     max-width: 400px;
     max-height: 250px;
@@ -672,9 +662,27 @@ a {
     color: #0044cc;
     font-weight: bold;
     text-decoration: none;
+    text-shadow: none; 
 }
 
 a:hover {
+    color: #0099ff;
+}
+
+.bottle-footer {
+    margin-top: 3px;
+    z-index: 1;
+    text-shadow: none;
+}
+
+.bottle-footer a {
+    color: #0044cc;
+    font-weight: bold;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+.bottle-footer a:hover {
     color: #0099ff;
 }
 
