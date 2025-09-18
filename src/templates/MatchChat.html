@@ -28,7 +28,14 @@
             </ul>
         </nav>
     </header>
+
     <body style="text-align: center;">
+        <div class="bg-squares">
+            {% for i in range(200) %}
+                <div></div>
+            {% endfor %}
+        </div>
+
         <div id="MatchChat-view">
         <br><br><br>
             <div>
@@ -38,6 +45,9 @@
                 <span class="blue">Chat with</span> 
                 <span class="red"> no presure</span>
             </h1>
+            <p class="slogan-subtitle">
+                Find your next friend, anytime, anywhere.
+            </p>
             </div>
             <div>
                 <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match-button">Match Now!</button>
