@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_socketio import join_room, emit
+from flask_socketio import join_room, emit, leave_room
 from extensions import db
 from extensions import socketio
 from login import Users
@@ -59,6 +59,11 @@ def handle_connect():
             new_user=Connected_users(user_id=user_id, sid=request.sid)
             db.session.add(new_user)
             print(f"{user_id} new connect, fisrt sid: {request.sid}")
+
+            activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
+            if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
+                join_room(activated_rooms.room_name, sid= request.sid)
+                print (f"{user_id} 1, rejoin")
 
         db.session.commit()
 
@@ -129,7 +134,15 @@ def match_success_page():
     members= Activated_rooms.query.filter_by(room_name=room_name).first()       #to show avatar
     if members:
         user1=Profile_data.query.filter_by(user_id=members.user1_id).first()
+        if not user1:
+            user1= Profile_data(user_id=members.user1_id)
+            db.session.add(user1)
+            db.session.commit()
         user2=Profile_data.query.filter_by(user_id=members.user2_id).first()
+        if not user2:
+            user2= Profile_data(user_id=members.user2_id)
+            db.session.add(user2)
+            db.session.commit()
 
     redirect_url = url_for("MatchChat.chat_room", room_name=room_name, _external=True)      #to redirect to chat_room
 
@@ -148,7 +161,39 @@ def chat_room():
 
 @socketio.on("message")
 def handle_message(data):
-    room_name = request.args.get("room_name")
+    room_name = data["room_name"]
+    print(f"123 {room_name}")
+
+    user_id = session.get("user_id")
+    activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
+    if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
+        join_room(activated_rooms.room_name, sid= request.sid)
+        print (f"{user_id}, rejoin")
+
+    sender_id= data["user_id"]
+
     message=data["message"]
     print(message)
-    emit("print_message", {"message": message}, to=room_name)
+
+    emit("print_message", {"message": message, "sender_id" :sender_id}, to=room_name)
+
+@socketio.on("you_leave_room")
+def handle_you_leave_room(data):
+    room_name = data.get("room_name")
+
+    leave_room(room_name)
+
+    emit("other_user_leave", to=room_name)
+
+    emit("you_leave_room", room=request.sid)
+
+@socketio.on("other_leave_room")
+def handle_other_leave_room(data):
+    room_name = data.get("room_name")
+
+    leave_room(room_name)
+
+    room = Activated_rooms.query.filter_by(room_name=room_name).first()
+    if room:
+        db.session.delete(room)
+        db.session.commit()

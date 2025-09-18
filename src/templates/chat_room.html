@@ -7,17 +7,9 @@
         <title> MMU Match Chat </title>
     </head>
     <header>
-        <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
-            <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
-        </a>
-        <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
         <div>MMU Match Chat</div>
         <nav>
             <ul>
-                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
-                <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
-                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
-                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
                 {% if 'user_id' in session %}
                 <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
@@ -44,14 +36,18 @@
                 {% endif %}
             </div>
             <div>
-                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #ccc; border-radius: 8px; padding: 10px; color: aliceblue;">
+                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #ccc; border-radius: 8px; padding: 10px; color: aliceblue; display: flex; flex-direction: column;">
                 </div>
             </div>
-            <div style="position: absolute; bottom: 0; left: 20px;right: 20px; width: 97.65%; transform: translateY(-95%); background-color: aliceblue; border-radius: 0px 0px 12px 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); height: 7vh; display: flex; justify-content: center; align-items: center;">
+            <div style="position: absolute; bottom: 0;left: 20px; right: 20px; transform: translateY(-85%); background-color: aliceblue; border-radius: 0px 0px 12px 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); height: 7vh; display: flex; justify-content: center; align-items: center;">
                 <textarea id="messageInput" placeholder="Type a message..." rows="1" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc; resize: none; margin-left: 1%; margin-right: 5%;"></textarea>
                 <button id="sendButton" style="padding: 10px 20px; border-radius: 8px; background: blue; color: white; margin-right: 1%;" type="button">Send</button>
             </div>
         </div>
+        <div style="text-align: center; margin-top: 7vh;">
+            <button id="leaveButton" style="margin-bottom: 5vh;">Leave room</button>
+        </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
     <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
         const socket = io(); 
@@ -63,10 +59,13 @@
         const input = document.getElementById("messageInput");
         const chatBox = document.getElementById("chat-box");
 
+        const user_id = "{{ session.get('user_id') }}";
+        const room_name = "{{ room_name }}";
+
         document.getElementById("sendButton").addEventListener("click", () => {
             const message = input.value.trim();
             if (message) {
-                socket.emit("message", {message: message });
+                socket.emit("message", {message: message , room_name: room_name, user_id: user_id});
                 input.value = "";
             }
         });
@@ -75,7 +74,28 @@
             const p = document.createElement("p");
             p.textContent = data.message;
             chatBox.appendChild(p);
+
+            if (data.sender_id == user_id) {
+                p.classList.add("chat-content-self");
+            } else {
+                p.classList.add("chat-content-other");
+            }
+
             chatBox.scrollTop = chatBox.scrollHeight; 
+        });
+
+        document.getElementById("leaveButton").addEventListener("click", () => {
+            socket.emit("you_leave_room", { room_name: room_name });
+        });
+
+        socket.on("other_user_leave", function(data) {
+            alert(`User has left the room.`);
+            socket.emit("other_leave_room", { room_name: room_name });
+            window.location.href = "{{ url_for('main.homepage', _external=True) }}";
+        });
+
+        socket.on("you_leave_room", function() {
+            window.location.href = "{{ url_for('main.homepage', _external=True) }}";
         });
     </script>
     </body>

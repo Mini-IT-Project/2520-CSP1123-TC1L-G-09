@@ -1663,3 +1663,27 @@ label{
     padding: 0;
     line-height: 1;
 }
+
+/*Match Chat, chat room*/
+.chat-content-self {
+    display: inline-block;
+    align-self: flex-end;
+    max-width: 75%; 
+    word-wrap: break-word;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 7px;
+    background-color: #f15f37;
+}
+.chat-content-other {
+    display: inline-block;
+    align-self: flex-start;
+    max-width: 75%; 
+    word-wrap: break-word;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 7px;
+    background-color: #4e59d3;
+}
