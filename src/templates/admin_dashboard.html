@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        Admin Dashboard
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
+                <li>
+                {% if 'user_id' in session %}
+                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
+                {% else %}
+                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="all-post-container">
+    All Posts
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author ID</th>
+            <th>Created At</th>
+            <th>Content</th>
+            <th>Actions</th>
+        </tr>
+        {% for p in posts %}
+        <tr>
+            <td>{{ p.title }}</td>
+            <td>{{ p.user_id }}</td>
+            <td>{{ p.created_at }}</td>
+            <td>{{ p.content[:50] }}...</td>
+            <td>
+                <form action="{{ url_for('admin.delete_post', post_id=p.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    <div class="report-post-container">
+    Reported Posts
+    <table>
+        <tr>
+            <th>Post ID</th>
+            <th>Reason</th>
+            <th>Reported At</th>
+            <th>Actions</th>
+        </tr>
+        {% for r in reports %}
+        <tr>
+            <td>{{ r.post_id }}</td>
+            <td>{{ r.reason }}</td>
+            <td>{{ r.create_at }}</td>
+            <td>
+                <a href="{{ url_for('forum.post_detail', post_id=r.post_id) }}">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+</body>
+</html>
