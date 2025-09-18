@@ -1439,10 +1439,13 @@ label{
     line-height: 1.4;
     gap: 6px;
 
-    text-align: justify ;
+    text-align: justify;
     text-justify: inter-word;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
     margin: 12px auto;
     margin-bottom: 2px;
+    padding: 10px; 
 
     display: -webkit-box;
     line-clamp: 6;
@@ -1460,7 +1463,7 @@ label{
 .post-content p {
     margin: 0;
     text-align: justify;
-    text-justify: inter-word;
+    text-justify: inter-word;  
     
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -1695,6 +1698,7 @@ label{
     line-height: 1.6;
     margin: 0 auto 12px;
     text-align: justify;
+    text-align-last: center; 
     white-space: normal;
     overflow: visible;
     display: block;
@@ -1780,6 +1784,15 @@ label{
     margin: 0;
     padding: 0;
     line-height: 1;
+}
+
+/*Match Chat*/
+.slogan-subtitle {
+    font-size: 16px;
+    color: #444;   /* 深灰色 */
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 400;
 }
 
 /*Match Chat, chat room*/
