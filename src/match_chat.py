@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_socketio import join_room, emit
+from flask_socketio import join_room, emit, leave_room
 from extensions import db
 from extensions import socketio
 from login import Users
@@ -168,3 +168,24 @@ def handle_message(data):
     print(message)
 
     emit("print_message", {"message": message, "sender_id" :sender_id}, to=room_name)
+
+@socketio.on("you_leave_room")
+def handle_you_leave_room(data):
+    room_name = data.get("room_name")
+
+    leave_room(room_name)
+
+    emit("other_user_leave", to=room_name)
+
+    emit("you_leave_room", room=request.sid)
+
+@socketio.on("other_leave_room")
+def handle_other_leave_room(data):
+    room_name = data.get("room_name")
+
+    leave_room(room_name)
+
+    room = Activated_rooms.query.filter_by(room_name=room_name).first()
+    if room:
+        db.session.delete(room)
+        db.session.commit()
