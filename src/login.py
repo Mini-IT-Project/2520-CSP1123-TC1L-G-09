@@ -10,6 +10,10 @@ class Users(db.Model):
     email= db.Column(db.String(120), unique=True, nullable=False)
     password= db.Column(db.String(200), nullable=False)
 
+    posts = db.relationship("Post", backref="author", lazy="dynamic")
+    likes = db.relationship("Like", backref="user", lazy="dynamic")
+    comments = db.relationship("Comment", backref="user", lazy="dynamic")
+
 @login_bp.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
