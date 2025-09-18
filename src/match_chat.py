@@ -60,6 +60,11 @@ def handle_connect():
             db.session.add(new_user)
             print(f"{user_id} new connect, fisrt sid: {request.sid}")
 
+            activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
+            if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
+                join_room(activated_rooms.room_name, sid= request.sid)
+                print (f"{user_id} 1, rejoin")
+
         db.session.commit()
 
 @socketio.on("disconnect")
@@ -148,7 +153,18 @@ def chat_room():
 
 @socketio.on("message")
 def handle_message(data):
-    room_name = request.args.get("room_name")
+    room_name = data["room_name"]
+    print(f"123 {room_name}")
+
+    user_id = session.get("user_id")
+    activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
+    if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
+        join_room(activated_rooms.room_name, sid= request.sid)
+        print (f"{user_id}, rejoin")
+
+    sender_id= data["user_id"]
+
     message=data["message"]
     print(message)
-    emit("print_message", {"message": message}, to=room_name)
+
+    emit("print_message", {"message": message, "sender_id" :sender_id}, to=room_name)

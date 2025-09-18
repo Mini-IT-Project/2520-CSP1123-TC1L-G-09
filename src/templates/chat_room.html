@@ -44,7 +44,7 @@
                 {% endif %}
             </div>
             <div>
-                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #ccc; border-radius: 8px; padding: 10px; color: aliceblue;">
+                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #ccc; border-radius: 8px; padding: 10px; color: aliceblue; display: flex; flex-direction: column;">
                 </div>
             </div>
             <div style="position: absolute; bottom: 0; left: 20px;right: 20px; width: 97.65%; transform: translateY(-95%); background-color: aliceblue; border-radius: 0px 0px 12px 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); height: 7vh; display: flex; justify-content: center; align-items: center;">
@@ -63,10 +63,13 @@
         const input = document.getElementById("messageInput");
         const chatBox = document.getElementById("chat-box");
 
+        const user_id = "{{ session.get('user_id') }}";
+
         document.getElementById("sendButton").addEventListener("click", () => {
+            const room_name = "{{ room_name }}";
             const message = input.value.trim();
             if (message) {
-                socket.emit("message", {message: message });
+                socket.emit("message", {message: message , room_name: room_name, user_id: user_id});
                 input.value = "";
             }
         });
@@ -75,6 +78,13 @@
             const p = document.createElement("p");
             p.textContent = data.message;
             chatBox.appendChild(p);
+
+            if (data.sender_id == user_id) {
+                p.classList.add("chat-content-self");
+            } else {
+                p.classList.add("chat-content-other");
+            }
+
             chatBox.scrollTop = chatBox.scrollHeight; 
         });
     </script>
