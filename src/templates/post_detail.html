@@ -115,7 +115,9 @@
                         <button class="like-reply-btn" data-id="{{r.id}}">
                             👍<span class="reply-like-count">{{r.like_count()}}</span>
                         </button>
+                        <!--
                         <span class="comment-action reply-btn" data-id="{{r.id}}">Reply</span>
+                        -->
                     </div>
                 </div>
                 {% endfor %}
@@ -125,6 +127,7 @@
     {% endfor %}
     </ul>
 </section>
+<!--
 <div id="reply-form" style="display: none;">
   <form id="replyForm" data-post-id="{{ post.id }}">
     <input type="hidden" name="parent_id" id="replyParentId">
@@ -132,6 +135,7 @@
     <button type="submit">Submit</button>
   </form>
 </div>
+-->
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -221,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // -------------------- REPLY FORM --------------------
+  /*
   const replyFormContainer = document.getElementById("reply-form");
   const replyForm = document.getElementById("replyForm");
   const parentInput = document.getElementById("replyParentId");
@@ -287,6 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+  */
 
   // -------------------- HELPER FUNCTIONS --------------------
   function addCommentToList(data) {
