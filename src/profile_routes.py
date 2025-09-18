@@ -16,9 +16,9 @@ class Profile_data(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     avatar_type= db.Column(db.Integer, nullable=False, default=0)
-    campus_name= db.Column(db.String(200), nullable=False, default=' ')
+    campus_name= db.Column(db.String(200), nullable=False, default='Malaysia')
     degree_name= db.Column(db.String(200), nullable=False, default=' ')
-    faculty_name= db.Column(db.String(200), nullable=False, default=' ')
+    faculty_name= db.Column(db.String(200), nullable=False, default='MMU')
 
 @profile_bp.route("/", methods=['GET', 'POST'])
 def myProfile():
