@@ -77,7 +77,7 @@
                     {% for comment in user.comments %}
                     <li>
                         <a href="{{url_for('forum.post_detail',post_id=comment.post.id)}}">
-                            {{comment.post.title}}:{{comment.body[:50]}}
+                            {{comment.body[:50]}}...(on"{{comment.post.title}})
                         </a>
                     </li>
                     {% else %}
