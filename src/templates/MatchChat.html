@@ -6,51 +6,51 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title> MMU Match Chat </title>
     </head>
-    <header>
-        <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
-            <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
-        </a>
-        <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
-        <div>MMU Match Chat</div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
-                <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
-                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
-                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
-                <li>
-                {% if 'user_id' in session %}
-                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
-                {% else %}
-                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
-                {% endif %}
-                </li>
-            </ul>
-        </nav>
-    </header>
 
-    <body style="text-align: center;">
+    <body class="match-chat">
+        <header>
+            <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
+                <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
+            </a>
+            <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
+            <div>MMU Match Chat</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                    <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
+                    <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                    <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
+                    <li>
+                    {% if 'user_id' in session %}
+                    <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
+                    {% else %}
+                    <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+                    {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
         <div class="bg-squares">
             {% for i in range(200) %}
                 <div></div>
             {% endfor %}
         </div>
 
-        <div id="MatchChat-view">
-        <br><br><br>
+        <div class="match-content">
             <div>
-            <h1 class="slogan-line">
-                <span class="red">Meet different</span> 
-                <span class="blue">people</span><br>
-                <span class="blue">Chat with</span> 
-                <span class="red"> no presure</span>
-            </h1>
-            <p class="slogan-subtitle">
-                Find your next friend, anytime, anywhere.
-            </p>
+                <h1 class="slogan-line">
+                    <span class="red">Meet different</span> 
+                    <span class="blue">people</span><br>
+                    <span class="blue">Chat with</span> 
+                    <span class="red"> no presure</span>
+                </h1>
+                <p class="slogan-subtitle">
+                    Find your next friend, anytime, anywhere.
+                </p>
             </div>
-            <div>
-                <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match-button">Match Now!</button>
+            <div class="button-group">
+                <button id="match-button" onclick="toggleEdit()">Match Now</button>
             </div>
         </div>
 
@@ -60,35 +60,64 @@
             <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="cancel-button">Cancel</button>
         </div>
 
-    <script>  /*gpt generated, but i understand how it work*/
-        function toggleEdit() {
-            let view = document.getElementById("MatchChat-view");
-            let edit = document.getElementById("MatchChat-hidden");
-            if (view.style.display === "none") {
-                view.style.display = "block";
-                edit.style.display = "none";
-            } else {
-                view.style.display = "none";
-                edit.style.display = "block";
+        <script>  /*gpt generated, but i understand how it work*/
+            function toggleEdit() {
+                let view = document.getElementById("MatchChat-view");
+                let edit = document.getElementById("MatchChat-hidden");
+                if (view.style.display === "none") {
+                    view.style.display = "block";
+                    edit.style.display = "none";
+                } else {
+                    view.style.display = "none";
+                    edit.style.display = "block";
+                }
             }
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
-    <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
-        const socket = io(); 
-        socket.on('connect', function() { 
-            socket.emit('my event', {data: 'I\'m connected!'}); 
-        }); 
-    </script>
-    <script>
-        document.getElementById("match-button").addEventListener("click", () => {
-            socket.emit("match_request");
-        });
-        document.getElementById("cancel-button").addEventListener("click", () => {
-            socket.emit("cancel_request");
-        });
-        socket.on("match_success", function(data) {
-            window.location.href = data.redirect_url;    //redirect to match success page
-        });
-    </script>
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
+        <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
+            const socket = io(); 
+            socket.on('connect', function() { 
+                socket.emit('my event', {data: 'I\'m connected!'}); 
+            }); 
+        </script>
+        <script>
+            document.getElementById("match-button").addEventListener("click", () => {
+                socket.emit("match_request");
+            });
+            document.getElementById("cancel-button").addEventListener("click", () => {
+                socket.emit("cancel_request");
+            });
+            socket.on("match_success", function(data) {
+                window.location.href = data.redirect_url;    //redirect to match success page
+            });
+        </script>
+
+        <script>
+            const container = document.querySelector(".bg-squares");
+            const squareSize = 44; 
+            const cols = Math.ceil(window.innerWidth / squareSize);
+            const rows = Math.ceil(window.innerHeight / squareSize);
+            const total = cols * rows;
+
+            for (let i = 0; i < total; i++) {
+                const div = document.createElement("div");
+                container.appendChild(div);
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const bg = document.querySelector('.bg-squares');
+                const cols = Math.ceil(window.innerWidth / 44);  // 40px + margin
+                const rows = Math.ceil(window.innerHeight / 44);
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const div = document.createElement('div');
+                        div.style.background = (r + c) % 2 === 0 ? '#e4f0ffdc' : '#d0e7ff'; 
+                        bg.appendChild(div);
+                    }
+                }
+             });
+        </script>
     </body>
+</html>
