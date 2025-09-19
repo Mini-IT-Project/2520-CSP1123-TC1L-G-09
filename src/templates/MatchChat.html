@@ -37,8 +37,7 @@
             {% endfor %}
         </div>
 
-        <div id="MatchChat-view">
-            <br><br><br>
+        <div class="match-content">
             <div>
                 <h1 class="slogan-line">
                     <span class="red">Meet different</span> 
@@ -50,8 +49,8 @@
                     Find your next friend, anytime, anywhere.
                 </p>
             </div>
-            <div>
-                <button style="font-size: 30px; padding: 25px 40px; margin-top: 20vh; background-color: #B22222;" type="button" onclick="toggleEdit()" id="match-button">Match Now!</button>
+            <div class="button-group">
+                <button id="match-button" onclick="toggleEdit()">Match Now</button>
             </div>
         </div>
 
@@ -74,6 +73,7 @@
                 }
             }
         </script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>  
         <script type="text/javascript" charset="utf-8">   //initial socketio, from official website
             const socket = io(); 
@@ -91,6 +91,33 @@
             socket.on("match_success", function(data) {
                 window.location.href = data.redirect_url;    //redirect to match success page
             });
+        </script>
+
+        <script>
+            const container = document.querySelector(".bg-squares");
+            const squareSize = 44; 
+            const cols = Math.ceil(window.innerWidth / squareSize);
+            const rows = Math.ceil(window.innerHeight / squareSize);
+            const total = cols * rows;
+
+            for (let i = 0; i < total; i++) {
+                const div = document.createElement("div");
+                container.appendChild(div);
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const bg = document.querySelector('.bg-squares');
+                const cols = Math.ceil(window.innerWidth / 44);  // 40px + margin
+                const rows = Math.ceil(window.innerHeight / 44);
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const div = document.createElement('div');
+                        div.style.background = (r + c) % 2 === 0 ? '#e4f0ffdc' : '#d0e7ff'; 
+                        bg.appendChild(div);
+                    }
+                }
+             });
         </script>
     </body>
 </html>
