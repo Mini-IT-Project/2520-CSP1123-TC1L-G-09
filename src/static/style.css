@@ -1102,7 +1102,7 @@ ul {
 }
 
 .icon-btn:hover {
-    background-color: #cce6ff; 
+    background-color: #cc0000; 
 }
 
 /*button for create post*/
@@ -1355,7 +1355,7 @@ label{
 }
 
 .dropdown-toggle{
-    background-color: #cce6ff;
+    background-color: #cc0000;
     color: white;
     border: none;
     font-size: 20px;
@@ -1371,7 +1371,7 @@ label{
 }
 
 .dropdown-toggle:hover{
-    background-color: #cce6ff;
+    background-color: #eb1313;
 }
 
 .dropdown-menu{
@@ -1496,7 +1496,7 @@ label{
 }
 
 .tags{
-    display: flex;
+    display: left;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 16px;
@@ -1789,7 +1789,7 @@ label{
 /*Match Chat*/
 .slogan-subtitle {
     font-size: 16px;
-    color: #444;   /* 深灰色 */
+    color: #444;   
     margin-top: 10px;
     text-align: center;
     font-weight: 400;
