@@ -8,7 +8,12 @@
 </head>
 <body>
     <header>
-        <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
+        <a href="{% if session.get('is_admin') %}
+            {{ url_for('admin.dashboard') }}
+          {% else %}
+            {{ url_for('main.homepage') }}
+          {% endif %}"
+        style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
             <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
         </a>
         <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
