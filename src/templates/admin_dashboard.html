@@ -47,11 +47,7 @@
                 <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
                 <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
                 <li>
-                {% if 'user_id' in session %}
-                <span style="font-weight: bold;">Welcome</span>
-                {% else %}
                 <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
-                {% endif %}
                 </li>
             </ul>
         </nav>
@@ -69,7 +65,7 @@
         </tr>
         {% for r in reports %}
         <tr>
-            <td>{{ r.post.title }}</td>
+            <td>{{ r.post.title if r.post else "[Deleted Post]" }}</td>
             <td>{{ r.reason }}</td>
             <td>{{ r.details or '-' }}</td>
             <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
