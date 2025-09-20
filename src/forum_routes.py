@@ -165,7 +165,7 @@ def edit_post(post_id):
 
     if request.method == "POST":
         post.title = request.form.get("title")
-        post.body = request.form.get("body")
+        post.content = request.form.get("content")
 
         delete_ids = request.form.getlist("delete_media_ids")
         for media_id in delete_ids:
@@ -315,6 +315,11 @@ def delete_post(post_id):
     if not (is_admin or post.user_id == user_id):
         flash("You cannot delete this post", "error")
         return redirect(url_for("forum.post_detail", post_id=post.id))
+    
+    for media in post.media:
+        file_path=os.path.join(current_app.root_path,"static",media.media_url)
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
     try:
         db.session.delete(post)

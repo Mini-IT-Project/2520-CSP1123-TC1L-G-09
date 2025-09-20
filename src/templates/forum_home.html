@@ -68,7 +68,7 @@
                         <img class="media" src="{{url_for('static', filename=first.media_url)}}" alt="image" />
                     {% else %}
                         <video class="media" controls>
-                            <source src="{{url_for('static',filename=m.media_url)}}" />
+                            <source src="{{url_for('static',filename=first.media_url)}}" />
                         </video>
                     {% endif %}
                 </div>
