@@ -165,7 +165,7 @@ def edit_post(post_id):
 
     if request.method == "POST":
         post.title = request.form.get("title")
-        post.body = request.form.get("body")
+        post.content = request.form.get("content")
 
         delete_ids = request.form.getlist("delete_media_ids")
         for media_id in delete_ids:
@@ -261,7 +261,7 @@ def add_comment(post_id):
 
     socketio.emit("new_comment", {**response_data, "post_id": post_id})
 
-    return jsonify({"ok": True}), 200
+    return jsonify(response_data), 200
 
 @forum_bp.route("/comment/<int:comment_id>/like", methods=["POST"])
 def like_comment(comment_id):
@@ -310,13 +310,24 @@ def report_post(post_id):
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     user_id = session.get("user_id")
-    if post.user_id != user_id:
+    is_admin = session.get("is_admin", False)
+
+    if not (is_admin or post.user_id == user_id):
         flash("You cannot delete this post", "error")
         return redirect(url_for("forum.post_detail", post_id=post.id))
+    
+    for media in post.media:
+        file_path=os.path.join(current_app.root_path,"static",media.media_url)
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
-    db.session.delete(post)
-    db.session.commit()
-    flash("Post deleted successfully", "success")
-    return redirect(url_for("forum.homepage"))
-
+    try:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post deleted successfully", "success")
+        return redirect(url_for("forum.homepage"))
+    except Exception as e:
+        db.session.rollback()
+        flash("Failed to delete post", "error")
+        return redirect(url_for("forum.post_detail", post_id=post.id))
 

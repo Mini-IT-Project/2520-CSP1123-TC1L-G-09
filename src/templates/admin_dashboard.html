@@ -3,71 +3,75 @@
 <head>
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .report-post-container {
+            padding: 20px;
+        }
+
+        .report-post-container h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+
+        th {
+            background: #f1f1f1;
+        }
+
+        a.view-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <header>
-        Admin Dashboard
+        <span>Admin Dashboard</span>
         <nav>
             <ul>
+                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
                 <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
-                <li>
-                {% if 'user_id' in session %}
-                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
-                {% else %}
-                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
-                {% endif %}
-                </li>
             </ul>
         </nav>
     </header>
 
-    <div class="all-post-container">
-    All Posts
+    <div class="report-post-container">
+    <h2>Reported Posts</h2>
     <table>
         <tr>
             <th>Title</th>
-            <th>Author ID</th>
-            <th>Created At</th>
-            <th>Content</th>
-            <th>Actions</th>
-        </tr>
-        {% for p in posts %}
-        <tr>
-            <td>{{ p.title }}</td>
-            <td>{{ p.user_id }}</td>
-            <td>{{ p.created_at }}</td>
-            <td>{{ p.content[:50] }}...</td>
-            <td>
-                <form action="{{ url_for('admin.delete_post', post_id=p.id) }}" method="post" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    </div>
-
-    <div class="report-post-container">
-    Reported Posts
-    <table>
-        <tr>
-            <th>Post ID</th>
-            <th>Reason</th>
-            <th>Reported At</th>
+            <th>Reasons</th>
+            <th>Additional Reasons</th>
+            <th>Report Time</th>
             <th>Actions</th>
         </tr>
         {% for r in reports %}
         <tr>
-            <td>{{ r.post_id }}</td>
+            <td>{{ r.post.title if r.post else "[Deleted Post]" }}</td>
             <td>{{ r.reason }}</td>
-            <td>{{ r.create_at }}</td>
+            <td>{{ r.details or '-' }}</td>
+            <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
             <td>
-                <a href="{{ url_for('forum.post_detail', post_id=r.post_id) }}">View</a>
+                <a href="{{ url_for('forum.post_detail', post_id=r.post_id) }}" class="view-link">View</a>
             </td>
         </tr>
         {% endfor %}
     </table>
-    </div>
-
+</div>
 </body>
 </html>
