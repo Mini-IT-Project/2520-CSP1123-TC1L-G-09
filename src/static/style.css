@@ -2039,7 +2039,7 @@ body.match-success {
 }
 .chat-box-div{
     overflow-y: auto; 
-    height: 55vh; 
+    height: 53vh; 
     border: 1px solid #000000;
     border-radius: 8px; 
     padding: 10px; 
@@ -2053,12 +2053,13 @@ body.match-success {
     bottom: 0;left: 0px; 
     right: 0px; 
     transform: translateY(75%); 
-    background-color: aliceblue; 
+    background-color: #f89c9c; 
     border-radius: 0px 0px 12px 12px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
     height: 7vh; display: flex; 
     justify-content: center; 
     align-items: center;
+    margin-top: 10px;
     padding: 3px 10px;
     gap: 15px;
 }
@@ -2071,8 +2072,16 @@ body.match-success {
 }
 .chat-send-button{
     padding: 10px 20px; 
-    border-radius: 8px; 
-    background: blue; 
+    border-radius: 20px; 
+    background: rgb(193, 35, 35); 
+    color: white; 
+    margin-right: 1%;
+}
+
+.chat-leave-button{
+    padding: 10px 20px; 
+    border-radius: 20px; 
+    background: rgb(53, 59, 139); 
     color: white; 
     margin-right: 1%;
 }
