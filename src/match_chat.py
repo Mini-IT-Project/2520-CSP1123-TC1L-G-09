@@ -40,7 +40,13 @@ def home():
         flash("Please login in first.")
         return redirect(url_for('login.home')) #check used-id 
     
-    return render_template("MatchChat.html")
+    myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
+    if not myprofile_data:
+        myprofile_data= Profile_data(user_id=user_id)
+        db.session.add(myprofile_data)
+        db.session.commit()
+
+    return render_template("MatchChat.html", myprofile_data = myprofile_data)
 
 @socketio.on("connect")
 def handle_connect():
@@ -69,6 +75,15 @@ def handle_connect():
 
 @socketio.on("disconnect")
 def handle_disconnect():
+    user_id = session.get("user_id")
+
+    cancel_user=MC_WaitingUser.query.filter_by(user_id=user_id).first()
+    print(f"{user_id} cancel")
+
+    if cancel_user:
+        db.session.delete(cancel_user)
+        db.session.commit()
+        
     user=Connected_users.query.filter_by(sid=request.sid).first()
     if user:
         print(f"delete {user.user_id} from db")
@@ -108,7 +123,8 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)        #url show room_name, so match_success_page can get room_name variable
+        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)  
+        print("Emitting match_success", redirect_url)      #url show room_name, so match_success_page can get room_name variable
         emit("match_success", {"redirect_url": redirect_url, "room_name": room_name},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
@@ -165,9 +181,10 @@ def handle_message(data):
     print(f"123 {room_name}")
 
     user_id = session.get("user_id")
+    user= Connected_users.query.filter_by(user_id=user_id).first()
     activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
     if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
-        join_room(activated_rooms.room_name, sid= request.sid)
+        join_room(activated_rooms.room_name, sid= user.sid)
         print (f"{user_id}, rejoin")
 
     sender_id= data["user_id"]
