@@ -252,7 +252,7 @@ h2 {
     border-radius: 10px 0 0 10px;
 }
 
-/*Upcoming Events*/
+/* Upcoming Events */
 .events {
     text-align: center;
     margin: 20px auto;
@@ -261,136 +261,71 @@ h2 {
 .events h2 {
     color: #0044cc;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.card-container {
+/* 横向滚动容器 */
+.card-scroll {
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 10px;
-}
-
-.card-container .card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s, background-color 0.3s;
-    text-align: center;
-}
-
-.card-container .card:nth-child(odd) {
-    background-color: #e3f2fd;
-}
-
-.card-container .card img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.card-container .card h3 {
-    font-size: 1.1em;
-    margin: 5px 0;
-    color: #0044cc;
-}
-
-.card-container .card p {
-    font-size: 0.9em;
-    margin: 5px 0;
-    color: #333;
-}
-
-.events .card-container .card {
-    position: absolute;
-    bottom: 0;
-    border-radius: 15px;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     padding: 10px;
+    scrollbar-width: thin; /* 火狐 */
+}
+
+.card-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+.card-scroll::-webkit-scrollbar-thumb {
+    background: #0044cc;
+    border-radius: 4px;
+}
+
+/* 单个卡片 */
+.card-scroll .card {
+    flex: 0 0 auto;   /* 不要缩小 */
+    width: 250px;
+    border-radius: 12px;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    height:360px;
+    scroll-snap-align: center;
+    transition: transform 0.3s;
 }
 
-.events .card-container {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    height: 380px;   
-    margin: 0 auto;
+.card-scroll .card:hover {
+    transform: translateY(-5px);
 }
 
-.events .card-container .card img {
+.card-scroll .card img {
     width: 100%;
-    height: 330px;   
+    height: 150px;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
-.events .card-container .card:nth-child(1) {
-    left: 0%;
-    transform: scale(0.8);
-    z-index: 1;
-    width: 20%;
-    background: #d6e6f7;
-}
-.events .card-container .card:nth-child(2) {
-    left: 18%;
-    transform: scale(0.85);
-    z-index: 2;
-    width: 20%;
-    background: #bddcfa;
-}
-.events .card-container .card:nth-child(3) {
-    left: 36%;
-    transform: scale(1);
-    z-index: 3;
-    width: 20%;
-    background: #1978d7;
-}
-.events .card-container .card:nth-child(4) {
-    left: 54%;
-    transform: scale(0.85);
-    z-index: 2;
-    width: 20%;
-    background: #bddcfa;
-}
-.events .card-container .card:nth-child(5) {
-    left: 72%;
-    transform: scale(0.8);
-    z-index: 1;
-    width: 20%;
-    background: #d6e6f7;
-}
-
-.events .card-container .card img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.events .card-container .card h3 {
+.card-scroll .card h3 {
     font-size: 18px;
     font-weight: bold;
-    margin: 8px 0 5px;
+    margin: 5px 0;
     color: #003366;
 }
 
-.events .card-container .card p.date {
+.card-scroll .card p.date {
     font-size: 14px;
     color: #555;
-    margin: 0 0 8px;
+    margin: 0 0 5px;
 }
 
-.events .card-container .card p.desc {
+.card-scroll .card p.desc {
     font-size: 15px;
     color: #222;
     line-height: 1.4;
 }
+
 
 /*MMU Links*/
 .mmu-links {
@@ -2034,7 +1969,7 @@ body.match-success {
     border-radius: 30px;
 }
 .user-info-div{
-    color: rgb(216, 226, 240); 
+    color: rgb(255, 255, 255); 
     padding: 21px 10px 0px 10px;
 }
 .chat-box-div{
