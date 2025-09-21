@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div class="match-hidden" div id="MatchChat-hidden">
+        <div class="match-hidden" id="MatchChat-hidden">
             <div class="avatar" style="margin-top: 13vh;">
                 <img src="{{url_for('static', filename='avatar' ~ myprofile_data.avatar_type ~ '.png')}}" alt="avatar">
             </div>
@@ -64,7 +64,7 @@
             </div>
             <p class="search-text" id="search-text" >Searching for user...</p>
             <br><br>
-            <button class="cancel-button" type="button" onclick="toggleEdit()">Cancel</button>
+            <button id="cancel-button" class="cancel-button" type="button" onclick="toggleEdit()">Cancel</button>
         </div>
 
         <script>  /*gpt generated, but i understand how it work*/
@@ -96,6 +96,7 @@
                 socket.emit("cancel_request");
             });
             socket.on("match_success", function(data) {
+                console.log("收到 match_success:", data); 
                 window.location.href = data.redirect_url;    //redirect to match success page
             });
         </script>

@@ -123,7 +123,8 @@ def handle_match_request():
         db.session.delete(other)
         db.session.commit()
 
-        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)        #url show room_name, so match_success_page can get room_name variable
+        redirect_url = url_for("MatchChat.match_success_page", room_name=room_name, _external=True)  
+        print("Emitting match_success", redirect_url)      #url show room_name, so match_success_page can get room_name variable
         emit("match_success", {"redirect_url": redirect_url, "room_name": room_name},to=room_name)
     else:
         new_user=MC_WaitingUser(user_id=user_id)      #go to waiting pool
