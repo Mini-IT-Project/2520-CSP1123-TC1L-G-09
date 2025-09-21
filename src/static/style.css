@@ -1948,3 +1948,55 @@ body.match-chat {
     margin: 7px;
     background-color: #4e59d3;
 }
+.chat-background-div {
+    background-color: #fff4f4; 
+    margin: 20px; 
+    padding: 20px; 
+    height: 75vh; 
+    box-sizing: border-box; 
+    position: relative; 
+    border-radius: 30px;
+}
+.user-info-div{
+    color: rgb(216, 226, 240); 
+    padding: 21px 10px 0px 10px;
+}
+.chat-box-div{
+    overflow-y: auto; 
+    height: 55vh; 
+    border: 1px solid #000000;
+    border-radius: 8px; 
+    padding: 10px; 
+    color: aliceblue; 
+    display: flex; 
+    flex-direction: column;
+    margin-top: 1vh;
+}
+.chat-input-div{
+    position: absolute; 
+    bottom: 0;left: 0px; 
+    right: 0px; 
+    transform: translateY(75%); 
+    background-color: aliceblue; 
+    border-radius: 0px 0px 12px 12px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+    height: 7vh; display: flex; 
+    justify-content: center; 
+    align-items: center;
+    padding: 3px 10px;
+    gap: 15px;
+}
+.chat-textarea{
+    flex: 1; 
+    padding: 10px; 
+    border-radius: 8px; 
+    border: 1px solid #ccc; 
+    resize: none; 
+}
+.chat-send-button{
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    background: blue; 
+    color: white; 
+    margin-right: 1%;
+}
