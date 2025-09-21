@@ -21,7 +21,7 @@
         </nav>
     </header>
     <body>
-        <div style="background-color: #fff4f4; margin: 20px; padding: 20px; height: 75vh; box-sizing: border-box; position: relative;">
+        <div class="chat-background-div">
             <div class="avatar" style="display: flex; background-color: #990000; padding: 1vh;">
                 {% if user1.user_id == session.get("user_id") %}
                 <img src="{{url_for('static', filename='avatar' ~ user2.avatar_type ~ '.png')}}" alt="avatar" style="width: 60px; height: 60px;">
@@ -30,18 +30,18 @@
                 {% endif %}
 
                 {% if user1.user_id == session.get("user_id") %}
-                <p style="color: rgb(216, 226, 240); padding: 21px 10px 0px 10px;">{{ user2.degree_name }} in {{ user2.faculty_name }} at {{ user2.campus_name }}</p>
+                <p class="user-info-div">{{ user2.degree_name }} in {{ user2.faculty_name }} at {{ user2.campus_name }}</p>
                 {% else %}
-                <p style="color: rgb(216, 226, 240); padding: 21px 10px 0px 10px;">{{ user1.degree_name }} in {{ user1.faculty_name }} at {{ user1.campus_name }}</p>
+                <p class="user-info-div">{{ user1.degree_name }} in {{ user1.faculty_name }} at {{ user1.campus_name }}</p>
                 {% endif %}
             </div>
-            <div>
-                <div id="chat-box" style="overflow-y: auto; height: 55vh; border: 1px solid #000000; border-radius: 8px; padding: 10px; color: aliceblue; display: flex; flex-direction: column;">
-                </div>
-            </div>
-            <div style="position: absolute; bottom: 0;left: 0px; right: 0px; transform: translateY(75%); background-color: aliceblue; border-radius: 0px 0px 12px 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); height: 7vh; display: flex; justify-content: center; align-items: center;">
-                <textarea id="messageInput" placeholder="Type a message..." rows="1" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc; resize: none; margin-left: 1%; margin-right: 5%;"></textarea>
-                <button id="sendButton" style="padding: 10px 20px; border-radius: 8px; background: blue; color: white; margin-right: 1%;" type="button">Send</button>
+
+            <div id="chat-box" class="chat-box-div"></div>
+
+            <div class="chat-input-div">
+                <textarea id="messageInput" placeholder="Type a message..." rows="1" class="chat-text-area"></textarea>
+                
+                <button id="sendButton" class="chat-send-button" type="button">Send</button>
             </div>
         </div>
         <div style="text-align: center; margin-top: 7vh;">
