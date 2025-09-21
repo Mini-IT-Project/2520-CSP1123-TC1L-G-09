@@ -1925,6 +1925,81 @@ body.match-chat {
     transform: scale(1.05);
 }
 
+ /*Match Success*/
+ body {
+  margin: 0;
+  height: 100vh;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.star-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  opacity: 1;
+  animation: rise 5s linear forwards;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80vh);
+    opacity: 0;
+  }
+}
+
+.success-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.avatars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.avatars p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.waiting-text {
+  margin-top: 20px;
+  font-size: 20px;
+  color: blue;
+}
+
 /*Match Chat, chat room*/
 .chat-content-self {
     display: inline-block;
