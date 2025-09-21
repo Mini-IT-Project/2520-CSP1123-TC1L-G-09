@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title> MMU Match Chat </title>
     </head>
+    
     <header>
         <div>MMU Match Chat</div>
     </header>
@@ -29,7 +30,7 @@
         </div>
         
         <script>
-        const star = document.querySelector(".star-container");
+        const container = document.querySelector(".star-container");
 
         function createStar(){
             const star = document.createElement("div");
@@ -37,7 +38,7 @@
 
             //RANDOM POSITION &  SIZE
             star.style.left = Math.random () * 100 + "vw";
-            const size = Math.random() * 15 + 10;
+            const size = Math.random() * 30 + 25;
             star.style.width = size + "px";
             star.style.height = size + "px";
 

@@ -1931,7 +1931,7 @@ body.match-success {
   height: 100vh;
   background: #fff;
   overflow: hidden;
-  font-family: sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   position: relative;
 }
 
