@@ -111,16 +111,6 @@
     </a>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.querySelector("input[name='q']");
-    if (searchInput) {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.has("q")) {
-            searchInput.value = "";
-        }
-    }
-});
-
-    document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".like-btn").forEach(button => {
         button.addEventListener("click", () => {
             const postId = button.getAttribute("data-id");
