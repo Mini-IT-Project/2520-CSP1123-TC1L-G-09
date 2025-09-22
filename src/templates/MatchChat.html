@@ -8,23 +8,25 @@
     </head>
 
         <header>
+            <div>
             <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
                 <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
             </a>
             <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
-            <div>MMU Match Chat</div>
+            </div>
+            <div class="title">MMU Match Chat</div>
             <nav>
                 <ul>
                     <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
                     <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
                     <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
                     <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
-                    <li>
-                    {% if 'user_id' in session %}
-                    <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
-                    {% else %}
-                    <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
-                    {% endif %}
+                    <li class="welcome-info">
+                        {% if 'user_id' in session %}
+                        <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
+                        {% else %}
+                        <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+                        {% endif %}
                     </li>
                 </ul>
             </nav>
