@@ -1288,7 +1288,7 @@ label{
 }
 
 .dropdown-toggle{
-    background-color: #0d47a1;
+    background-color: #e03a38;
     color: white;
     border: none;
     font-size: 20px;
@@ -1579,22 +1579,20 @@ label{
     text-decoration: underline;
 }
 
-.like-comment-btn,
-.comment-action reply-btn {
+.like-comment-btn {
     border: none;
     color: white;
     background-color: #0a6ef0;  
-    width: 70px;
-    height: 36px;
-    font-size: 13px;
+    width: 50px;
+    height: 25px;
+    font-size: 10px;
     cursor: pointers;
-    padding: 8px 12px; 
+    padding: 5px 12px; 
     border-radius:20px;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.like-comment-btn:hover,
-.comment-action reply-btn:hover {
+.like-comment-btn:hover {
     background-color: #005fa3;
     transform: translateY(-2px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
