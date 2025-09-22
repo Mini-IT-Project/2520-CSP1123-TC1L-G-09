@@ -78,9 +78,9 @@ def handle_disconnect():
     user_id = session.get("user_id")
 
     cancel_user=MC_WaitingUser.query.filter_by(user_id=user_id).first()
-    print(f"{user_id} cancel")
 
     if cancel_user:
+        print(f"{user_id} cancel")
         db.session.delete(cancel_user)
         db.session.commit()
         
@@ -179,14 +179,7 @@ def chat_room():
 def handle_message(data):
     room_name = data["room_name"]
     print(f"123 {room_name}")
-
-    user_id = session.get("user_id")
-    user= Connected_users.query.filter_by(user_id=user_id).first()
-    activated_rooms= Activated_rooms.query.filter((Activated_rooms.user1_id == user_id)|(Activated_rooms.user2_id == user_id)).first()
-    if activated_rooms:            #if user are joining an room, but reconnect, rejoin room
-        join_room(activated_rooms.room_name, sid= user.sid)
-        print (f"{user_id}, rejoin")
-
+    
     sender_id= data["user_id"]
 
     message=data["message"]
