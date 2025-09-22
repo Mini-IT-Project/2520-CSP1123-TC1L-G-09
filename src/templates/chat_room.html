@@ -56,46 +56,48 @@
             });
         </script>
         <script>
-            const input = document.getElementById("messageInput");
-            const chatBox = document.getElementById("chat-box");
+            document.addEventListener("DOMContentLoaded", () => {
+                const input = document.getElementById("messageInput");
+                const chatBox = document.getElementById("chat-box");
 
-            const user_id = "{{ session.get('user_id') }}";
-            const room_name = "{{ room_name }}";
+                const user_id = "{{ session.get('user_id') }}";
+                const room_name = "{{ room_name }}";
 
-            document.getElementById("sendButton").addEventListener("click", () => {
-                const message = input.value.trim();
-                if (message) {
-                    socket.emit("message", {message: message , room_name: room_name, user_id: user_id});
-                    input.value = "";
-                }
-            });
+                document.getElementById("sendButton").addEventListener("click", () => {
+                    const message = input.value.trim();
+                    if (message) {
+                        socket.emit("message", {message: message , room_name: room_name, user_id: user_id});
+                        input.value = "";
+                    }
+                });
 
-            socket.on("print_message", function(data) {
-                const p = document.createElement("p");
-                p.textContent = data.message;
-                chatBox.appendChild(p);
+                socket.on("print_message", function(data) {
+                    const p = document.createElement("p");
+                    p.textContent = data.message;
+                    chatBox.appendChild(p);
 
-                if (data.sender_id == user_id) {
-                    p.classList.add("chat-content-self");
-                } else {
-                    p.classList.add("chat-content-other");
-                }
+                    if (data.sender_id == user_id) {
+                        p.classList.add("chat-content-self");
+                    } else {
+                        p.classList.add("chat-content-other");
+                    }
 
-                chatBox.scrollTop = chatBox.scrollHeight; 
-            });
+                    chatBox.scrollTop = chatBox.scrollHeight; 
+                });
 
-            document.getElementById("leaveButton").addEventListener("click", () => {
-                socket.emit("you_leave_room", { room_name: room_name });
-            });
+                document.getElementById("leaveButton").addEventListener("click", () => {
+                    socket.emit("you_leave_room", { room_name: room_name });
+                });
 
-            socket.on("other_user_leave", function(data) {
-                alert(`User has left the room.`);
-                socket.emit("other_leave_room", { room_name: room_name });
-                window.location.href = "{{ url_for('main.homepage', _external=True) }}";
-            });
+                socket.on("other_user_leave", function(data) {
+                    alert(`User has left the room.`);
+                    socket.emit("other_leave_room", { room_name: room_name });
+                    window.location.href = "{{ url_for('main.homepage', _external=True) }}";
+                });
 
-            socket.on("you_leave_room", function() {
-                window.location.href = "{{ url_for('main.homepage', _external=True) }}";
+                socket.on("you_leave_room", function() {
+                    window.location.href = "{{ url_for('main.homepage', _external=True) }}";
+                });
             });
         </script>
     </body>
