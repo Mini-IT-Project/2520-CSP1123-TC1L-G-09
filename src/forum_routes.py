@@ -67,16 +67,21 @@ def index():
     posts_query=Post.query
 
     if search_keyword:
-        search_pattern = f"%{search_keyword}%"
+        normalized_keyword=search_keyword.lower().lstrip("#")
+        search_pattern = f"%{normalized_keyword}%"
         posts_query = posts_query.filter(
             or_(
-                Post.title.ilike(search_pattern),
-                Post.content.ilike(search_pattern)
+                db.func.lower(Post.title).ilike(search_pattern),
+                db.func.lower(Post.content).ilike(search_pattern),
+                Post.tags.any(db.func.lower(Tag.name).ilike(search_pattern))
             )
         )
     
     if tag_filter:
-        posts_query = posts_query.join(Post.tags).filter(Tag.name == tag_filter)
+        normalized_tag=tag_filter.lower().lstrip("#")
+        posts_query=posts_query.filter(
+            Post.tags.any(db.func.lower(Tag.name)==normalized_tag)
+        )
 
     all_posts = posts_query.order_by(Post.created_at.desc()).all()
     for p in all_posts:
