@@ -1288,7 +1288,7 @@ label{
 }
 
 .dropdown-toggle{
-    background-color: #cc0000;
+    background-color: #0d47a1;
     color: white;
     border: none;
     font-size: 20px;
@@ -1304,7 +1304,7 @@ label{
 }
 
 .dropdown-toggle:hover{
-    background-color: #eb1313;
+    background-color: #0d47a1;
 }
 
 .dropdown-menu{
@@ -1342,6 +1342,11 @@ label{
     justify-content: center;
     gap:16px;
     padding:16px;
+}
+
+.post-header{
+    background-color: #0d47a1;
+    border-radius: 6px;
 }
 
 .post-header .post-author {
@@ -2018,3 +2023,37 @@ body.match-success {
     margin-right: 1%;
 }
 
+/* admin dashboard */
+.report-post-container {
+    padding: 20px;
+}
+
+.report-post-container h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+}
+
+th {
+    background: #f1f1f1;
+}
+
+a.view-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

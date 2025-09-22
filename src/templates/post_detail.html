@@ -19,7 +19,7 @@
   </header>
 
 <article class="card post">
-    <header class="post-header" style="background-color: #cce6ff;border-radius: 6px;">
+    <header class="post-header">
         <div style="display: flex; align-items: center;gap: 10px;">
             <img src="{{url_for('static', filename='avatar' ~ (author_profile.avatar_type if author_profile else 0) ~ '.png')}}" 
             alt="avatar" style="width: 40px; height:40px; border-radius: 50%; object-fit: cover;">
@@ -118,45 +118,12 @@
                 <button class="like-comment-btn" data-id="{{c.id}}">
                     👍<span class="comment-like-count">{{c.like_count()}}</span>
                 </button>
-                <!--
-                <span class="comment-action reply-btn" data-id="{{c.id}}">Reply</span>
-              -->
-            </div>
-
-            <div class="replies">
-                {% for r in c.replies %}
-                <div class="reply-item" data-id="{{r.id}}">
-                    <div class="reply-header">
-                        <img src="{{url_for('static',filename='avatar' ~ (r.profile.avatar_type if r.profile else 0) ~ '.png')}}" alt="avatar" class="comment-avatar">
-                        <span class="reply-author">{{r.profile.faculty_name if r.profile else 'Anonymous'}}</span>
-                    </div>
-                    <div class="reply-body">{{r.body}}</div>
-                    <div class="comment-time">{{r.created_at.strftime('%Y-%m-%d %H:%M')}}</div>
-                    <div class="reply-actions">
-                        <button class="like-reply-btn" data-id="{{r.id}}">
-                            👍<span class="reply-like-count">{{r.like_count()}}</span>
-                        </button>
-                        <!--
-                        <span class="comment-action reply-btn" data-id="{{r.id}}">Reply</span>
-                        -->
-                    </div>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </li>
     {% endfor %}
     </ul>
 </section>
-<!--
-<div id="reply-form" style="display: none;">
-  <form id="replyForm" data-post-id="{{ post.id }}">
-    <input type="hidden" name="parent_id" id="replyParentId">
-    <textarea name="body" placeholder="Write your reply..."></textarea>
-    <button type="submit">Submit</button>
-  </form>
-</div>
--->
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -186,27 +153,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // -------------------- HELPER: send like --------------------
+  async function sendLike(url, button, countSelector) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const countSpan = button.querySelector(countSelector);
+        if (countSpan) countSpan.textContent = data.likes;
+      } else {
+        alert(data.error || "LIKE ERROR");
+      }
+    } catch (err) {
+      console.error("LIKE ERROR:", err);
+      alert("Network error, please try again later");
+    }
+  }
+
   // -------------------- POST LIKE --------------------
   document.querySelectorAll(".like-btn").forEach(button => {
-    button.addEventListener("click", async () => {
+    button.addEventListener("click", () => {
       const postId = button.dataset.id;
-      try {
-        const res = await fetch(`/forum/post/${postId}/like`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({})
-        });
-        const data = await res.json();
-        if (data.ok) {
-          const countSpan = button.querySelector(".like-count");
-          if (countSpan) countSpan.textContent = data.likes;
-        } else {
-          alert(data.error || "LIKE ERROR");
-        }
-      } catch (err) {
-        console.error("LIKE ERROR:", err);
-        alert("Network error, please try again later");
-      }
+      sendLike(`/forum/post/${postId}/like`, button, ".like-count");
+    });
+  });
+
+  // -------------------- COMMENT LIKE --------------------
+  document.querySelectorAll(".like-comment-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      const commentId = button.dataset.id;
+      sendLike(`/forum/comment/${commentId}/like`, button, ".comment-like-count");
     });
   });
 
@@ -245,76 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // -------------------- REPLY FORM --------------------
-  /*
-  const replyFormContainer = document.getElementById("reply-form");
-  const replyForm = document.getElementById("replyForm");
-  const parentInput = document.getElementById("replyParentId");
-
-  document.addEventListener("click", async e => {
-    // LIKE COMMENT/REPLY
-    const likeBtn = e.target.closest(".like-comment-btn, .like-reply-btn");
-    if (likeBtn) {
-      const commentId = likeBtn.dataset.id;
-      try {
-        const res = await fetch(`/forum/comment/${commentId}/like`, { method: "POST" });
-        const data = await res.json();
-        if (data.ok) {
-          const countSpan = likeBtn.querySelector("span");
-          if (countSpan) countSpan.textContent = data.likes;
-        }
-      } catch (err) {
-        console.error("Like and Comment Error:", err);
-      }
-    }
-
-    // SHOW REPLY FORM
-    const replyBtn = e.target.closest(".reply-btn");
-    if (replyBtn) {
-      const commentId = replyBtn.dataset.id;
-      parentInput.value = commentId;
-
-      const authorEl = replyBtn.closest(".comment-item, .reply-item")
-                              .querySelector(".comment-author, .reply-author");
-      const textarea = replyForm.querySelector("textarea");
-      textarea.value = `@${authorEl?.textContent || "Anonymous"} `;
-      textarea.focus();
-
-      replyBtn.closest(".comment-item, .reply-item").appendChild(replyFormContainer);
-      replyFormContainer.style.display = "block";
-    }
-  });
-
-  // SUBMIT REPLY
-  if (replyForm) {
-    replyForm.addEventListener("submit", async e => {
-      e.preventDefault();
-      const formData = new FormData(replyForm);
-      const postId = replyForm.dataset.postId;
-
-      try {
-        const res = await fetch(`/forum/post/${postId}/comment`, {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
-        if (data.ok) {
-          if (!document.querySelector(`.reply-item[data-id="${data.comment_id}"]`)) {
-            addReplyToComment(data);
-          }
-          replyForm.reset();
-          replyFormContainer.style.display = "none";
-        } else {
-          alert(data.error || "Reply Failed");
-        }
-      } catch (err) {
-        console.error("Reply Error:", err);
-        alert("Network error, please try again later");
-      }
-    });
-  }
-  */
-
   // -------------------- HELPER FUNCTIONS --------------------
   function addCommentToList(data) {
     const commentList = document.querySelector(".comment-list");
@@ -337,42 +247,15 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="like-comment-btn" data-id="${data.comment_id}">
             👍 <span class="comment-like-count">${data.likes || 0}</span>
           </button>
-          <span class="reply-btn" data-id="${data.comment_id}">Reply</span>
         </div>
-        <div class="replies"></div>
       </div>
     `;
+
+    li.querySelector(".like-comment-btn").addEventListener("click", () => {
+      sendLike(`/forum/comment/${data.comment_id}/like`, li, ".comment-like-count");
+    });
 
     commentList.appendChild(li);
-  }
-
-  function addReplyToComment(data) {
-    const parentComment = document.querySelector(
-      `.comment-item[data-id="${data.parent_id}"] .replies`
-    );
-    if (!parentComment) return;
-
-    const div = document.createElement("div");
-    div.className = "reply-item";
-    div.dataset.id = data.comment_id;
-
-    div.innerHTML = `
-      <div class="reply-header">
-        <img src="/static/avatar${data.avatar_type || 0}.png" alt="avatar" class="comment-avatar">
-        <span class="reply-author">${data.author}</span>
-        ${data.is_author ? '<span class="author-badge">Author</span>' : ''}
-      </div>
-      <div class="reply-body">${data.body}</div>
-      <div class="comment-time">${data.created_at || "Just Now"}</div>
-      <div class="reply-actions">
-        <button class="like-reply-btn" data-id="${data.comment_id}">
-          👍 <span class="reply-like-count">${data.likes || 0}</span>
-        </button>
-        <span class="reply-btn" data-id="${data.comment_id}">Reply</span>
-      </div>
-    `;
-
-    parentComment.appendChild(div);
   }
 });
 
