@@ -1291,7 +1291,7 @@ label{
 }
 
 .dropdown-toggle{
-    background-color: #cc0000;
+    background-color: #0d47a1;
     color: white;
     border: none;
     font-size: 20px;
@@ -1307,7 +1307,7 @@ label{
 }
 
 .dropdown-toggle:hover{
-    background-color: #eb1313;
+    background-color: #0d47a1;
 }
 
 .dropdown-menu{
@@ -1345,6 +1345,11 @@ label{
     justify-content: center;
     gap:16px;
     padding:16px;
+}
+
+.post-header{
+    background-color: #0d47a1;
+    border-radius: 6px;
 }
 
 .post-header .post-author {
