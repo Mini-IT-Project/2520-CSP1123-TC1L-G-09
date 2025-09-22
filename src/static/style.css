@@ -1630,7 +1630,7 @@ label{
 
 body .post-detail-container .post-detail-content  {
     font-size: 16px;
-    color: #0044cc !important;
+    color: #444 !important;
     line-height: 1.6;
     margin: 0 auto 12px;
     text-align: justify;
