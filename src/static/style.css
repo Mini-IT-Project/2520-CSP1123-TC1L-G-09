@@ -2025,3 +2025,38 @@ body.match-success {
     color: white; 
     margin-right: 1%;
 }
+
+/* admin dashboard */
+.report-post-container {
+    padding: 20px;
+}
+
+.report-post-container h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+}
+
+th {
+    background: #f1f1f1;
+}
+
+a.view-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
