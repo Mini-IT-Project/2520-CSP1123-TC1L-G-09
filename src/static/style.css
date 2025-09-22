@@ -252,7 +252,7 @@ h2 {
     border-radius: 10px 0 0 10px;
 }
 
-/* Upcoming Events */
+/*Upcoming Events*/
 .events {
     text-align: center;
     margin: 20px auto;
@@ -264,14 +264,13 @@ h2 {
     margin-bottom: 10px;
 }
 
-/* 横向滚动容器 */
 .card-scroll {
     display: flex;
     gap: 15px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding: 10px;
-    scrollbar-width: thin; /* 火狐 */
+    scrollbar-width: thin; 
 }
 
 .card-scroll::-webkit-scrollbar {
@@ -282,9 +281,8 @@ h2 {
     border-radius: 4px;
 }
 
-/* 单个卡片 */
 .card-scroll .card {
-    flex: 0 0 auto;   /* 不要缩小 */
+    flex: 0 0 auto;  
     width: 250px;
     border-radius: 12px;
     padding: 10px;
@@ -325,7 +323,6 @@ h2 {
     color: #222;
     line-height: 1.4;
 }
-
 
 /*MMU Links*/
 .mmu-links {
@@ -1628,9 +1625,9 @@ label{
     box-sizing: border-box;
 }
 
-.post-detail-container .post-detail-content  {
+body .post-detail-container .post-detail-content  {
     font-size: 16px;
-    color: #050505;
+    color: #0044cc !important;
     line-height: 1.6;
     margin: 0 auto 12px;
     text-align: justify;
@@ -2020,3 +2017,4 @@ body.match-success {
     color: white; 
     margin-right: 1%;
 }
+
