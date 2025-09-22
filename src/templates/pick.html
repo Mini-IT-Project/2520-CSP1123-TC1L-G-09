@@ -38,6 +38,11 @@
             Your browser does not support the video tag.
         </video>
 
+        <audio id ="ocean" autoplay loop hidden>
+            <source src="{{ url_for('static', filename='ocean.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
         {% if bottle %}
             <div class="bottle-wrapper">
                 <div class="bottle_content">
@@ -74,5 +79,12 @@
             </div>
         {% endif %}
     </main>
+
+    <script>
+        const audio = document.getElementById('ocean');
+        if (audio){
+        audio.volumn = 0.28;
+        }
+    </script>
 </body>
 </html>
