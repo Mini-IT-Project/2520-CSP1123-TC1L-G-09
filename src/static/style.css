@@ -62,6 +62,19 @@ header {
     font-size: 2vw;
     */
 }
+.header-back-home-a {
+    position: absolute; 
+    left: 80px; 
+    transform: translateX(-50%); 
+    top: -10px;
+}
+.header-back-home-text {
+    color: white; 
+    position: absolute; 
+    left: 130px; 
+    top: 70px; 
+    font-size: 18px;
+}
 .title {
     text-align: center;
     font-size: 3vw;
