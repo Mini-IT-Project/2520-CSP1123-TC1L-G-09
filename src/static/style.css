@@ -1640,6 +1640,8 @@ body .post-detail-container .post-detail-content  {
     white-space: normal;
     overflow: visible;
     display: block;
+    word-wrap: break-word;
+     overflow-wrap: break-word;
 }
 
 .post-detail-container img,
@@ -1665,6 +1667,15 @@ body .post-detail-container .post-detail-content  {
     border-radius: none;
     text-decoration: none;
     color: #ffffff;
+}
+
+.post-detail-container .post-detail-title,
+.post-detail-container .post-detail-content,
+.post-detail-container .post-detail-media,
+.post-detail-container .post-detail-tags {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .post-detail-actions {
@@ -1694,8 +1705,8 @@ body .post-detail-container .post-detail-content  {
     width: 90px;         
     height: 40px;              
     padding: 0 12px;
-    background-color: #e6f2ff; 
-    color: #0077cc;            
+    background-color: #0077cc; 
+    color: #ffffff;            
     border: none;
     border-radius: 16px;
     font-size: 14px;
