@@ -47,13 +47,13 @@ header nav {
     margin-left: 3vw;
     align-items: center;
     flex-wrap: wrap; 
-    max-width: 33%;
+    max-width: 37%;
 }
 
 header nav ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 2vw;
+    gap: 1.5vw;
     align-items: center;
     flex-direction: row;
     list-style: none;
@@ -79,7 +79,7 @@ header nav ul li a:hover {
     display: inline;
 }
 
-@media (max-width: 1660px) {
+@media (max-width: 1400px) {
     .welcome-info {
         display: none;
     }
