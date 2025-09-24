@@ -229,7 +229,6 @@ def add_comment(post_id):
     post = Post.query.get_or_404(post_id)
     comment_content = request.form.get("body", "").strip()
     comment_author = request.form.get("author", "Anonymous").strip() or "Anonymous"
-    parent_id = request.form.get("parent_id", type=int)
 
     if not comment_content:
         return jsonify({"ok": False, "error": "Please write your comment"}), 400
@@ -243,7 +242,6 @@ def add_comment(post_id):
         body=comment_content,
         author=comment_author,
         user_id=user_id,
-        parent_id=parent_id if parent_id else None
     )
 
     db.session.add(new_comment)
@@ -254,7 +252,6 @@ def add_comment(post_id):
     response_data = {
         "ok": True,
         "comment_id": new_comment.id,
-        "parent_id": parent_id if parent_id else None,
         "body": comment_content,
         "author": profile.faculty_name if profile else comment_author,
         "avatar_type": profile.avatar_type if profile else 0,

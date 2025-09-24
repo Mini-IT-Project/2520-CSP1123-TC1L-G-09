@@ -85,8 +85,6 @@ class Comment(db.Model):
     created_at=db.Column(db.DateTime,default=datetime.now(MALAYSIA_TZ),nullable=False)
     post=db.relationship('Post',back_populates='comments')
     user_id=db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
-    parent_id=db.Column(db.Integer,db.ForeignKey("comments.id"),nullable=True)
-    replies=db.relationship("Comment",backref=db.backref("parent",remote_side=[id]),lazy="dynamic")
     likes=db.relationship("CommentLike",back_populates="comment",cascade="all,delete-orphan")
 
     def like_count(self):
