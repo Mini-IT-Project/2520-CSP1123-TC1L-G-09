@@ -178,15 +178,6 @@ def edit_post(post_id):
         for tag in process_tags(tags_input):
             post.tags.append(tag)
 
-        delete_ids = request.form.getlist("delete_media_ids")
-        for media_id in delete_ids:
-            media_obj = PostMedia.query.get(int(media_id))
-            if media_obj and media_obj in post.media:
-                file_path = os.path.join(current_app.root_path, "static", media_obj.media_url)
-                if os.path.exists(file_path):
-                    os.remove(file_path)
-                db.session.delete(media_obj)
-
         upload_files = request.files.getlist("media")
         for file in upload_files:
             data = handle_file_upload(file)
