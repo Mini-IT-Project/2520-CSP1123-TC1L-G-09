@@ -33,28 +33,6 @@
                 <input type="text" name="tags" value="{{existing_tags if existing_tags else ''}}" placeholder="#mmu">
             </div>
 
-            {% if mode=="edit" and post.media %}
-            <div class="form-group">
-                <label>Current Media</label>
-                <div class="preview-container">
-                    {% for m in post.media %}
-                    <p>DEBUG: {{ url_for('static', filename=m.media_url) }}</p>
-                    <div class="media-preview">
-                        {% if m.media_url.endswith(('.png','.jpeg','.jpg','.gif')) %}
-                        <img src="{{url_for('static', filename=m.media_url)}}">
-                        {% else %}
-                        <video src="{{url_for('static', filename=m.media_url)}}" controls></video>
-                        {% endif %}
-                        <div>
-                            <input type="checkbox" name="delete_media_ids" value="{{m.id}}">
-                            DELETE MEDIA
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
             <div class="upload-box">
                 <input type="file" id="media" name="media" multiple accept="image/*,video/*" hidden>
                 <label for="media" class="upload-label">

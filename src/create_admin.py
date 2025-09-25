@@ -7,11 +7,17 @@ from app import create_app
 app=create_app()
 
 with app.app_context():
-    email = input("please enter your admin email : ").strip()
-    password = getpass.getpass("Please enter your password: ").strip()  
+    email = input("please enter your admin email (exp:xxx@student.mmu.edu.my): ").strip()
+    password = getpass.getpass("Please enter your password: ").strip() 
 
     if not email or not password:
         print(" Email and password cannot be empty")
+        exit()
+
+    elif not email.endswith("@student.mmu.edu.my"):
+        print("Invalid email. Must end with @student.mmu.edu.my")
+        exit()
+
     else:
         existing = Users.query.filter_by(email=email).first()
         if existing:
