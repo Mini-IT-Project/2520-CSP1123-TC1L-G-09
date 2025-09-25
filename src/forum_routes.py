@@ -13,11 +13,12 @@ forum_bp = Blueprint(
     template_folder="templates"
 )
 
+#File upload processing
 def handle_file_upload(file):
-    ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}
+    ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}  
 
     def allowed_file(filename: str) -> bool:
-        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
+        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT #check the file is legal
 
     if not file or not allowed_file(file.filename):
         return None
@@ -25,7 +26,7 @@ def handle_file_upload(file):
     filename = secure_filename(file.filename)
     extension = filename.rsplit(".", 1)[1].lower()
 
-    upload_dir = os.path.join(current_app.root_path, "static", "uploads")
+    upload_dir = os.path.join(current_app.root_path, "static", "uploads") #save the file to static/uploads
     os.makedirs(upload_dir, exist_ok=True)
 
     save_path = os.path.join(upload_dir, filename)
@@ -37,10 +38,10 @@ def handle_file_upload(file):
         "media_url": f"uploads/{filename}"
     }
     
-def analysis_tag(raw:str):
+def analysis_tag(raw:str): #raw(exp:Python/WEB/....) str (indicates that is string)
     if not raw:
         return []
-    raw = raw.replace(","," ").replace("#"," ")
+    raw = raw.replace(","," ").replace("#"," ")  
     tags = []
     for part in raw.split():
         cleaned = part.strip().lstrip("#")
