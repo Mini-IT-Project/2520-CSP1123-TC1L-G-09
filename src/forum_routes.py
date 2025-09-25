@@ -172,6 +172,11 @@ def edit_post(post_id):
     if request.method == "POST":
         post.title = request.form.get("title")
         post.content = request.form.get("content")
+        tags_input = request.form.get("tags", "").strip()
+
+        post.tags.clear()
+        for tag in process_tags(tags_input):
+            post.tags.append(tag)
 
         delete_ids = request.form.getlist("delete_media_ids")
         for media_id in delete_ids:
@@ -195,9 +200,9 @@ def edit_post(post_id):
         db.session.commit()
         flash("POST UPDATED", "success")
         return redirect(url_for("forum.post_detail", post_id=post.id))
-
-    return render_template("create_edit_post.html", post=post)
-
+    
+    existing_tags = " ".join([t.name for t in post.tags])
+    return render_template("create_edit_post.html", post=post,existing_tags=existing_tags,mode="edit")
 
 @forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
 def like_post(post_id):
