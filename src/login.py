@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash  #pass
 from sqlalchemy.exc import IntegrityError
 import re
 
-login_bp = Blueprint("login",__name__)
+login_bp = Blueprint("login",__name__)         #create blueprint
 
 class Users(db.Model):
     id= db.Column(db.Integer, primary_key=True)
@@ -18,10 +18,10 @@ class Users(db.Model):
 
 @login_bp.route('/', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
+    if request.method == 'POST':     #if login page submit form
         login_email = request.form['email'] + "@student.mmu.edu.my"
         login_user= Users.query.filter_by(email=login_email).first()
-        if login_user:
+        if login_user:                    #if user exist, save to session
             login_password= request.form['password']
             if check_password_hash(login_user.password, login_password):
                 session['user_id'] = login_user.id
@@ -57,7 +57,7 @@ def register():
             flash("Password should include at least one number")
             return render_template("register.html")
 
-        password = generate_password_hash(request.form['password'])
+        password = generate_password_hash(request.form['password'])  #user hash to secreated
 
         new_user= Users(email=email, password=password)
         print(f"{new_user}, {email}, {password}")

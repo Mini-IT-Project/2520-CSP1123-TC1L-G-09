@@ -38,13 +38,13 @@ def home():
     user = Users.query.get(user_id) 
     if not user:
         flash("Please login in first.")
-        return redirect(url_for('login.home')) #check used-id 
+        return redirect(url_for('login.home')) #check is login or no 
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
     if not myprofile_data:
         myprofile_data= Profile_data(user_id=user_id)
         db.session.add(myprofile_data)
-        db.session.commit()
+        db.session.commit()   #initial profile_data
 
     return render_template("MatchChat.html", myprofile_data = myprofile_data)
 
@@ -62,7 +62,7 @@ def handle_connect():
                 join_room(activated_rooms.room_name, sid= request.sid)
                 print (f"{user_id}, rejoin")
         else:
-            new_user=Connected_users(user_id=user_id, sid=request.sid)
+            new_user=Connected_users(user_id=user_id, sid=request.sid)  #new connect
             db.session.add(new_user)
             print(f"{user_id} new connect, fisrt sid: {request.sid}")
 
@@ -82,17 +82,17 @@ def handle_disconnect():
     if cancel_user:
         print(f"{user_id} cancel")
         db.session.delete(cancel_user)
-        db.session.commit()
+        db.session.commit()  #if you are waiting, but back to homepage or any else, quit waiting pool
         
     user=Connected_users.query.filter_by(sid=request.sid).first()
     if user:
         print(f"delete {user.user_id} from db")
         db.session.delete(user)
-        db.session.commit()
+        db.session.commit()   #delete unneeded data
 
 @socketio.on('my event')
 def handle_my_event(data):
-    print(data, request.sid)
+    print(data, request.sid)   #while connect, print
 
 @socketio.on("match_request")
 def handle_match_request():
@@ -140,7 +140,7 @@ def handle_cancel_request():
     print(f"{user_id} cancel")
 
     db.session.delete(cancel_user)
-    db.session.commit()
+    db.session.commit()     #if cancel, just quit waiting pool
 
 @MatchChat_bp.route('/match_success')
 def match_success_page():
@@ -158,7 +158,7 @@ def match_success_page():
         if not user2:
             user2= Profile_data(user_id=members.user2_id)
             db.session.add(user2)
-            db.session.commit()
+            db.session.commit()   #if user 1,2 not initial profile yet, initial
 
     redirect_url = url_for("MatchChat.chat_room", room_name=room_name, _external=True)      #to redirect to chat_room
 
@@ -206,4 +206,4 @@ def handle_other_leave_room(data):
     room = Activated_rooms.query.filter_by(room_name=room_name).first()
     if room:
         db.session.delete(room)
-        db.session.commit()
+        db.session.commit()   #delete unneeded data
