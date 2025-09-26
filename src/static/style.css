@@ -99,6 +99,32 @@ header nav ul li a:hover {
     }
 }
 
+/*Footer*/
+footer {
+  background-color: #bbc0cc;
+  color: #000000;
+  text-align: center;
+  padding: 0.5rem;
+}
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-aboutus {
+    max-width: 40%;
+}
+.footer-contactus {
+    max-width: 40%;
+}
+.footer-copy {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+}
+
 /*Slogan*/
 .hero {
     text-align: center; 
