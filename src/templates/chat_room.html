@@ -57,7 +57,7 @@
                     if (message) {
                         socket.emit("message", {message: message , room_name: room_name, user_id: user_id});
                         input.value = "";
-                    }
+                    }  /*emit message, and clear input column*/
                 });
 
                 socket.on("print_message", function(data) {
@@ -69,7 +69,7 @@
                         p.classList.add("chat-content-self");
                     } else {
                         p.classList.add("chat-content-other");
-                    }
+                    }     /*differ self or other message to show*/
 
                     chatBox.scrollTop = chatBox.scrollHeight; 
                 });

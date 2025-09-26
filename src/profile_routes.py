@@ -1,6 +1,5 @@
 from flask import Blueprint,render_template,session,redirect,url_for, flash,request
 from extensions import db
-from forum_models import Comment,Post,Like
 from login import Users
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -10,7 +9,7 @@ profile_bp = Blueprint(
     template_folder="templates",
     static_folder="static",
     static_url_path="/forum-static"
-)
+)    #create blueprint
 
 class Profile_data(db.Model):
     id= db.Column(db.Integer, primary_key=True)
@@ -31,13 +30,13 @@ def myProfile():
     user = Users.query.get(user_id) 
     if not user:
         flash("Please login in first.")
-        return redirect(url_for('login.home')) #check used-id 
+        return redirect(url_for('login.home'))   #check is login or no
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
     if not myprofile_data:
         myprofile_data= Profile_data(user_id=user_id)
         db.session.add(myprofile_data)
-        db.session.commit()
+        db.session.commit()     #initial profile_data
 
     if request.method=='POST': #while html form click save
         myprofile_data.avatar_type = request.form.get("avatar_type")
@@ -59,7 +58,7 @@ def profile():
     user = Users.query.get(user_id) 
     if not user:
         flash("Please login in first.")
-        return redirect(url_for('login.home'))
+        return redirect(url_for('login.home'))   #check is login or no
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
         
@@ -75,7 +74,7 @@ def settings():
     user = Users.query.get(user_id) 
     if not user:
         flash("Please login in first.")
-        return redirect(url_for('login.home'))
+        return redirect(url_for('login.home'))  #check is login or no
     
     myprofile_data= Profile_data.query.filter_by(user_id=user_id).first()
     
@@ -88,7 +87,7 @@ def change_password():
     current_password=request.form.get("current_password")
     new_password=request.form.get("new_password")
 
-    if check_password_hash(user.password, current_password):
+    if check_password_hash(user.password, current_password):  #check new and old password
         user.password= generate_password_hash(new_password)
         db.session.commit()
 
