@@ -27,7 +27,7 @@ def dashboard():
     reports = Report.query.order_by(Report.created_at.desc()).all()
     return render_template("admin_dashboard.html", posts=posts, reports=reports)
 
-@admin_bp.route("/delete_post/<int:post_id>", methods=["POST"])
+@admin_bp.route("/delete_post/<int:post_id>", methods=["POST"]) #let the admin can delete post
 @admin_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
