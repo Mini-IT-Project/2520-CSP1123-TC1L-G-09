@@ -8,28 +8,59 @@ body {
 
 /*Header*/
 header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #0d47a1;
     color: white;
     padding: 35px 20px; 
+    gap: 10px;
     font-size: 2.5em; 
     font-weight: bold;
-    text-align: center;
-    position: relative;
     z-index: 1000;
+    height: 45px;
+}
+.header-back-home-a {
+    position: absolute; 
+    left: 80px; 
+    transform: translateX(-50%); 
+    top: -10px;
+}
+.header-back-home-text {
+    color: white; 
+    position: absolute; 
+    left: 130px; 
+    top: 70px; 
+    font-size: 18px;
+}
+.title {
+    text-align: center;
+    font-size: 3vw;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 header nav {
-    position: absolute;
-    top: 25px;
-    right: 20px;
+    justify-content: flex-end;
+    margin-left: 3vw;
+    align-items: center;
+    flex-wrap: wrap; 
+    max-width: 37%;
 }
 
 header nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 1.5vw;
+    align-items: center;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    margin-bottom: 1rem;
+    justify-content: space-evenly;
+    /*font-size: 3vw;*/
 }
 
 header nav ul li a {
@@ -42,6 +73,56 @@ header nav ul li a {
 
 header nav ul li a:hover {
     color: #ccdaff;
+}
+
+.welcome-info {
+    display: inline;
+}
+
+@media (max-width: 1400px) {
+    .welcome-info {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    header nav {
+        margin-right: 30px;
+    }
+    header nav ul {
+        flex-direction: column;
+        margin-bottom: 33px;
+        gap: 0;
+    }
+    header nav ul li {
+        height: 27px;
+    }
+}
+
+/*Footer*/
+footer {
+  background-color: #bbc0cc;
+  color: #000000;
+  text-align: center;
+  padding: 0.5rem;
+}
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-aboutus {
+    max-width: 40%;
+}
+.footer-contactus {
+    max-width: 40%;
+}
+.footer-copy {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
 }
 
 /*Slogan*/

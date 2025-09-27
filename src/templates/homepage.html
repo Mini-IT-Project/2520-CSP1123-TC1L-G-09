@@ -7,25 +7,27 @@
 </head>
 
 <body>
-
-    <header>
-        <div class="title">MMU SOUL</div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
-                <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
-                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
-                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
-                <li>
-                {% if 'user_id' in session %}
-                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
-                {% else %}
-                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
-                {% endif %}
-                </li>
-            </ul>
-        </nav> 
-    </header>
+        <header>
+            <div>
+                <!-- empty div, so that layout be normal, else, in confusion -->
+            </div>
+            <div class="title">MMU Soul</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                    <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
+                    <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                    <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
+                    <li class="welcome-info">
+                        {% if 'user_id' in session %}
+                        <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
+                        {% else %}
+                        <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
     <div class="hero">
         <h1 class="slogan-line">
@@ -168,6 +170,21 @@
                 </div>
             </div>
         </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-aboutus">
+                <h3>About us</h3>
+                <p>This website is an open and anonymous space for sharing thoughts and opinions freely. We believe everyone deserves a place to express themselves without judgment. Respect others, speak responsibly, and enjoy the conversation.</p>
+            </div>
+            <div class="footer-contactus">
+                <h3>Contact us</h3>
+                <p>Face any problems or any Business Cooperation, please contact email below: </p>
+                <a href="mailto:mmusoul@gmail.com">mmusoul@gmail.com</a>
+            </div>
+        </div>
+        <p class="footer-copy">© 2025 MMU Soul. All rights reserved</p>
+    </footer>
 
 </body>
 </html>

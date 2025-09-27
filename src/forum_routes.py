@@ -13,11 +13,12 @@ forum_bp = Blueprint(
     template_folder="templates"
 )
 
+#File upload processing
 def handle_file_upload(file):
-    ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}
+    ALLOWED_EXT = {"png","jpg","jpeg","gif","mp4","mov"}  
 
     def allowed_file(filename: str) -> bool:
-        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
+        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT #check the file is legal
 
     if not file or not allowed_file(file.filename):
         return None
@@ -25,7 +26,7 @@ def handle_file_upload(file):
     filename = secure_filename(file.filename)
     extension = filename.rsplit(".", 1)[1].lower()
 
-    upload_dir = os.path.join(current_app.root_path, "static", "uploads")
+    upload_dir = os.path.join(current_app.root_path, "static", "uploads") #save the file to static/uploads
     os.makedirs(upload_dir, exist_ok=True)
 
     save_path = os.path.join(upload_dir, filename)
@@ -37,10 +38,10 @@ def handle_file_upload(file):
         "media_url": f"uploads/{filename}"
     }
     
-def analysis_tag(raw:str):
+def analysis_tag(raw:str): #raw(exp:Python/WEB/....) str (indicates that is string)
     if not raw:
         return []
-    raw = raw.replace(","," ").replace("#"," ")
+    raw = raw.replace(","," ").replace("#"," ")  
     tags = []
     for part in raw.split():
         cleaned = part.strip().lstrip("#")
@@ -67,16 +68,21 @@ def index():
     posts_query=Post.query
 
     if search_keyword:
-        search_pattern = f"%{search_keyword}%"
+        normalized_keyword=search_keyword.lower().lstrip("#")
+        search_pattern = f"%{normalized_keyword}%"
         posts_query = posts_query.filter(
             or_(
-                Post.title.ilike(search_pattern),
-                Post.content.ilike(search_pattern)
+                db.func.lower(Post.title).ilike(search_pattern),
+                db.func.lower(Post.content).ilike(search_pattern),
+                Post.tags.any(db.func.lower(Tag.name).ilike(search_pattern))
             )
         )
     
     if tag_filter:
-        posts_query = posts_query.join(Post.tags).filter(Tag.name == tag_filter)
+        normalized_tag=tag_filter.lower().lstrip("#")
+        posts_query=posts_query.filter(
+            Post.tags.any(db.func.lower(Tag.name)==normalized_tag)
+        )
 
     all_posts = posts_query.order_by(Post.created_at.desc()).all()
     for p in all_posts:
@@ -166,15 +172,11 @@ def edit_post(post_id):
     if request.method == "POST":
         post.title = request.form.get("title")
         post.content = request.form.get("content")
+        tags_input = request.form.get("tags", "").strip()
 
-        delete_ids = request.form.getlist("delete_media_ids")
-        for media_id in delete_ids:
-            media_obj = PostMedia.query.get(int(media_id))
-            if media_obj and media_obj in post.media:
-                file_path = os.path.join(current_app.root_path, "static", media_obj.media_url)
-                if os.path.exists(file_path):
-                    os.remove(file_path)
-                db.session.delete(media_obj)
+        post.tags.clear()
+        for tag in process_tags(tags_input):
+            post.tags.append(tag)
 
         upload_files = request.files.getlist("media")
         for file in upload_files:
@@ -189,9 +191,9 @@ def edit_post(post_id):
         db.session.commit()
         flash("POST UPDATED", "success")
         return redirect(url_for("forum.post_detail", post_id=post.id))
-
-    return render_template("create_edit_post.html", post=post)
-
+    
+    existing_tags = " ".join([t.name for t in post.tags])
+    return render_template("create_edit_post.html", post=post,existing_tags=existing_tags,mode="edit")
 
 @forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
 def like_post(post_id):
@@ -224,7 +226,6 @@ def add_comment(post_id):
     post = Post.query.get_or_404(post_id)
     comment_content = request.form.get("body", "").strip()
     comment_author = request.form.get("author", "Anonymous").strip() or "Anonymous"
-    parent_id = request.form.get("parent_id", type=int)
 
     if not comment_content:
         return jsonify({"ok": False, "error": "Please write your comment"}), 400
@@ -238,7 +239,6 @@ def add_comment(post_id):
         body=comment_content,
         author=comment_author,
         user_id=user_id,
-        parent_id=parent_id if parent_id else None
     )
 
     db.session.add(new_comment)
@@ -249,7 +249,6 @@ def add_comment(post_id):
     response_data = {
         "ok": True,
         "comment_id": new_comment.id,
-        "parent_id": parent_id if parent_id else None,
         "body": comment_content,
         "author": profile.faculty_name if profile else comment_author,
         "avatar_type": profile.avatar_type if profile else 0,

@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash  #password is safe, even me dont know too, through hash
 from sqlalchemy.exc import IntegrityError
+import re
 
-login_bp = Blueprint("login",__name__)
+login_bp = Blueprint("login",__name__)         #create blueprint
 
 class Users(db.Model):
     id= db.Column(db.Integer, primary_key=True)
@@ -17,10 +18,10 @@ class Users(db.Model):
 
 @login_bp.route('/', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
+    if request.method == 'POST':     #if login page submit form
         login_email = request.form['email'] + "@student.mmu.edu.my"
         login_user= Users.query.filter_by(email=login_email).first()
-        if login_user:
+        if login_user:                    #if user exist, save to session
             login_password= request.form['password']
             if check_password_hash(login_user.password, login_password):
                 session['user_id'] = login_user.id
@@ -42,7 +43,21 @@ def home():
 def register():
     if request.method == 'POST':
         email = request.form['email'] + "@student.mmu.edu.my"
-        password = generate_password_hash(request.form['password'])
+
+        if len(request.form['password'])< 8:         #check passsword strength, at least one upper, lowercase letter, and one number, and at least 8 digit
+            flash("Password length should more than 8")
+            return render_template("register.html")
+        if not re.search(r"[A-Z]", request.form['password']):
+            flash("Password should include at least one uppercase letter")
+            return render_template("register.html")
+        if not re.search(r"[a-z]", request.form['password']):
+            flash("Password should include at least one lowercase letter")
+            return render_template("register.html")
+        if not re.search(r"\d", request.form['password']):
+            flash("Password should include at least one number")
+            return render_template("register.html")
+
+        password = generate_password_hash(request.form['password'])  #user hash to secreated
 
         new_user= Users(email=email, password=password)
         print(f"{new_user}, {email}, {password}")
