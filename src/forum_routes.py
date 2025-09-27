@@ -67,6 +67,7 @@ def index():
     tag_filter:str=request.args.get("tag","").strip()
     posts_query=Post.query
 
+    # Search filter, match in title, content, or tags
     if search_keyword:
         normalized_keyword=search_keyword.lower().lstrip("#")
         search_pattern = f"%{normalized_keyword}%"
@@ -112,6 +113,7 @@ def create_post():
                                post=None,
                                existing_tags="")
     
+    # Check login status
     user_id=session.get("user_id")
     if not user_id:
         flash("Please login first","error")
@@ -311,6 +313,7 @@ def delete_post(post_id):
     user_id = session.get("user_id")
     is_admin = session.get("is_admin", False)
 
+    # Check permission, only admin or author can delete
     if not (is_admin or post.user_id == user_id):
         flash("You cannot delete this post", "error")
         return redirect(url_for("forum.post_detail", post_id=post.id))
