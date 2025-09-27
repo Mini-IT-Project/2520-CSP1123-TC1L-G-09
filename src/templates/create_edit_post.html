@@ -63,11 +63,13 @@
     </div>
 
 <script>
-const fileInput = document.getElementById("media");
+//--------- Binding-----------------
+const fileInput = document.getElementById("media"); 
 const previewContainer = document.getElementById("preview-container");
 
 let dt = new DataTransfer();
 
+//--------File selection event----------
 fileInput.addEventListener("change", function(e) {
     const newFiles = Array.from(e.target.files);
 
@@ -77,6 +79,7 @@ fileInput.addEventListener("change", function(e) {
         const wrapper = document.createElement("div");
         wrapper.classList.add("media-preview");
 
+        //----------Determine the file type and generate a preview-----
         if (file.type.startsWith("image/")) {
             const img = document.createElement("img");
             img.src = fileURL;
@@ -88,6 +91,7 @@ fileInput.addEventListener("change", function(e) {
             wrapper.appendChild(video);
         }
 
+        //---------------Add a delete button for media----
         const removeBtn = document.createElement("button");
         removeBtn.innerHTML = "×";
         removeBtn.classList.add("remove-btn");

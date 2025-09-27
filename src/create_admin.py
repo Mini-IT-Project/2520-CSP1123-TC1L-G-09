@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 from app import create_app  
 
 app=create_app()
-
+#let the admin create acc
 with app.app_context():
     email = input("please enter your admin email (exp:xxx@student.mmu.edu.my): ").strip()
     password = getpass.getpass("Please enter your password: ").strip() 
