@@ -197,7 +197,7 @@ def edit_post(post_id):
     existing_tags = " ".join([t.name for t in post.tags])
     return render_template("create_edit_post.html", post=post,existing_tags=existing_tags,mode="edit")
 
-@forum_bp.route("/post/<int:post_id>/like", methods=["POST"])
+@forum_bp.route("/post/<int:post_id>/like", methods=["POST"]) 
 def like_post(post_id):
     post=Post.query.get_or_404(post_id)
     user_id=session.get("user_id")
