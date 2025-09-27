@@ -100,7 +100,7 @@ header nav ul li a:hover {
 }
 
 /*Footer*/
-footer {
+.homepage-footer {
   background-color: #bbc0cc;
   color: #000000;
   text-align: center;
