@@ -32,16 +32,53 @@
 
 
 <body>
+    <!-- ===== Header Section ===== -->
+    <header>
+        <a href="{{url_for('main.homepage')}}" style="position: absolute; left: 80px; transform: translateX(-50%); top: -10px;">
+            <img src="{{url_for('static', filename='ebeemmu.png')}}" alt="logo" width="150" height="105" style="margin-left: 10px;">
+        </a>
+        <div style="color: white; position: absolute; left: 130px; top: 70px; font-size: 18px;">Back</div>
+        <div>Drifting Bottle</div>
+        
+        <!-- Navigation Menu -->
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('forum.homepage') }}">Forum</a></li>
+                <li><a href="{{ url_for('MatchChat.home') }}">Match Chat</a></li>
+                <li><a href="{{ url_for('bottle.DriftingBottle') }}">Drifting Bottle</a></li>
+                <li><a href="{{ url_for('profile.myProfile') }}">Profile</a></li>
+                <li>
 
+                <!-- If logged in, display "Welcome" -->
+                {% if 'user_id' in session %}
+                <span style="color: rgb(255, 255, 255); font-weight: bold;">Welcome</span>
+
+                <!-- If not logged in, show login link -->
+                {% else %}
+                <a href="{{ url_for('login.home') }}" class="homepage-login">Login</a>
+
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== Main Content ===== -->
     <main>
+        <!-- ===== Throw Bottle Section ===== -->
         <div class="section">
+
             <h2>Throw a Bottle！</h2>
+            <!-- Form for throwing a bottle -->
             <form id="throwForm" action="{{ url_for('bottle.throw') }}" method="post" enctype="multipart/form-data">
+                <!-- Text area for writing message -->
                 <textarea name="content" rows="4" placeholder="Write your message..." required></textarea><br>
 
+                <!-- File upload input -->
                 <label for="file">Upload a file here (image/audio/video)</label>
                 <input type="file" name="file"><br><br>
 
+                <!-- Select campus dropdown -->
                 <label for="campus">Select your campus:</label>
                 <select name="campus" required>
                     <option value="all">Mix campuses</option>
@@ -49,15 +86,22 @@
                     <option value="melaka">Melaka</option>
                 </select><br><br>
 
+                <!-- Submit button -->
                 <button type="submit" id="submit">Throw it to the sea</button>
             </form>
 
+            <!-- Display total unpicked bottles -->
             <p class="info">There are {{ unpicked_count }} bottles floating in the sea 🌊</p>
         </div>
 
+        <!-- ===== Pick Bottle Section ===== -->
         <div class="section">
+
             <h2>Pick a Bottle!</h2>
+            <!-- Form for picking a bottle -->
             <form id="pickForm" action="{{ url_for('bottle.pick') }}" method="get">
+
+                <!-- Select campus filter -->
                 <label for="campus">Select pick campus:</label>
                 <select name="campus" id="campus">
                     <option value="all">Mix campuses</option>
@@ -68,6 +112,7 @@
                 <button type="submit">Pick a bottle right now！</button>
             </form>
 
+            <!-- Conditional display: bottles available or not -->
             <p class="info">
                 {% if unpicked_count > 0 %}
                     There are {{ unpicked_count }} bottles floating in the sea
@@ -77,9 +122,13 @@
             </p>
         </div>
 
+        <!-- ===== Video Popup for Throw Action ===== -->
         <div id="videoPopup"> 
             <div style="position:relative; background:#fff; padding:2px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+
+                <!-- Close button -->
                 <span id="closeBtn" class="close-btn">×</span>
+                <!-- Throw animation video -->
                 <video id="throwVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
                     <source src="{{ url_for('static', filename='throw.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
@@ -87,9 +136,13 @@
             </div>
         </div>
 
+        <!-- ===== Video Popup for Pick Action ===== -->
         <div id="pickVideoPopup"> 
             <div style="position:relative; background:#fff; padding:2px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.5);">
+
+                <!-- Close button -->
                 <span id="closePickBtn" class="close-btn">×</span>
+                <!-- Pick animation video -->
                 <video id="pickVideo" style="width: 90vw; height: auto; max-height: 90vh; border-radius: 10px;">
                     <source src="{{ url_for('static', filename='pick.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
@@ -97,25 +150,28 @@
             </div>
         </div>
 
+        <!-- ===== JavaScript for Throw and Pick Logic ===== -->
         <script>
-        /*throw*/
+        /* ===== Throw Bottle Logic ===== */
         document.getElementById("throwForm").addEventListener("submit", function(event) {
-            event.preventDefault(); 
+            event.preventDefault();   // Stop form from submitting immediately
 
-            var form = this;
-            var popup = document.getElementById("videoPopup");
-            var video = document.getElementById("throwVideo");
+            var form = this;  // Store the form reference
+            var popup = document.getElementById("videoPopup");  // Popup container
+            var video = document.getElementById("throwVideo");  // Throw video
 
-            popup.classList.add("show");
-            video.currentTime = 0;
-            video.play();
-
+            popup.classList.add("show");  // Show popup
+            video.currentTime = 0;  // Restart video
+            video.play();  // Play animation
+   
+            // When video ends, hide popup and submit form
             video.onended = function() {
                 popup.classList.remove("show"); 
                 console.log("video ended, submitting form");
                 HTMLFormElement.prototype.submit.call(form);
             };
 
+            // If user clicks close, hide popup and still submit form
             document.getElementById("closeBtn").onclick = function() {
                 popup.classList.remove("show");
                 video.pause();
@@ -124,24 +180,26 @@
             };
         });
 
-        /*pick*/
+        /* ---- Pick Bottle ---- */
         document.getElementById("pickForm").addEventListener("submit", function(event) {
-            event.preventDefault(); 
+            event.preventDefault();   // Stop form from submitting immediately
 
-            var form = this;
-            var popup = document.getElementById("pickVideoPopup");
-            var video = document.getElementById("pickVideo");
+            var form = this;  // Reference to form
+            var popup = document.getElementById("pickVideoPopup");  // Popup container
+            var video = document.getElementById("pickVideo");  // Pick video
 
-            popup.classList.add("show");
-            video.currentTime = 0;
-            video.play();
+            popup.classList.add("show");  // Show popup
+            video.currentTime = 0;  // Restart video
+            video.play();  // Play animation
 
+            // When video ends, hide popup and submit form
             video.onended = function() {
                 popup.classList.remove("show"); 
                 console.log("pick video ended, submitting form");
                 HTMLFormElement.prototype.submit.call(form);
             };
 
+            // If user clicks close, hide popup and still submit form
             document.getElementById("closePickBtn").onclick = function() {
                 popup.classList.remove("show");
                 video.pause();
