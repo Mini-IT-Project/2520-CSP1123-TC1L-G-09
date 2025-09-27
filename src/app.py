@@ -1,3 +1,8 @@
+import eventlet
+eventlet.monkey_patch() 
+
+from sqlalchemy.pool import NullPool
+
 from flask import Flask
 import os
 from login import login_bp
@@ -15,6 +20,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"poolclass": NullPool}
 
     UPLOAD_FOLDER = os.path.join(app.root_path,"static", "uploads")  
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
