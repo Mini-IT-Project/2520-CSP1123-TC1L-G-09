@@ -2,8 +2,6 @@ venv/
 __pycache__/
 *.pyc
 
-*.db
-instance/
 
 
 src/static/uploads/
